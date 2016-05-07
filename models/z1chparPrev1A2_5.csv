@@ -1,0 +1,7 @@
+Variable,ClassVal0,DF,Estimate,StdErr,WaldChiSq,ProbChiSq
+Intercept,,1,0.1375,0.5279,0.0678,0.7945
+age,,1,0.1766,0.0697,6.4265,0.0112
+MAGE,,1,-0.112,0.0187,35.8706,<.0001
+pregalc,,1,0.1605,0.0368,18.9872,<.0001
+pregalc*pregalc,,1,-0.00294,0.00117,6.3128,0.012
+z1single_previous,1,1,0.7209,0.1672,18.5952,<.0001

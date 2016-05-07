@@ -1,0 +1,5 @@
+Variable,ClassVal0,DF,Estimate,StdErr,WaldChiSq,ProbChiSq
+Intercept,,1,1.3019,0.4144,9.87,0.0017
+pregsmk,,1,0.192,0.0573,11.2297,0.0008
+pregalc,,1,-0.0471,0.02,5.5442,0.0185
+mhrswrk,,1,-0.0443,0.0152,8.5361,0.0035

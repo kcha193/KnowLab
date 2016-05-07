@@ -1,0 +1,9 @@
+Variable,ClassVal0,Estimate,StdErr,DF,tValue,Probt
+Intercept,,-1.0821,0.0793,9922,-13.64,<.0001
+age,,-0.2657,0.02307,9922,-11.52,<.0001
+z1gender,1,0.3876,0.04158,9922,9.32,<.0001
+hadmtot_previous,,0.1699,0.01704,9922,9.97,<.0001
+chres_previous,,0.03922,0.01781,9922,2.2,0.0277
+fsmoke_previous,,0.02857,0.006443,9922,4.43,<.0001
+age*hadmtot_previous,,0.000954,0.008183,9922,0.12,0.9072
+age*fsmoke_previous,,-0.00618,0.002101,9922,-2.94,0.0033

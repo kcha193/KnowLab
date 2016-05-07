@@ -1,0 +1,4 @@
+Variable,ClassVal0,Estimate,StdErr,DF,tValue,Probt
+Intercept,,13.8438,0.1649,69,83.93,<.0001
+z1single0,1,-1.2723,0.5253,69,-2.42,0.0181
+_sd,,1.319583268,0.2965,,,

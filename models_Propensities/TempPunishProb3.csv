@@ -1,0 +1,8 @@
+Variable,ClassVal0,Estimate,StdErr,DF,tValue,Probt
+Intercept,,4.2132,0.4025,1123,10.47,<.0001
+r1stchildethn,1,0.2839,0.1907,1123,1.49,0.1368
+r1stchildethn,2,-0.8436,0.3657,1123,-2.31,0.0212
+r1stchildethn,3,0,,,,
+householdsize,,0.1041,0.04741,1123,2.2,0.0283
+welfare,1,-0.7,0.2057,1123,-3.4,0.0007
+pregsmk,,-0.02013,0.007937,1123,-2.54,0.0114

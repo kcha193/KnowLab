@@ -1,0 +1,12 @@
+Variable,ClassVal0,Estimate
+Intercept,,NA
+z1gender,1,0.138892
+r1stchildethn,2,0.5
+r1stchildethn,3,0.9
+r1stchildethn,4,-0.3498412
+z1HighBw,1,0.5653138
+z1LowBw,1,-0.5108256
+z1Caesarean,1,0.2151114
+z1Breakfast,1,-0.5653138
+r1Sleep,2,-0.8415672
+r1Sleep,3,-0.3784364

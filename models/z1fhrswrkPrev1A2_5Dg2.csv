@@ -1,0 +1,7 @@
+Variable,ClassVal0,DF,Estimate,StdErr,WaldChiSq,ProbChiSq
+Intercept,,1,0.2968,2.0296,0.0214,0.8837
+fage,,1,3.7064,1.1738,9.97,0.0016
+fage*fage,,1,-0.4104,0.1492,7.5674,0.0059
+z1single0,1,1,-3.5971,0.7156,25.2692,<.0001
+bthorder,,1,-3.0402,1.2407,6.0044,0.0143
+bthorder*bthorder,,1,0.4317,0.203,4.5234,0.0334

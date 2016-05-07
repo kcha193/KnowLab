@@ -1,0 +1,6 @@
+Variable,ClassVal0,Estimate,StdErr,DF,tValue,Probt
+Intercept,,25.9586,1.2687,39,20.46,<.0001
+welfare,1,5.5004,2.2298,39,2.47,0.0181
+z1chpar,1,4.7074,2.0855,39,2.26,0.0297
+pregalc,,0.3151,0.1639,39,1.92,0.0618
+_sd,,6.126565106,8.5,,,

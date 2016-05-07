@@ -1,0 +1,6 @@
+Variable,ClassVal0,Estimate,StdErr,DF,tValue,Probt
+Intercept,,17.3629,0.3405,111,50.99,<.0001
+bthorder,,0.7184,0.185,111,3.88,0.0002
+fage,,0.3542,0.09932,111,3.57,0.0005
+householdsize,,-0.2265,0.05013,111,-4.52,<.0001
+_sd,,0.899611027,0.1086,,,

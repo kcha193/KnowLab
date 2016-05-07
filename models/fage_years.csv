@@ -1,0 +1,5 @@
+Dependent,Variable,ClassVal0,Estimate,StdErr,tValue,Probt
+no99fage_years,Intercept,,7.835569384,1.24380385,6.3,<.0001
+no99fage_years,mage_years,,0.711503976,0.08155363,8.72,<.0001
+no99fage_years,mage_years*mage_years,,0.003648169,0.0013189,2.77,0.0057
+,_sd,,3.783016,,,

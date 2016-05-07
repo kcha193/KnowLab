@@ -1,0 +1,15 @@
+Variable,ClassVal0,Estimate,StdErr,DF,tValue,Probt
+Intercept,,2.5555,0.202,32,12.65,<.0001
+r1stchildethn,4,0.01898,0.1922,32,0.1,0.922
+r1stchildethn,1,0.01898,0.1922,32,0.1,0.922
+r1stchildethn,2,-0.5539,0.5419,32,-1.02,0.3144
+r1stchildethn,3,0,,,,
+mhrswrk_previous,,0.02822,0.005713,32,4.94,<.0001
+pregsmk,,-0.2441,0.08884,32,-2.75,0.0098
+pregsmk*pregsmk,,0.02848,0.006269,32,4.54,<.0001
+pregalc,,-0.122,0.0738,32,-1.65,0.108
+pregsmk*r1stchildethn,4,-0.1294,0.07001,32,-1.85,0.0737
+pregsmk*r1stchildethn,1,-0.1294,0.07001,32,-1.85,0.0737
+pregsmk*r1stchildethn,2,0.163,0.1089,32,1.5,0.1443
+pregsmk*r1stchildethn,3,0,,,,
+_Alpha,,0.09101,0.03796,,,

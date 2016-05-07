@@ -1,0 +1,7 @@
+Variable,ClassVal0,Estimate,StdErr,DF,tValue,Probt
+Intercept,,6.2018,0.788,1218,6.58,<.0001
+r1stfeduc,1,0.6396,0.4616,1218,1.39,0.1661
+r1stfeduc,2,0.9681,0.3445,1218,2.81,0.005
+r1stfeduc,3,0,,,,
+bthorder,,0.3732,0.152,1218,2.46,0.0142
+bwkg,,-4.0003,0.3257,1218,-12.28,<.0001

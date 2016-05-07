@@ -1,0 +1,5 @@
+Variable,ClassVal0,Estimate,StdErr,DF,tValue,Probt
+Intercept,,1.5281,0.3827,117,3.99,0.0001
+fage,,0.2087,0.1028,117,2.03,0.0446
+msmoke,,0.09531,0.01755,117,5.43,<.0001
+_sd,,1.213589717,0.1926,,,

@@ -1,0 +1,150 @@
+{
+    "BREAST": {
+        "measures": ["frequencies", "means"],
+        "subgroups": []
+    },
+    "bthorder": {
+        "measures": ["frequencies"],
+        "subgroups": []
+    },
+    "burt": {
+        "measures": ["means", "quintiles"],
+        "subgroups": ["bthorder", "NPRESCH", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1", "z1overcrowdLvl1"]
+   	},
+    "bwkg": {
+        "measures": ["frequencies", "means", "quintiles"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "z1single0Lvl1"]
+    },
+    "chres": {
+        "measures": ["frequencies"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1"]
+    },
+    "fage": {
+        "measures": ["frequencies"],
+        "subgroups": ["r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH"]
+    },
+    "fhrswrk": {
+        "measures": ["means", "quintiles"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1"]
+    },
+    "fsmoke": {
+        "measures": ["means"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1"]
+    },
+    "ga": {
+        "measures": ["frequencies", "means"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "z1single0Lvl1"]
+    },
+    "gpmorb": {
+        "measures": ["means", "quintiles"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1"]
+    },
+    "gpprev": {
+        "measures": ["means", "quintiles"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1"]
+    },
+    "gpresp": {
+        "measures": ["means", "quintiles"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1"]
+    },
+    "gptotvis": {
+        "measures": ["means", "quintiles"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1"]
+    },
+    "hadmtot": {
+        "measures": ["means", "quintiles"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1"]
+    },
+    "houtptot": {
+        "measures": ["means", "quintiles"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1"]
+    },
+    "INTERACT": {
+        "measures": ["frequencies"],
+        "subgroups": []
+    },
+    "kids": {
+        "measures": ["frequencies", "means"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1", "z1overcrowdLvl1"]
+    },
+    "MAGE": {
+        "measures": ["means", "quintiles"],
+        "subgroups": ["r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH"]
+    },
+    "mhrswrk": {
+        "measures": ["means", "quintiles"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1"]
+    },
+    "msmoke": {
+        "measures": ["means"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1"]
+    },
+    "NPRESCH": {
+        "measures": ["frequencies"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "z1single0Lvl1"]
+    },
+    "pregalc": {
+        "measures": ["frequencies", "means"],
+        "subgroups": []
+    },
+    "pregsmk": {
+        "measures": ["frequencies"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "z1single0Lvl1"]
+    },
+    "PUNISH": {
+        "measures": ["frequencies"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "z1single0Lvl1"]
+    },
+    "r1stchildethn": {
+        "measures": ["frequencies"],
+        "subgroups": []
+    },
+    "r1stfeduc": {
+        "measures": ["frequencies"],
+        "subgroups": ["r1stchildethn", "r1stmeduc", "SESBTH"]
+    },
+    "r1stmeduc": {
+        "measures": ["frequencies"],
+        "subgroups": ["r1stchildethn", "r1stfeduc", "SESBTH"]
+    },
+    "SESBTH": {
+        "measures": ["frequencies"],
+        "subgroups": ["r1stchildethn", "z1single0Lvl1"]
+    },
+    "welfareLvl1": {
+        "measures": ["frequencies"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1", "z1overcrowdLvl1"]
+    },
+    "z1accomLvl1": {
+        "measures": ["frequencies"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1", "z1overcrowdLvl1"]
+    },
+    "z1chparLvl1": {
+        "measures": ["frequencies"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1", "z1overcrowdLvl1"]
+    },
+        "z1condLvl1": {
+        "measures": ["frequencies"],
+        "subgroups": ["bthorder", "NPRESCH", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1"]
+    },
+    "z1genderLvl1": {
+        "measures": ["frequencies"],
+        "subgroups": []
+    },
+    "z1homeownLvl1": {
+        "measures": ["frequencies"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "z1accomLvl1", "z1genderLvl1", "z1singleLvl1", "z1single0Lvl1"]
+    },
+    "z1overcrowdLvl1": {
+        "measures": ["frequencies"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1singleLvl1", "z1single0Lvl1"]
+    },
+    "z1singleLvl1": {
+        "measures": ["frequencies"],
+        "subgroups": ["bthorder", "r1stchildethn", "r1stfeduc", "r1stmeduc", "SESBTH", "welfareLvl1", "z1accomLvl1", "z1genderLvl1", "z1homeownLvl1", "z1single0Lvl1", "z1overcrowdLvl1"]
+    },
+    "z1single0Lvl1": {
+        "measures": ["frequencies"],
+        "subgroups": ["r1stchildethn", "r1stmeduc", "SESBTH"]
+    }
+}

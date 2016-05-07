@@ -1,0 +1,6 @@
+Variable,ClassVal0,DF,Estimate,StdErr,WaldChiSq,ProbChiSq
+Intercept,,1,5.1886,3.4842,2.2176,0.1364
+age,,1,-1.8437,0.7307,6.3658,0.0116
+fage,,1,-0.9675,0.4123,5.5073,0.0189
+fhrswrk,,1,0.0784,0.0269,8.4639,0.0036
+welfare,1,1,2.6417,1.1047,5.7181,0.0168

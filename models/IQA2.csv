@@ -1,0 +1,14 @@
+Variable,ClassVal0,Estimate
+Intercept,,96.83967
+z1GA,1,-11.94
+z1LowBw,1,-4.98
+z1Breast,1,0.02
+z1Breast,2,1.68
+z1Breast,3,2.15
+z1Breast,4,2.78
+z1Breast,5,2.91
+z1stmDiabete,1,-11.7
+z1Hearing,1,-6.3
+z1PrintExp,1,5.580819
+z1Drink,1,-1.95
+_sd,,14
