@@ -2,6 +2,8 @@
 
 rm(list = ls())
 
+.rs.restartR()
+
 #devtools::install_github("kcha193/simarioV2")
 
 library(simarioV2)
@@ -36,7 +38,9 @@ env.base <- simulateP(Simenv, 10)
 sfStop()
 
 saveRDS(env.base, "base/FullBaseRun.rds")
+ 
 
+.rs.restartR()
 
 
 ##########################################################################################
@@ -67,5 +71,8 @@ test <- tableBuilder(env = env.base, statistic="frequencies",
                      variableName="z1singleLvl1", grpbyName="SESBTHLvl1")
 test <- tableBuilder(env = env.base, statistic="frequencies", 
                      variableName="z1singleLvl1", grpbyName="SESBTHLvl2")
+test <- tableBuilder(env = env.base, statistic="frequencies", 
+                     variableName="z1singleLvl1", grpbyName="z1genderLvl0")
+
 
 

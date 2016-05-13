@@ -1,6 +1,5 @@
 
 
-
 rm(list = ls())
 
 #devtools::install_github("kcha193/simarioV2")
@@ -31,6 +30,8 @@ env.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "
 
 env.scenario$cat.adjustments$SESBTH[1,] <- c(1,0.1, 0.1 )	
 
+subgroupExpression <- "mhrswrk < 20"
+env.scenario <- setGlobalSubgroupFilterExpression(env.scenario, subgroupExpression)
 
 sfInit(parallel=TRUE, cpus = 4, slaveOutfile = "test.txt" )
 
@@ -44,9 +45,11 @@ sfLibrary(stringr)
 env.scenario <- simulatePShiny(env.scenario, 4)
 sfStop()
 
-
+label_flattened_mx_grping.and.CIs
 
 test <- tableBuilder(env = env.scenario, statistic="means", variableName="fhrswrk")
+
+test <- tableBuilder(env = env.scenario, statistic="means", variableName="fhrswrk", grpbyName = "r1stchildethn")
 
 test <- tableBuilder(env = env.scenario, statistic="frequencies", variableName="z1HearingLvl1")
 

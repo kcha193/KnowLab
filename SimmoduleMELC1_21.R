@@ -1295,7 +1295,7 @@ simulateKnowLab <- function(Simmodule, simenv) {
     z1ScoreLvl1 <<- ifelse(Score > 89.88, 1,0)
   }
   
-  pre_simulation_setup_MELC <- function() {
+  pre_simulation_setup <- function() {
     
     # setup constants
     NUMCHILDREN <<- length(A0)
@@ -1348,7 +1348,7 @@ simulateKnowLab <- function(Simmodule, simenv) {
   
   outcomes <- createOutcomeMatrices(simenv$simframe, "years1_21", c(1:NUM_ITERATIONS))
   
-  pre_simulation_setup_MELC()
+  pre_simulation_setup()
   
   store_current_values_in_outcomes(1)
   
