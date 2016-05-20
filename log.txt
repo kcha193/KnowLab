@@ -1,4 +1,5 @@
-starting worker for localhost:11308 
+starting worker for localhost:11186 
+Type: EXEC 
 Type: EXEC 
 Type: EXEC 
 Type: EXEC 
@@ -78,7 +79,8 @@ Type: EXEC
 Type: EXEC 
 Type: EXEC 
 Type: EXEC 
-Run 1 year 2 
+Type: EXEC 
+
 Run 1 year 3 
 Run 1 year 4 
 Run 1 year 5 
@@ -98,25 +100,8 @@ Run 1 year 18
 Run 1 year 19 
 Run 1 year 20 
 Run 1 year 21 
-Run 1 yError in unserialize(node$con) : error reading from connection
-Calls: local ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
-In addition: Warning messages:
-1: replacing previous import 'Hmisc::summarize' by 'plyr::summarize' when loading 'simarioV2' 
-2: replacing previous import 'Hmisc::is.discrete' by 'plyr::is.discrete' when loading 'simarioV2' 
-Execution halted
-fStop().
-'sfInit()' is called now.
-snowfall 1.84-6.1 initialized: sequential execution, one CPU.
-
-Type: DONE 
-There were 50 or more warnings (use warnings() to see the first 50)
-n 1 year 19 
-Run 1 year 20 
-Run 1 year 21 
 Type: EXEC 
 Calling a snowfall function without calling 'sfInit' first or after sfStop().
 'sfInit()' is called now.
 snowfall 1.84-6.1 initialized: sequential execution, one CPU.
 
-Type: DONE 
-There were 50 or more warnings (use warnings() to see the first 50)

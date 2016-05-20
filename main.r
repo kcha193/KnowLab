@@ -33,7 +33,7 @@ sfLibrary(stringr)
 
 Simenv <- createSimenv("Base", initialSim$simframe, initialSim$dict, "years1_21")
 
-env.base <- simulateP(Simenv, 10)
+env.base <- simulateP(Simenv, 2)
 
 sfStop()
 

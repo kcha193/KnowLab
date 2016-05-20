@@ -1284,6 +1284,7 @@ simulateKnowLab <- function(Simmodule, simenv) {
   }
   
   
+   
   simulate_Score <- function() {	 		 
     
     if(iteration == 17){
@@ -1316,6 +1317,18 @@ simulateKnowLab <- function(Simmodule, simenv) {
     
     mage_years <<- MAGE + 1
     #when look at collated means - can see the effect from y2 onwards but doesn't show effect for y1
+    
+    school <- NULL
+    for( i in 1:5000){
+      s <- sample(which(rbinom(100, size =1, as.numeric(transition_probabilities$r1School[i,-1]))==1))[1]
+      
+      while(is.na(s))
+        s <- sample(which(rbinom(100, size =1, as.numeric(transition_probabilities$r1School[i,-1]))==1))[1]
+      
+      school <- c(school, s)
+    } 
+    
+    r1School <<- school
   }
   
   
@@ -1351,9 +1364,6 @@ simulateKnowLab <- function(Simmodule, simenv) {
   pre_simulation_setup()
   
   store_current_values_in_outcomes(1)
-  
-  #browser()
-  z1OverweightLvl1 <- numeric(5000)
   
   for (iteration in 2:NUM_ITERATIONS) {
     #iteration =5
@@ -1404,8 +1414,8 @@ simulateKnowLab <- function(Simmodule, simenv) {
     
   }
   
-  detach("simframe")
   
+  detach("simframe")
   
  outcomes
   
