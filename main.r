@@ -48,7 +48,6 @@ library(ggplot2)
 
 test <- tableBuilder(env.base, "frequencies", "r1School", grpbyName = "r1stchildethnLvl1", CI = FALSE)
 
-
 test <- tableBuilder(env.base, "frequencies", "z1genderLvl1", grpbyName = "r1School" , CI = FALSE)
 genderSchool = data.frame(t(sapply(strsplit(colnames(test), " "), function(x) x)), Freq = test[1,])
 names(genderSchool)[1:2] = c("School", "Gender")
