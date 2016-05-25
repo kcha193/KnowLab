@@ -28,10 +28,7 @@ source("SimmoduleMELC1_21.R")
 
 env.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
-env.scenario$cat.adjustments$SESBTH[1,] <- c(1,0.1, 0.1 )	
-
-subgroupExpression <- "mhrswrk < 20"
-env.scenario <- setGlobalSubgroupFilterExpression(env.scenario, subgroupExpression)
+env.scenario$cat.adjustments$z1ECE[1,] <- c(0,1)	
 
 sfInit(parallel=TRUE, cpus = 4, slaveOutfile = "test.txt" )
 
@@ -42,8 +39,51 @@ sfLibrary(snowfall)
 sfLibrary(simarioV2)
 sfLibrary(stringr)
 
-env.scenario <- simulatePShiny(env.scenario, 4)
+env.scenario <- simulateP(env.scenario, 4)
 sfStop()
+
+
+
+
+env.base$modules[[1]]$run_results_collated$means$IQ	
+env.base$modules[[1]]$run_results_collated$freqs$z1ScoreLvl1
+
+env.scenario$modules[[1]]$run_results_collated$means$IQ	
+env.scenario$modules[[1]]$run_results_collated$freqs$z1ScoreLvl1
+
+table(env.base$simframe$z1ECELvl1)
+
+
+apply(
+rbind(
+table(env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[which(env.base$simframe$z1ECELvl1 == 0),17])/sum(env.base$simframe$z1ECELvl1 == 0),
+table(env.base$modules[[1]]$run_results$run2$outcomes$z1ScoreLvl1[which(env.base$simframe$z1ECELvl1 == 0),17])/sum(env.base$simframe$z1ECELvl1 == 0),
+table(env.base$modules[[1]]$run_results$run3$outcomes$z1ScoreLvl1[which(env.base$simframe$z1ECELvl1 == 0),17])/sum(env.base$simframe$z1ECELvl1 == 0),
+table(env.base$modules[[1]]$run_results$run4$outcomes$z1ScoreLvl1[which(env.base$simframe$z1ECELvl1 == 0),17])/sum(env.base$simframe$z1ECELvl1 == 0)),
+2, mean)
+
+
+apply(
+  rbind(
+    table(env.scenario$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[which(env.base$simframe$z1ECELvl1 == 0),17])/sum(env.base$simframe$z1ECELvl1 == 0),
+    table(env.scenario$modules[[1]]$run_results$run2$outcomes$z1ScoreLvl1[which(env.base$simframe$z1ECELvl1 == 0),17])/sum(env.base$simframe$z1ECELvl1 == 0),
+    table(env.scenario$modules[[1]]$run_results$run3$outcomes$z1ScoreLvl1[which(env.base$simframe$z1ECELvl1 == 0),17])/sum(env.base$simframe$z1ECELvl1 == 0),
+    table(env.scenario$modules[[1]]$run_results$run4$outcomes$z1ScoreLvl1[which(env.base$simframe$z1ECELvl1 == 0),17])/sum(env.base$simframe$z1ECELvl1 == 0)),
+  2, mean)
+
+
+
+test <- tableBuilder(env = env.base, statistic="frequencies", variableName="z1ScoreLvl1")
+
+test <- tableBuilder(env = env.scenario, statistic="frequencies", variableName="z1ScoreLvl1")
+
+
+
+
+
+
+
+
 
 label_flattened_mx_grping.and.CIs
 
