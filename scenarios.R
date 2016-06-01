@@ -23,6 +23,7 @@ catToContModels <<- initialSim$catToContModels
 models <<- initialSim$models
 PropensityModels <<- initialSim$PropensityModels
 children <<- initialSim$children
+transition_probabilities <<- initialSim$transition_probabilities
 
 source("SimmoduleMELC1_21.R")
 
@@ -39,7 +40,7 @@ sfLibrary(snowfall)
 sfLibrary(simarioV2)
 sfLibrary(stringr)
 
-env.scenario <- simulateP(env.scenario, 4)
+env.scenario <- simulatePShiny(env.scenario, 4)
 sfStop()
 
 

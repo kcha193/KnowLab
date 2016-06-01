@@ -1,7 +1,6 @@
 Varname,Description,Codings_Expr,Description details,Options,Option codes
 alcabuseLvl1,Alcohol abuse,"c(""None""=0, ""Alcohol abuse""=1)",,,
 depressionLvl1,Depression,"c(""None""=0, ""Depression""=1)",,,
-z1accom,Accommodation undetached,,,,
 z1accomLvl1,Accommodation undetached ,"c(""Detached house""=0, ""Undetached house""=1)",,False/True,==0/==1
 z1accom_previous,Accommodation undetached (prev year),,,,
 age,Age,,,,
