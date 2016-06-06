@@ -20,7 +20,8 @@ NUM_ITERATIONS <- 21
 
 initialSim <- initSim(NUM_ITERATIONS)
 
-saveRDS(initialSim, "./base/initialSim.rds")
+saveRDS(initialSim, "base/initialSim.rds")
+saveRDS(initialSim, "../KnowLabShiny/base/initialSim.rds")
 
 sfInit(parallel=TRUE, cpus = 4, slaveOutfile = "log.txt" )
 
@@ -38,13 +39,38 @@ env.base <- simulateP(Simenv, 10)
 sfStop()
 
 saveRDS(env.base, "base/FullBaseRun.rds")
- 
+saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
+
 .rs.restartR()
 
 ##########################################################################################
 
 library(knitr)
 library(ggplot2)
+
+names(env.base$modules[[1]]$run_results$run1$outcomes)
+
+apply(env.base$modules[[1]]$run_results$run1$outcomes[["burt"]], 2, mean)
+apply(env.base$modules[[1]]$run_results$run1$outcomes[["burt"]], 2, sd)
+
+apply(sapply(env.base$modules[[1]]$run_results, 
+             function(x) apply(x$outcome[["burt"]], 2, mean)), 1, mean)
+
+apply(sapply(env.base$modules[[1]]$run_results, function(x) apply(x$outcome[["burt"]], 2, mean)), 1, sd)
+
+
+apply(env.base$modules[[1]]$run_results$run1$outcomes[["z1accomLvl1"]], 2, function(x) table(x)/length(x))
+
+apply(sapply(env.base$modules[[1]]$run_results, 
+             function(x) apply(x$outcome[["z1accomLvl1"]], 2, function(x) table(x)/length(x))), 1, 
+                function(y) sapply(y, mean))
+
+env.base$modules[[1]]$run_results_collated$means$burt
+
+
+
+
+
 
 test <- tableBuilder(env.base, "frequencies", "r1School", grpbyName = "r1stchildethnLvl1", CI = FALSE)
 

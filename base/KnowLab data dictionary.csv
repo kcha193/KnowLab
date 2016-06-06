@@ -69,7 +69,7 @@ r1stfeduc,Father's education at child's birth,"c(""Tertiary""=1, ""Secondary""=2
 r1stfethn,Father's ethnicity,"c(""NZ Euro""=1, ""Pacific""=2, ""Maori""=3)",(ages 1-13: range 0-100),Less than/Greater than/Less than or equal to/Greater than or equal to/Equals,</>/<=/>=/==
 fhrswrk,Father's hours worked per week,,,,
 z1gender,Gender,"c(""Female""=0, ""Male""=1)",,Female/Male,==0/==1
-z1genderLvl1,Gender ,"c(""Female""=0, ""Male""=1)",(range 32-45),Less than/Greater than/Less than or equal to/Greater than or equal to,</>/<=/>=
+z1genderLvl1,Gender ,"c(""Female""=0, ""Male""=1)",,Female/Male,==0/==1
 ga,Gestational age (weeks),,,,
 gptotvis,GP visits,,,,
 gptotvis_Previous,GP visits in previous year,,,,

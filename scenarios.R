@@ -29,6 +29,9 @@ source("SimmoduleMELC1_21.R")
 
 env.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
+subgroupExpression <- "mhrswrk<21"	
+env.scenario <- setGlobalSubgroupFilterExpression(env.scenario, subgroupExpression)
+
 env.scenario$cat.adjustments$z1ECE[1,] <- c(0,1)	
 
 sfInit(parallel=TRUE, cpus = 4, slaveOutfile = "test.txt" )
@@ -78,6 +81,7 @@ test <- tableBuilder(env = env.base, statistic="frequencies", variableName="z1Sc
 
 test <- tableBuilder(env = env.scenario, statistic="frequencies", variableName="z1ScoreLvl1")
 
+test <- tableBuilder(env = env.scenario, statistic="means", variableName="IQ")
 
 
 
