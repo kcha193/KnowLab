@@ -102,3 +102,9 @@ Run 1 year 19
 Run 1 year 20 
 Run 1 year 21 
 Type: EXEC 
+Error in unserialize(node$con) : error reading from connection
+Calls: local ... doTryCatch -> recvData -> recvData.SOCKnode -> unserialize
+In addition: Warning messages:
+1: replacing previous import 'Hmisc::summarize' by 'plyr::summarize' when loading 'simarioV2' 
+2: replacing previous import 'Hmisc::is.discrete' by 'plyr::is.discrete' when loading 'simarioV2' 
+Execution halted

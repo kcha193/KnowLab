@@ -1,10 +1,10 @@
-starting worker for localhost:11522 
+starting worker for localhost:11309 
 Type: EXEC 
 Type: EXEC 
 Type: EXEC 
 Type: EXEC 
 Type: EXEC 
-JOB STARTED AT Fri Jun 03 14:59:52 2016 ON SC-STA-291922 (OSWindows) 7 x64
+JOB STARTED AT Fri Jun 10 14:28:31 2016 ON SC-STA-291922 (OSWindows) 7 x64
  
 Type: EXEC 
 Type: EXEC 
@@ -140,19 +140,25 @@ Run 1 year 19
 Run 1 year 20 
 Run 1 year 21 
 Type: EXEC 
-Calling a snowfall function without calling 'sfInit' first or after sfStop().
-'sfInit()' is called now.
-snowfall 1.84-6.1 initialized: sequential execution, one CPU.
-
 Type: DONE 
-There were 50 or more warnings (use warnings() to see the first 50)
-n 1 year 19 
+3 
+Run 1 year 4 
+Run 1 year 5 
+Run 1 year 6 
+Run 1 year 7 
+Run 1 year 8 
+Run 1 year 9 
+Run 1 year 10 
+Run 1 year 11 
+Run 1 year 12 
+Run 1 year 13 
+Run 1 year 14 
+Run 1 year 15 
+Run 1 year 16 
+Run 1 year 17 
+Run 1 year 18 
+Run 1 year 19 
 Run 1 year 20 
 Run 1 year 21 
 Type: EXEC 
-Calling a snowfall function without calling 'sfInit' first or after sfStop().
-'sfInit()' is called now.
-snowfall 1.84-6.1 initialized: sequential execution, one CPU.
-
 Type: DONE 
-There were 50 or more warnings (use warnings() to see the first 50)

@@ -10,7 +10,8 @@ library(simarioV2)
 library(snowfall)
 library(stringr)
 library(stringi)
-library(tidyr)
+
+
 setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
 
 source("initKnowLab.R")
@@ -34,7 +35,7 @@ sfLibrary(stringr)
 
 Simenv <- createSimenv("Base", initialSim$simframe, initialSim$dict, "years1_21")
 
-env.base <- simulateP(Simenv, 10)
+env.base <- simulatePShiny(Simenv, 10)
 
 sfStop()
 
@@ -45,32 +46,16 @@ saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 
 ##########################################################################################
 
-library(knitr)
-library(ggplot2)
+#test <- tableBuilder(env.base, "means", "IQ")
 
-names(env.base$modules[[1]]$run_results$run1$outcomes)
+tableBuilderNew(env.base, statistic = "frequencies", "bwkg")
+tableBuilderNew(env.base, statistic = "means", "bwkg")
 
-apply(env.base$modules[[1]]$run_results$run1$outcomes[["burt"]], 2, mean)
-apply(env.base$modules[[1]]$run_results$run1$outcomes[["burt"]], 2, sd)
+tableBuilderNew(env.base, "means", "IQ")
 
-apply(sapply(env.base$modules[[1]]$run_results, 
-             function(x) apply(x$outcome[["burt"]], 2, mean)), 1, mean)
-
-apply(sapply(env.base$modules[[1]]$run_results, function(x) apply(x$outcome[["burt"]], 2, mean)), 1, sd)
-
-
-apply(env.base$modules[[1]]$run_results$run1$outcomes[["z1accomLvl1"]], 2, function(x) table(x)/length(x))
-
-apply(sapply(env.base$modules[[1]]$run_results, 
-             function(x) apply(x$outcome[["z1accomLvl1"]], 2, function(x) table(x)/length(x))), 1, 
-                function(y) sapply(y, mean))
-
-env.base$modules[[1]]$run_results_collated$means$burt
-
-
-
-
-
+tableBuilderNew(env.base, "frequencies", "z1OverweightLvl1")
+    
+tableBuilderNew(env.base, "frequencies", "z1accomLvl1")
 
 test <- tableBuilder(env.base, "frequencies", "r1School", grpbyName = "r1stchildethnLvl1", CI = FALSE)
 
@@ -150,6 +135,14 @@ test <- tableBuilder(env = env.base, statistic="frequencies",
                      variableName="z1singleLvl1", grpbyName="SESBTHLvl2")
 test <- tableBuilder(env = env.base, statistic="frequencies", 
                      variableName="z1singleLvl1", grpbyName="z1genderLvl0")
+
+test <- tableBuilder(env = env.base, statistic="frequencies", 
+                     variableName="z1singleLvl1", grpbyName="z1genderLvl0")
+
+test <- tableBuilder(env = env.base, statistic="frequencies", variableName="z1accomLvl1", grpbyName="z1genderLvl0")
+
+head(env.base$simframe$z1genderLvl1)
+head(env.base$simframe$z1genderLvl0)
 
 
 
