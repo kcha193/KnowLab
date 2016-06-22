@@ -8,9 +8,6 @@ rm(list = ls())
 
 library(simarioV2)
 library(snowfall)
-library(stringr)
-library(stringi)
-
 
 setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
 

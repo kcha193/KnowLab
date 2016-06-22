@@ -6,8 +6,7 @@ rm(list = ls())
 
 library(simarioV2)
 library(snowfall)
-library(stringr)
-library(stringi)
+
 
 setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
 
@@ -27,24 +26,42 @@ transition_probabilities <<- initialSim$transition_probabilities
 
 source("SimmoduleMELC1_21.R")
 
-env.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
 subgroupExpression <- "mhrswrk<21"	
-env.scenario <- setGlobalSubgroupFilterExpression(env.scenario, subgroupExpression)
+Simenv.scenario <- setGlobalSubgroupFilterExpression(Simenv.scenario, subgroupExpression)
 
-env.scenario$cat.adjustments$z1ECE[1,] <- c(0,1)	
+Simenv.scenario$cat.adjustments$z1ECE[1,] <- c(0,1)	
 
 sfInit(parallel=TRUE, cpus = 4, slaveOutfile = "test.txt" )
 
-sfExportAll()
+#sfExportAll()
 
-sfLibrary(Hmisc)
 sfLibrary(snowfall)
 sfLibrary(simarioV2)
-sfLibrary(stringr)
+sfExport( "binbreaks", "transition_probabilities", "models", 
+          "PropensityModels", "children")
 
-env.scenario <- simulatePShiny(env.scenario, 4)
+assign(Simenv.scenario$name, simulatePShiny(Simenv.scenario, 4))
+
+
 sfStop()
+
+
+tableBuilderNew(env = env.base, statistic="freq", 
+                variableName="z1accomLvl1", 
+                grpbyName = "bthorder")
+
+
+
+tableBuilderNew(env = env.base, statistic="means", 
+                variableName="bwkg", 
+                grpbyName = "bthorder")
+
+
+tableBuilderNew(env = scenario, statistic="means", 
+                variableName="bwkg", 
+                grpbyName = "bthorder")
 
 
 

@@ -90,8 +90,8 @@ meansingle,,as.numeric(NA),,
 meanwelfare,,as.numeric(NA),,
 onelessp,,as.logical(NA),,
 onemorep,,as.logical(NA),,
-pregalc,,pregalc,continuous,years1_21
-pregsmk,,pregsmk,continuous,years1_21
+pregalc,,pregalc,continuous,
+pregsmk,,pregsmk,continuous,
 z1pregsmkLvl0,,as.integer(pregsmk==0),,
 z1pregsmkLvl1,,as.integer(pregsmk>0),,
 z1OverweightLvl1,,as.integer(NA),categorical,years1_21
@@ -100,13 +100,15 @@ r1stchildethnLvl1,,as.integer(r1stchildethn==1),,
 r1stchildethnLvl2,,as.integer(r1stchildethn==2),,
 r1stchildethnLvl3,,as.integer(r1stchildethn==3),,
 r1stchildethnLvl4,,as.integer(r1stchildethn==4),,
-r1stchildethn,,r1stchildethn,categorical,years1_21
+r1stchildethn,,r1stchildethn,categorical,
+r1stfeduc,,r1stfeduc,categorical,
 r1stfeducLvl1,,as.integer(r1stfeduc==1),,
 r1stfeducLvl2,,as.integer(r1stfeduc==2),,
 r1stfeducLvl3,,as.integer(r1stfeduc==3),,
 r1stfethnLvl1,,as.integer(r1stfethn==1),,
 r1stfethnLvl2,,as.integer(r1stfethn==2),,
 r1stfethnLvl3,,as.integer(r1stfethn==3),,
+r1stmeduc,,r1stmeduc,categorical,
 r1stmeducLvl1,,as.integer(r1stmeduc==1),,
 r1stmeducLvl2,,as.integer(r1stmeduc==2),,
 r1stmeducLvl3,,as.integer(r1stmeduc==3),,
@@ -140,6 +142,7 @@ z1householdsize_prevLvl1,,as.integer(NA),,
 z1kids_previousLvl1,,as.integer(NA),,
 z1mhrswrk_previousLvl1,,as.integer(NA),,
 z1single_previousLvl1,,as.integer(NA),,
+z1single0,,z1single0,,
 z1single0Lvl0,,as.integer(z1single0==0),,
 z1single0Lvl1,,as.integer(z1single0==1),,
 z1singleLvl0,,as.integer(z1single1==0),,
@@ -265,13 +268,13 @@ mean_mhrswrk1_3,,as.integer(NA),,
 mean_welfare1_3,,as.integer(NA),,
 mean_msmoke1_3,,as.integer(NA),,
 mean_z1homeown1_3,,as.integer(NA),,
-z1HighBwLvl1,,as.integer(bwkg>4),categorical,years1_21
+z1HighBwLvl1,,as.integer(bwkg>4),categorical,
 z1ObeseLvl1,,as.integer(NA),categorical,years1_21
-z1LowBwLvl1,,as.integer(bwkg<2.5),categorical,years1_21
-z1CaesareanLvl1,,z1CaesareanLvl1,categorical,years1_21
-z1BreakfastLvl1,,z1BreakfastLvl1,categorical,years1_21
-r1mBMI,,r1mBMI,categorical,years1_21
-r1ParentEduc,,r1ParentEduc,categorical,years1_21
+z1LowBwLvl1,,as.integer(bwkg<2.5),categorical,
+z1CaesareanLvl1,,z1CaesareanLvl1,categorical,
+z1BreakfastLvl1,,z1BreakfastLvl1,categorical,
+r1mBMI,,r1mBMI,categorical,
+r1ParentEduc,,r1ParentEduc,categorical,
 r1mBMILvl1,,as.integer(r1mBMI == 1),categorical,
 r1mBMILvl2,,as.integer(r1mBMI == 2),categorical,
 r1mBMILvl3,,as.integer(r1mBMI == 3),categorical,
@@ -323,15 +326,15 @@ z1BreastLvl3,,"ifelse(BREAST == 3 | BREAST == 4, 1, 0)",,
 z1BreastLvl4,,"ifelse(BREAST == 5 | BREAST == 6, 1, 0)",,
 z1BreastLvl5,,"ifelse(BREAST>= 7, 1, 0)",,
 IQ,IQ_previous,as.integer(NA),continuous,years1_21
-z1stmDiabeteLvl1,,z1stmDiabeteLvl1,categorical,years1_21
-z1HearingLvl1,,z1HearingLvl1,categorical,years1_21
-z1ECELvl1,,z1ECELvl1,categorical,years1_21
-z1PrintExpLvl1,,z1PrintExpLvl1,categorical,years1_21
-z1DrinkLvl1,,z1DrinkLvl1,categorical,years1_21
+z1stmDiabeteLvl1,,z1stmDiabeteLvl1,categorical,
+z1HearingLvl1,,z1HearingLvl1,categorical,
+z1ECELvl1,,z1ECELvl1,categorical,
+z1PrintExpLvl1,,z1PrintExpLvl1,categorical,
+z1DrinkLvl1,,z1DrinkLvl1,categorical,
 IQ_previous,,as.integer(NA),continuous,
-z1ADHDLvl1,,z1ADHDLvl1,categorical,years1_21
+z1ADHDLvl1,,z1ADHDLvl1,categorical,
 Score,,as.integer(NA),continuous,years1_21
-z1ParentInvolveLvl1,,z1ParentInvolveLvl1,categorical,years1_21
+z1ParentInvolveLvl1,,z1ParentInvolveLvl1,categorical,
 z1ScoreLvl1,,as.integer(NA),categorical,years1_21
 IQ_previous1,,as.integer(NA),,
 IQ_previous2,,as.integer(NA),,
@@ -341,5 +344,5 @@ IQ_previous5,,as.integer(NA),,
 IQ_previous6,,as.integer(NA),,
 IQ_previous7,,as.integer(NA),,
 IQ_previous8,,as.integer(NA),,
-r1Region,,r1Region,categorical,years1_21
-r1School,,as.integer(NA),categorical,years1_21
+r1Region,,r1Region,categorical,
+r1School,,as.integer(NA),categorical,
