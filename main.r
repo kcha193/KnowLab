@@ -25,10 +25,8 @@ sfInit(parallel=TRUE, cpus = 4, slaveOutfile = "log.txt" )
 
 sfExportAll()
 
-sfLibrary(Hmisc)
 sfLibrary(snowfall)
 sfLibrary(simarioV2)
-sfLibrary(stringr)
 
 Simenv <- createSimenv("Base", initialSim$simframe, initialSim$dict, "years1_21")
 
