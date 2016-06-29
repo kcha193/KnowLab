@@ -1,10 +1,10 @@
-starting worker for localhost:11144 
+starting worker for localhost:11383 
 Type: EXEC 
 Type: EXEC 
 Type: EXEC 
 Type: EXEC 
 Type: EXEC 
-JOB STARTED AT Fri Jun 24 14:55:11 2016 ON SC-STA-291922 (OSWindows) 7 x64
+JOB STARTED AT Wed Jun 29 14:51:03 2016 ON SC-STA-291922 (OSWindows) 7 x64
  
 Type: EXEC 
 Type: EXEC 
@@ -19,36 +19,6 @@ Type: EXEC
 Type: EXEC 
 Type: EXEC 
 Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Loading required package: lattice
-Loading required package: survival
-Loading required package: Formula
-Loading required package: ggplot2
-
-Attaching package: 'Hmisc'
-
-The following objects are masked from 'package:base':
-
-    format.pval, round.POSIXt, trunc.POSIXt, units
-
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Library Hmisc loaded.
 Type: EXEC 
 Type: EXEC 
 Type: EXEC 
@@ -80,18 +50,6 @@ Type: EXEC
 Type: EXEC 
 Type: EXEC 
 Library simarioV2 loaded.
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Type: EXEC 
-Library stringr loaded.
 Type: EXEC 
 Type: EXEC 
 Type: EXEC 
