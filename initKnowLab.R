@@ -59,8 +59,8 @@ initSim <- function(num.iterations){
     #names(binbreaks$fage_years) <- c(NA, "< 20", "20 - 24", "25 - 29", "30 - 34", "35 - 39", "40+", "No father")
     names(binbreaks$fage_years) <- c(NA, "1", "2", "3", "4", "5", "6", "7")
     
-    binbreaks$MAGE.4cat <- c(0, 19, 24, 29, 98)
-    names(binbreaks$MAGE.4cat) <- c(NA, "<20", "20 -24", "25-29", "30+")
+    #binbreaks$MAGE.4cat <- c(0, 19, 24, 29, 98)
+   # names(binbreaks$MAGE.4cat) <- c(NA, "<20", "20 -24", "25-29", "30+")
     
     ##binbreaks$fage_years <- c(0, 19, 24, 29, 34, 39, 98)  
     ##names(binbreaks$fage_years) <- c(NA, "< 20", "20 - 24", "25 - 29", "30 - 34", "35 - 39", "40+")

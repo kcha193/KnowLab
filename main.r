@@ -23,7 +23,8 @@ saveRDS(initialSim, "../KnowLabShiny/base/initialSim.rds")
 
 sfInit(parallel=TRUE, cpus = 4, slaveOutfile = "log.txt" )
 
-sfExportAll()
+sfExport( "binbreaks", "transition_probabilities", "models", 
+          "PropensityModels", "children")
 
 sfLibrary(snowfall)
 sfLibrary(simarioV2)

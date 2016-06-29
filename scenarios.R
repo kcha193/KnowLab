@@ -52,6 +52,10 @@ tableBuilderNew(env = env.base, statistic="freq",
                 variableName="z1accomLvl1", 
                 grpbyName = "bthorder")
 
+tableBuilderNew(env = env.base, statistic="freq", 
+                variableName="z1accomLvl1", 
+                grpbyName = "bwkg")
+
 
 
 tableBuilderNew(env = env.base, statistic="means", 
