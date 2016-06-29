@@ -6,8 +6,8 @@ rm(list = ls())
 
 #devtools::install_github("kcha193/simarioV2")
 
+library(parallel)
 library(simarioV2)
-library(snowfall)
 
 setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
 
@@ -21,17 +21,27 @@ initialSim <- initSim(NUM_ITERATIONS)
 saveRDS(initialSim, "base/initialSim.rds")
 saveRDS(initialSim, "../KnowLabShiny/base/initialSim.rds")
 
-sfInit(parallel=TRUE, cpus = 4, slaveOutfile = "log.txt" )
 
-sfExport( "binbreaks", "transition_probabilities", "models", 
-          "PropensityModels", "children")
+# Calculate the number of cores
+
+# Initiate cluster
+cl <- makeCluster(detectCores())
+
+clusterExport(cl, c("binbreaks", "transition_probabilities", "models", 
+              "PropensityModels", "children"))
+
+clusterEvalQ(cl, {library(simarioV2)})
+clusterSetRNGStream(cl, 1)
+
 
 sfLibrary(snowfall)
 sfLibrary(simarioV2)
 
 Simenv <- createSimenv("Base", initialSim$simframe, initialSim$dict, "years1_21")
 
-env.base <- simulatePShiny(Simenv, 10)
+env.base <- simulatePShiny(cl, Simenv, 10)
+
+stopCluster(cl)
 
 sfStop()
 
