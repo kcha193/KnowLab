@@ -1,9 +1,9 @@
 Variable,ClassVal0,Estimate
-Intercept,NA,33.81656
+Intercept,NA,31.43252
 z1gender,1,-4.7234
-r1stchildethn,1,-2.2609
-r1stchildethn,2,-9.3937
-r1stchildethn,3,-4.8579
+r1stchildethn,2,-7.1327
+r1stchildethn,3,-2.5969
+r1stchildethn,4,2.2609
 r1ParentEduc,2,0
 r1ParentEduc,3,-4.652799
 SESBTH,2,0

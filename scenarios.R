@@ -4,8 +4,8 @@ rm(list = ls())
 
 #devtools::install_github("kcha193/simarioV2")
 
+library(parallel)
 library(simarioV2)
-library(snowfall)
 
 
 setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
@@ -28,46 +28,37 @@ source("SimmoduleMELC1_21.R")
 
 Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
+Simenv.scenario$cat.adjustments$z1cond[5,] <- c(0,1)	
+
 subgroupExpression <- "mhrswrk<21"	
 Simenv.scenario <- setGlobalSubgroupFilterExpression(Simenv.scenario, subgroupExpression)
 
-Simenv.scenario$cat.adjustments$z1ECE[1,] <- c(0,1)	
+# Initiate cluster
+cl <- makeCluster(detectCores())
 
-sfInit(parallel=TRUE, cpus = 4, slaveOutfile = "test.txt" )
+clusterExport(cl, c("binbreaks", "transition_probabilities", "models", 
+                    "PropensityModels", "children"))
 
-#sfExportAll()
+clusterEvalQ(cl, {library(simarioV2)})
+clusterSetRNGStream(cl, 1)
 
-sfLibrary(snowfall)
-sfLibrary(simarioV2)
-sfExport( "binbreaks", "transition_probabilities", "models", 
-          "PropensityModels", "children")
+Simenv.scenario <- simulatePShiny(cl, Simenv.scenario, 4)
 
-assign(Simenv.scenario$name, simulatePShiny(Simenv.scenario, 4))
-
-
-sfStop()
-
-
-tableBuilderNew(env = env.base, statistic="freq", 
-                variableName="z1accomLvl1", 
-                grpbyName = "bthorder")
-
-tableBuilderNew(env = env.base, statistic="freq", 
-                variableName="z1accomLvl1", 
-                grpbyName = "bwkg")
+stopCluster(cl)
 
 
 
-tableBuilderNew(env = env.base, statistic="means", 
-                variableName="bwkg", 
-                grpbyName = "bthorder")
 
+tableBuilderNew(env = env.base, statistic="freq", variableName="z1accomLvl1", grpbyName = "bthorder")
 
-tableBuilderNew(env = scenario, statistic="means", 
-                variableName="bwkg", 
-                grpbyName = "bthorder")
+tableBuilderNew(env = env.base, statistic="freq", variableName="z1accomLvl1", 
+                grpbyName = "bthorder", logisetexpr = "bwkg < 2")
 
+tableBuilderNew(env = env.base, statistic="freq", variableName="z1accomLvl1", grpbyName = "bwkg")
 
+tableBuilderNew(env = env.base, statistic="means", variableName="bwkg", grpbyName = "bthorder")
+
+tableBuilderNew(env = scenario, statistic="means", variableName="bwkg", grpbyName = "bthorder")
 
 
 env.base$modules[[1]]$run_results_collated$means$IQ	

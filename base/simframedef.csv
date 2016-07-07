@@ -136,7 +136,7 @@ z1chres_previousLvl1,,as.integer(NA),,,
 z1chresLvl0,,as.integer(NA),,,
 z1fhrswrk_previousLvl1,,as.integer(NA),,,
 z1genderLvl0,,as.integer(z1gender==0),,,
-z1genderLvl1,,as.integer(z1gender==1),,,
+z1genderLvl1,,as.integer(z1gender==1),,,years1_21
 z1homeown_previousLvl1,,as.integer(NA),,,
 z1householdsize_prevLvl1,,as.integer(NA),,,
 z1kids_previousLvl1,,as.integer(NA),,,

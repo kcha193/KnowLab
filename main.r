@@ -33,17 +33,11 @@ clusterExport(cl, c("binbreaks", "transition_probabilities", "models",
 clusterEvalQ(cl, {library(simarioV2)})
 clusterSetRNGStream(cl, 1)
 
-
-sfLibrary(snowfall)
-sfLibrary(simarioV2)
-
 Simenv <- createSimenv("Base", initialSim$simframe, initialSim$dict, "years1_21")
 
 env.base <- simulatePShiny(cl, Simenv, 10)
 
 stopCluster(cl)
-
-sfStop()
 
 saveRDS(env.base, "base/FullBaseRun.rds")
 saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
@@ -51,6 +45,17 @@ saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 .rs.restartR()
 
 ##########################################################################################
+
+
+tableBuilderNew(env.base, statistic = "means", "Score")
+
+tableBuilderNew(env.base, statistic = "means", "Score", grpbyName = "r1stchildethn")
+
+tableBuilderNew(env.base, statistic = "means", "z1ScoreLvl1", grpbyName = "r1stchildethn")
+
+
+
+
 
 #test <- tableBuilder(env.base, "means", "IQ")
 

@@ -821,13 +821,30 @@ table(env.base$simframe$z1ParentInvolveLvl1)/5000
 
 ###############################################################
 
+score <- read.csv(file.choose())
+
+score %>% group_by(ETHN) %>% summarise(mean(SCORE))
+score %>% group_by(GENDER) %>% summarise(mean(SCORE))
 
 
+
+ethnlvl2 <- ifelse(score$ETHN == "M", 1, 0)
+ethnlvl3 <- ifelse(score$ETHN == "P", 1, 0)
+ethnlvl4 <- ifelse(score$ETHN == "A", 1, 0)
+
+summary(lm(SCORE ~ factor(GENDER) + ethnlvl2 + ethnlvl3 + ethnlvl4, data = score))
+
+
+
+##############################################################
 
 
 
 attach(env.base$simframe, name="simframe")
 
+
+mean(score$SCORE)
+sd(score$SCORE)
 
 meanScore = 101.845
 sdScore = 15.50933
@@ -835,19 +852,19 @@ sdScore = 15.50933
  
  d <- function(r) 2*r/(1-r^2)
 
-inter = meanScore - (-4.7234 * mean(z1genderLvl1) - 2.2609 * mean(r1stchildethnLvl2) -
-			9.3937 * mean(r1stchildethnLvl3)- 4.8579 * mean(r1stchildethnLvl1) - 
+inter = meanScore - (-4.7234 * mean(z1genderLvl1) -7.1327 * mean(r1stchildethnLvl2) -
+                       2.5969 * mean(r1stchildethnLvl3) + 2.2609 * mean(r1stchildethnLvl4) - 
 			0.27 * sdScore * mean(SESBTHLvl3) -  0.3 * sdScore * mean(r1ParentEducLvl3) +
 			d(0.3) * sdScore * mean(z1PrintExpLvl1) + 0.137*sdScore * mean(z1ECELvl1) -
 			d(0.32) * sdScore * mean(z1ADHDLvl1) + 0.35* sdScore* mean(z1ParentInvolveLvl1) + 0.6 * 100 )
 
 inter
 
-eMean <-  inter -4.7234 * (z1genderLvl1) - 2.2609 * (r1stchildethnLvl1) -
-			9.3937 * (r1stchildethnLvl2)- 4.8579 * (r1stchildethnLvl3) - 
+eMean <-  inter -4.7234 * (z1genderLvl1) -7.1327 * r1stchildethnLvl2 -
+  2.5969 * r1stchildethnLvl3 + 2.2609 * r1stchildethnLvl4 - 
 			0.27 * sdScore * (SESBTHLvl3) -  0.3 * sdScore * (r1ParentEducLvl3) +
 			d(0.3) * sdScore * (z1PrintExpLvl1) + 0.137*sdScore * (z1ECELvl1)-
-			d(0.32) * sdScore * (z1ADHDLvl1) +  0.35* sdScore* mean(z1ParentInvolveLvl1) + 0.6 * simIQ
+			d(0.32) * sdScore * (z1ADHDLvl1) +  0.35* sdScore* mean(z1ParentInvolveLvl1) + 0.6 * 100
 
 
 
@@ -858,6 +875,9 @@ cor(simScore, simIQ)
 
 simScore <- scale(simScore) * sdScore + mean(simScore)
 
+
+
+
 mean(simScore)
 sd(simScore)
 
@@ -867,6 +887,9 @@ table(simScore > 89.88)/5000
 
 
 tapply(simScore, z1genderLvl1, mean)
+tapply(simScore, r1stchildethn, mean)
+
+
 ############################################################################
 
 
