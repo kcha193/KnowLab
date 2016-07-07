@@ -1295,9 +1295,9 @@ simulateKnowLab <- function(Simmodule, simenv) {
     
     z1ScoreLvl1 <<- ifelse(Score >= 89.88, 1,0)
     
-    z1FailLvl1 <<- ifelse(Score > 80, 1,0)
+    z1FailLvl1 <<- ifelse(Score < 80, 1,0)
     
-    z1DropLvl1 <<- ifelse(Score <= 80 & Score < 89.88, 1,0)
+    z1DropLvl1 <<- ifelse(Score >= 80 & Score < 89.88, 1,0)
   }
   
   pre_simulation_setup <- function() {

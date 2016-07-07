@@ -853,7 +853,7 @@ sdScore = 15.50933
  d <- function(r) 2*r/(1-r^2)
 
 inter = meanScore - (-4.7234 * mean(z1genderLvl1) -7.1327 * mean(r1stchildethnLvl2) -
-                       2.5969 * mean(r1stchildethnLvl3) + 2.2609 * mean(r1stchildethnLvl4) - 
+                       2.5969 * mean(r1stchildethnLvl3) + 3.2609 * mean(r1stchildethnLvl4) - 
 			0.27 * sdScore * mean(SESBTHLvl3) -  0.3 * sdScore * mean(r1ParentEducLvl3) +
 			d(0.3) * sdScore * mean(z1PrintExpLvl1) + 0.137*sdScore * mean(z1ECELvl1) -
 			d(0.32) * sdScore * mean(z1ADHDLvl1) + 0.35* sdScore* mean(z1ParentInvolveLvl1) + 0.6 * 100 )
@@ -887,14 +887,16 @@ tapply(simScore, r1stchildethn, mean)
 
 table(simScore > 89.88)/5000
 
-simPass <-   simScore > 89.88
+simPass <-   simScore >= 89.88
 tapply(simPass, z1genderLvl1, mean)
 tapply(simPass, r1stchildethn, mean)
 tapply(simPass, interaction(z1genderLvl1, r1stchildethn), mean)
 
 
+simDrop <- ifelse(simScore >=  80 &  simScore < 89.88,1,0)
+tapply(simDrop, z1genderLvl1, mean)
 
-simFail <- simScore <  80
+simFail <- ifelse(simScore <  80,1,0)
 tapply(simFail, z1genderLvl1, mean)
 tapply(simFail, r1stchildethn, mean)
 tapply(simFail, interaction(z1genderLvl1, r1stchildethn), mean)

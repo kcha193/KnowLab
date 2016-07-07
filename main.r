@@ -28,7 +28,7 @@ saveRDS(initialSim, "../KnowLabShiny/base/initialSim.rds")
 cl <- makeCluster(detectCores())
 
 clusterExport(cl, c("binbreaks", "transition_probabilities", "models", 
-              "PropensityModels", "children"))
+                    "PropensityModels", "children"))
 
 clusterEvalQ(cl, {library(simarioV2)})
 clusterSetRNGStream(cl, 1)
@@ -51,7 +51,16 @@ tableBuilderNew(env.base, statistic = "means", "Score")
 
 tableBuilderNew(env.base, statistic = "means", "Score", grpbyName = "r1stchildethn")
 
-tableBuilderNew(env.base, statistic = "means", "z1ScoreLvl1", grpbyName = "r1stchildethn")
+tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1", grpbyName = "z1genderLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1", grpbyName = "z1genderLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1", grpbyName = "z1genderLvl1")
+
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1", grpbyName = "r1stchildethn")
+
+
 
 tableBuilderNew(env.base, statistic = "means", "z1ScoreLvl1", grpbyName = "z1genderLvl1")
 
@@ -66,7 +75,7 @@ tableBuilderNew(env.base, statistic = "means", "bwkg")
 tableBuilderNew(env.base, "means", "IQ")
 
 tableBuilderNew(env.base, "frequencies", "z1OverweightLvl1")
-    
+
 tableBuilderNew(env.base, "frequencies", "z1accomLvl1")
 
 test <- tableBuilder(env.base, "frequencies", "r1School", grpbyName = "r1stchildethnLvl1", CI = FALSE)
