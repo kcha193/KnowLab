@@ -882,12 +882,25 @@ mean(simScore)
 sd(simScore)
 
 hist(simScore)
+tapply(simScore, z1genderLvl1, mean)
+tapply(simScore, r1stchildethn, mean)
 
 table(simScore > 89.88)/5000
 
+simPass <-   simScore > 89.88
+tapply(simPass, z1genderLvl1, mean)
+tapply(simPass, r1stchildethn, mean)
+tapply(simPass, interaction(z1genderLvl1, r1stchildethn), mean)
 
-tapply(simScore, z1genderLvl1, mean)
-tapply(simScore, r1stchildethn, mean)
+
+
+simFail <- simScore <  80
+tapply(simFail, z1genderLvl1, mean)
+tapply(simFail, r1stchildethn, mean)
+tapply(simFail, interaction(z1genderLvl1, r1stchildethn), mean)
+
+
+
 
 
 ############################################################################

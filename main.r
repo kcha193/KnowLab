@@ -53,6 +53,7 @@ tableBuilderNew(env.base, statistic = "means", "Score", grpbyName = "r1stchildet
 
 tableBuilderNew(env.base, statistic = "means", "z1ScoreLvl1", grpbyName = "r1stchildethn")
 
+tableBuilderNew(env.base, statistic = "means", "z1ScoreLvl1", grpbyName = "z1genderLvl1")
 
 
 

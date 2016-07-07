@@ -336,6 +336,8 @@ z1ADHDLvl1,,z1ADHDLvl1,categorical,,years1_21
 Score,,as.integer(NA),continuous,years1_21,
 z1ParentInvolveLvl1,,z1ParentInvolveLvl1,categorical,,years1_21
 z1ScoreLvl1,,as.integer(NA),categorical,years1_21,
+z1FailLvl1,,as.integer(NA),categorical,years1_21,
+z1DropLvl1,,as.integer(NA),categorical,years1_21,
 IQ_previous1,,as.integer(NA),,,
 IQ_previous2,,as.integer(NA),,,
 IQ_previous3,,as.integer(NA),,,
@@ -344,5 +346,5 @@ IQ_previous5,,as.integer(NA),,,
 IQ_previous6,,as.integer(NA),,,
 IQ_previous7,,as.integer(NA),,,
 IQ_previous8,,as.integer(NA),,,
-r1Region,,r1Region,categorical,,
-r1School,,as.integer(NA),categorical,,
+r1Region,,r1Region,categorical,,years1_21
+r1School,,as.integer(NA),categorical,,years1_21
