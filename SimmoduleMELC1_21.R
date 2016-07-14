@@ -1287,18 +1287,54 @@ simulateKnowLab <- function(Simmodule, simenv) {
    
   simulate_Score <- function() {	 		 
     
+    
+    
     if(iteration == 17){
-      Score <<- predSimNorm(models$ScoreA17)		 		  		  
-    } else{
-      Score <<- NAs
-    }
-    
-    z1ScoreLvl1 <<- ifelse(Score >= 89.88, 1,0)
-    
-    z1FailLvl1 <<- ifelse(Score < 80, 1,0)
-    
-    z1DropLvl1 <<- ifelse(Score >= 80 & Score < 89.88, 1,0)
+      
+      currectScore <- NAs
+      
+      currectScore[r1stchildethn != 2] <- predSimNorm(models$ScoreA17, 
+                                               set = r1stchildethn != 2)	 
+      
+      #Score[r1stchildethn != 2] <- scale(Score[r1stchildethn != 2]) * 15.70465 + 
+      #  mean(Score[r1stchildethn != 2])
+      
+      currectScore[r1stchildethn == 2] <- predSimNorm(models$ScoreA17Ethn2,
+                                               set = r1stchildethn == 2)	 		
+      
+      Score <<- currectScore
+      
+      #Score[r1stchildethn == 2] <<- scale(Score[r1stchildethn == 2]) * 9.06337 + 
+      #  mean(Score[r1stchildethn == 2])
+      
+      z1ScoreLvl1 <<- ifelse(currectScore > 88, 1,0)
+      
+      z1FailLvl1 <<- ifelse(currectScore <= 78.5, 1,0)
+      
+      z1DropLvl1 <<- ifelse(currectScore > 78.5 & currectScore <= 88, 1,0)
+      
+      
+      
+      
+    } 
+   }
+  
+  
+  simulate_NEET <- function() {	 		 
+   
+    if(iteration >=16 & iteration <= 21){
+      
+      z1NEETLvl1[z1genderLvl1 == 0] <<- 
+        predSimBinom(models[[paste("z1NEETGender0A", iteration, sep = "")]], set = z1genderLvl1 == 0)	   
+      z1NEETLvl1[z1genderLvl1 == 1] <<- 
+        predSimBinom(models[[paste("z1NEETGender1A", iteration, sep = "")]], set = z1genderLvl1 == 1)	
+      
+  } else {
+      z1NEETLvl1 <<- NAs
+    }  
+   
   }
+  
   
   pre_simulation_setup <- function() {
     
@@ -1366,7 +1402,7 @@ simulateKnowLab <- function(Simmodule, simenv) {
     
     #if(iteration ==5) browser()
     
-    #browser()
+ 
     
     cat("Run", simenv$num_runs_simulated+1, "year", iteration, "\n")
     
@@ -1387,6 +1423,7 @@ simulateKnowLab <- function(Simmodule, simenv) {
     # simulate_childrenObese()     
     
     simulate_Score()
+    simulate_NEET()
     
     #MELC models	
     simulate_family_household()      
@@ -1398,6 +1435,7 @@ simulateKnowLab <- function(Simmodule, simenv) {
     simulate_health_service_use()      
     simulate_conduct()      
     simulate_reading()      	  
+
     
     store_current_values_in_outcomes(iteration)
     

@@ -413,3 +413,7 @@ apply(base[,-c(1:4)], 2, function(x) apply(as.matrix(table(base[,3], x)), 1,
 #z1CaesareanLvl1			
  apply(as.matrix(table(base[,6], base[,7])), 1, 
 			function(y) round(y/sum(y), 2))
+
+ ##############################################################################
+ 
+ 

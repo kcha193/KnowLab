@@ -548,6 +548,22 @@ initSim <- function(num.iterations){
     # models$IQA16 <- loadGLMCSV(modelfiledir, "IQA16.csv")
     
     models$ScoreA17 <- loadGLMCSV(modelfiledir, "ScoreA17.csv")
+    models$ScoreA17Ethn2 <- loadGLMCSV(modelfiledir, "ScoreA17Ethn2.csv")
+    
+    models$z1NEETGender0A16 <- loadGLMCSV(modelfiledir, "z1NEETGender0A16.csv")
+    models$z1NEETGender0A18 <- loadGLMCSV(modelfiledir, "z1NEETGender0A18.csv")
+    models$z1NEETGender0A20 <- loadGLMCSV(modelfiledir, "z1NEETGender0A20.csv")
+    models$z1NEETGender0A17 <- loadGLMCSV(modelfiledir, "z1NEETGender0A17.csv")
+    models$z1NEETGender0A19 <- loadGLMCSV(modelfiledir, "z1NEETGender0A19.csv")
+    models$z1NEETGender0A21 <- loadGLMCSV(modelfiledir, "z1NEETGender0A21.csv")
+    
+    models$z1NEETGender1A16 <- loadGLMCSV(modelfiledir, "z1NEETGender1A16.csv")
+    models$z1NEETGender1A18 <- loadGLMCSV(modelfiledir, "z1NEETGender1A18.csv")
+    models$z1NEETGender1A20 <- loadGLMCSV(modelfiledir, "z1NEETGender1A20.csv")
+    models$z1NEETGender1A17 <- loadGLMCSV(modelfiledir, "z1NEETGender1A17.csv")
+    models$z1NEETGender1A19 <- loadGLMCSV(modelfiledir, "z1NEETGender1A19.csv")
+    models$z1NEETGender1A21 <- loadGLMCSV(modelfiledir, "z1NEETGender1A21.csv")
+    
     
     cat("Loaded models\n")
     models

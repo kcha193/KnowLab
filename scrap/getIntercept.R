@@ -825,81 +825,249 @@ score <- read.csv(file.choose())
 
 score %>% group_by(ETHN) %>% summarise(mean(SCORE))
 score %>% group_by(GENDER) %>% summarise(mean(SCORE))
+score %>% group_by(GENDER, ETHN) %>% summarise(mean(SCORE))
+
+scoreOther <- score %>% filter(ETHN != "M")
+
+ethnlvl3 <- ifelse(scoreOther$ETHN == "P", 1, 0)
+ethnlvl4 <- ifelse(scoreOther$ETHN == "A", 1, 0)
+
+summary(lm(SCORE ~ factor(GENDER) + ethnlvl3 + ethnlvl4, data = scoreOther))
+
+scoreM <- score %>% filter(ETHN == "M")
+
+ethnlvl2 <- ifelse(scoreM$ETHN == "M", 1, 0)
+
+summary(lm(SCORE ~ factor(GENDER), data = scoreM))
 
 
 
-ethnlvl2 <- ifelse(score$ETHN == "M", 1, 0)
-ethnlvl3 <- ifelse(score$ETHN == "P", 1, 0)
-ethnlvl4 <- ifelse(score$ETHN == "A", 1, 0)
+foo <- function(){
+  FE <- 105
+  score.FE <- rnorm(1476, FE, 15.5)
+  
+  c(table(score.FE > 90)[2]/1476, 
+    table(score.FE <= 90 & score.FE >82)[2]/1476,
+    table(score.FE <= 82)[2]/1476)
+}
 
-summary(lm(SCORE ~ factor(GENDER) + ethnlvl2 + ethnlvl3 + ethnlvl4, data = score))
+rowMeans(replicate(1000,foo()))
 
+
+foo <- function(){
+  ME <- 102.15
+  score.ME <- rnorm(1407, ME, 15.5)
+  
+  c(table(score.ME > 90)[2]/1407,
+  table(score.ME <= 90 & score.ME >82)[2]/1407,
+  table(score.ME <= 82)[2]/1407)
+}
+
+rowMeans(replicate(1000,foo()))
+
+
+
+foo <- function(){
+  
+  FP <- 101.5
+  score.FP <- rnorm(226, FP, 15.5)
+  c(table(score.FP > 90)[2]/226,
+  table(score.FP <= 90 & score.FP >82)[2]/226,
+  table(score.FP <= 82)[2]/226)
+}
+
+rowMeans(replicate(1000,foo()))
+
+
+foo <- function(){
+  
+  MP <- 97.5
+  score.MP <- rnorm(220, MP, 15.5)
+  c(table(score.MP > 90)[2]/220,
+  table(score.MP <= 90 & score.MP >82)[2]/220,
+  table(score.MP <= 82)[2]/220)
+  
+}
+
+rowMeans(replicate(100,foo()))
+
+
+
+foo <- function(){
+  
+  FA <- 112.5
+  score.FA <- rnorm(221, FA, 15.5)
+  
+  c(table(score.FA > 90)[2]/221,
+  table(score.FA <= 90 & score.FA >82)[2]/221,
+  table(score.FA <= 82)[2]/221)
+  
+}
+
+temp <- replicate(1000,foo())
+rowMeans(temp)
+
+
+
+
+
+foo <- function(){
+  
+  MA <- 106.9
+  score.MA <- rnorm(203, MA, 15.5)
+  
+  c(table(score.MA > 90)[2]/203,
+  table(score.MA <= 90 & score.MA >82)[2]/203,
+  table(score.MA <= 82)[2]/203)
+}
+
+temp <- replicate(1000,foo())
+rowMeans(temp)
+
+
+
+
+score.df <- data.frame(
+  ETH = factor(rep(c("E", "P", "A"),  c(1476 +1407, 226 + 220, 221 + 203))),
+  GENDER =  factor( c(rep(c("F", "M"),  c(1476, 1407)),  
+                       rep(c("F", "M"),  c(226, 220)),
+                       rep(c("F", "M"),  c(221, 203)))),
+  SCORE = c(score.FE, score.ME, score.FP, score.MP, score.FA, score.MA)
+)
+
+ethnlvl3 <- ifelse(score.df$ETH == "P", 1, 0)
+ethnlvl4 <- ifelse(score.df$ETH == "A", 1, 0)
+
+fit <- lm(SCORE ~ GENDER + ethnlvl3 + ethnlvl4, data = score.df)
+summary(fit)
+
+FE <- 105
+ME <- 102.15
+FP <- 101.5
+MP <- 97.5
+FA <- 112.5
+MA <- 106.9
+
+
+mean(c(102.15,97.5,106.9 ,105,101.5,112.5 ))
+
+mean(c(102.15,97.5,106.9 )) - mean(c(105,101.5,112.5 ))
+
+mean(c(101.5,97.5 )) - mean(c(105,102.15 ))
+mean(c(112.5,106.9 )) - mean(c(105,102.15 ))
+
+
+score.df$ETH <- factor(as.character(score.df$ETH), levels = c("E", "P", "A"))
+summary(lm(SCORE ~ GENDER + ETH, data = score.df))
+
+
+FM <- 92.5
+score.FM <- rnorm(628, FM, 9)
+table(score.FM > 90)/628
+table(score.FM <= 90 & score.FM >82)/628
+table(score.FM <= 82)/628
+
+
+MM <- 91
+score.MM <- rnorm(619, MM, 9)
+table(score.MM > 90)/619
+table(score.MM <= 90 & score.MM >82)/619
+table(score.MM <= 82)/619
+
+score.maori <- data.frame(
+  GENDER <- factor(rep(c("F", "M"),  c(628, 619))),
+  SCORE <- c(score.FM, score.MM)
+)
+
+summary(lm(SCORE ~ GENDER, data = score.maori))
 
 
 ##############################################################
 
-
-
 attach(env.base$simframe, name="simframe")
 
+simScore <- numeric(5000)
 
-mean(score$SCORE)
-sd(score$SCORE)
+(meanScore = mean(score.df$SCORE ))
+(sdScore = sd(score.df$SCORE ))
 
-meanScore = 101.845
-sdScore = 15.50933
- 
- 
+# > (meanScore = mean(score.df$SCORE ))
+# [1] 103.3947
+# > (sdScore = sd(score.df$SCORE ))
+# [1] 15.73345
+
  d <- function(r) 2*r/(1-r^2)
 
-inter = meanScore - (-4.7234 * mean(z1genderLvl1) -7.1327 * mean(r1stchildethnLvl2) -
-                       2.5969 * mean(r1stchildethnLvl3) + 3.2609 * mean(r1stchildethnLvl4) - 
-			0.27 * sdScore * mean(SESBTHLvl3) -  0.3 * sdScore * mean(r1ParentEducLvl3) +
-			d(0.3) * sdScore * mean(z1PrintExpLvl1) + 0.137*sdScore * mean(z1ECELvl1) -
-			d(0.32) * sdScore * mean(z1ADHDLvl1) + 0.35* sdScore* mean(z1ParentInvolveLvl1) + 0.6 * 100 )
+inter = meanScore - (-4.15 * mean(z1genderLvl1[r1stchildethn != 2])  -
+                       4.075 * mean(r1stchildethnLvl3[r1stchildethn != 2]) +
+                       6.125  * mean(r1stchildethnLvl4[r1stchildethn != 2]) - 
+			0.27 * sdScore * mean(SESBTHLvl3[r1stchildethn != 2]) -  
+			  0.3 * sdScore * mean(r1ParentEducLvl3[r1stchildethn != 2]) +
+			d(0.3) * sdScore * mean(z1PrintExpLvl1[r1stchildethn != 2]) + 
+			  0.137*sdScore * mean(z1ECELvl1[r1stchildethn != 2]) -
+			d(0.32) * sdScore * mean(z1ADHDLvl1[r1stchildethn != 2]) + 
+			  0.35* sdScore* mean(z1ParentInvolveLvl1[r1stchildethn != 2]) + 0.6 * 100 )
 
 inter
 
-eMean <-  inter -4.7234 * (z1genderLvl1) -7.1327 * r1stchildethnLvl2 -
-  2.5969 * r1stchildethnLvl3 + 2.2609 * r1stchildethnLvl4 - 
-			0.27 * sdScore * (SESBTHLvl3) -  0.3 * sdScore * (r1ParentEducLvl3) +
-			d(0.3) * sdScore * (z1PrintExpLvl1) + 0.137*sdScore * (z1ECELvl1)-
-			d(0.32) * sdScore * (z1ADHDLvl1) +  0.35* sdScore* mean(z1ParentInvolveLvl1) + 0.6 * 100
+eMean <-  inter -4.15 * (z1genderLvl1[r1stchildethn != 2]) -0 * r1stchildethnLvl2[r1stchildethn != 2] -
+  4.075 * r1stchildethnLvl3[r1stchildethn != 2] + 6.125 * r1stchildethnLvl4[r1stchildethn != 2] - 
+  0.27 * sdScore * (SESBTHLvl3[r1stchildethn != 2]) -  0.3 * sdScore * (r1ParentEducLvl3[r1stchildethn != 2]) +
+  d(0.3) * sdScore * (z1PrintExpLvl1[r1stchildethn != 2]) + 0.137*sdScore * (z1ECELvl1[r1stchildethn != 2])-
+  d(0.32) * sdScore * (z1ADHDLvl1[r1stchildethn != 2]) +  0.35* sdScore* mean(z1ParentInvolveLvl1[r1stchildethn != 2]) + 0.6 * 100
 
 
 
-simScore <- sapply(eMean, function(x) rnorm(1, x, sdScore))
-
-cor(simScore, simIQ)
+simScore[r1stchildethn != 2] <- sapply(eMean, function(x) rnorm(1, x, sdScore))
 
 
-simScore <- scale(simScore) * sdScore + mean(simScore)
+(meanScore = mean(c(score.MM, score.FM)))
+(sdScore = sd(c(score.MM, score.FM)))
+
+# > (meanScore = mean(c(score.MM, score.FM)))
+# [1] 91.6008
+# > (sdScore = sd(c(score.MM, score.FM)))
+# [1] 8.936842
+
+inter = meanScore - (-1.5 * mean(z1genderLvl1[r1stchildethn == 2])  - 
+                       0.27 * sdScore * mean(SESBTHLvl3[r1stchildethn == 2]) -  
+                       0.3 * sdScore * mean(r1ParentEducLvl3[r1stchildethn == 2]) +
+                       d(0.3) * sdScore * mean(z1PrintExpLvl1[r1stchildethn == 2]) + 
+                       0.137*sdScore * mean(z1ECELvl1[r1stchildethn == 2]) -
+                       d(0.32) * sdScore * mean(z1ADHDLvl1[r1stchildethn == 2]) + 
+                       0.35* sdScore* mean(z1ParentInvolveLvl1[r1stchildethn == 2]) + 0.6 * 100 )
+
+inter
+
+
+eMean <-  inter -1.5 * (z1genderLvl1[r1stchildethn == 2])  - 
+			0.27 * sdScore * (SESBTHLvl3[r1stchildethn == 2]) -  
+  0.3 * sdScore * (r1ParentEducLvl3[r1stchildethn == 2]) +
+			d(0.3) * sdScore * (z1PrintExpLvl1[r1stchildethn == 2]) + 
+  0.137*sdScore * (z1ECELvl1[r1stchildethn == 2])-
+			d(0.32) * sdScore * (z1ADHDLvl1[r1stchildethn == 2]) +  
+  0.35* sdScore* mean(z1ParentInvolveLvl1[r1stchildethn == 2]) + 0.6 * 100
 
 
 
-
-mean(simScore)
-sd(simScore)
-
-hist(simScore)
-tapply(simScore, z1genderLvl1, mean)
-tapply(simScore, r1stchildethn, mean)
-
-table(simScore > 89.88)/5000
-
-simPass <-   simScore >= 89.88
-tapply(simPass, z1genderLvl1, mean)
-tapply(simPass, r1stchildethn, mean)
-tapply(simPass, interaction(z1genderLvl1, r1stchildethn), mean)
+simScore[r1stchildethn == 2]  <- sapply(eMean, function(x) rnorm(1, x, sdScore))
 
 
-simDrop <- ifelse(simScore >=  80 &  simScore < 89.88,1,0)
-tapply(simDrop, z1genderLvl1, mean)
+#simScore <- scale(simScore) * sdScore + mean(simScore)
 
-simFail <- ifelse(simScore <  80,1,0)
-tapply(simFail, z1genderLvl1, mean)
-tapply(simFail, r1stchildethn, mean)
-tapply(simFail, interaction(z1genderLvl1, r1stchildethn), mean)
+z1ScoreLvl1 <- ifelse(simScore > 90, 1,0)
+z1FailLvl1 <- ifelse(simScore <= 82, 1,0)
+z1DropLvl1 <- ifelse(simScore > 82 & simScore <= 90, 1,0)
+
+table(z1ScoreLvl1)[2]/5000
+table(z1DropLvl1)[2]/5000
+table(z1FailLvl1)[2]/5000
+
+proptable <- function(x) round(table(x)[2]/length(x), 3)
+
+tapply(z1ScoreLvl1, interaction(z1genderLvl1, r1stchildethn),  proptable)
+tapply(z1DropLvl1, interaction(z1genderLvl1, r1stchildethn), proptable)
+tapply(z1FailLvl1, interaction(z1genderLvl1, r1stchildethn), proptable)
 
 
 
@@ -982,6 +1150,251 @@ table(env.base$simframe$z1BreastLvl2)/5000
 table(env.base$simframe$z1BreastLvl3)/5000
 table(env.base$simframe$z1BreastLvl4)/5000
 table(env.base$simframe$z1BreastLvl5)/5000
+
+#############################################################################
+
+modelfiledir <- paste(getwd(),"/models/",sep="")
+
+#models <- loadMELCModels(modelfiledir)
+#checkModelVars(models, simframe.master)
+
+models$zz1NEETGender0A16 <- loadGLMCSV(modelfiledir, "zz1NEETGender0A16.csv")
+models$zz1NEETGender0A18 <- loadGLMCSV(modelfiledir, "zz1NEETGender0A18.csv")
+models$zz1NEETGender0A20 <- loadGLMCSV(modelfiledir, "zz1NEETGender0A20.csv")
+models$zz1NEETGender0A17 <- loadGLMCSV(modelfiledir, "zz1NEETGender0A17.csv")
+models$zz1NEETGender0A19 <- loadGLMCSV(modelfiledir, "zz1NEETGender0A19.csv")
+models$zz1NEETGender0A21 <- loadGLMCSV(modelfiledir, "zz1NEETGender0A21.csv")
+
+models$zz1NEETGender1A16 <- loadGLMCSV(modelfiledir, "zz1NEETGender1A16.csv")
+models$zz1NEETGender1A18 <- loadGLMCSV(modelfiledir, "zz1NEETGender1A18.csv")
+models$zz1NEETGender1A20 <- loadGLMCSV(modelfiledir, "zz1NEETGender1A20.csv")
+models$zz1NEETGender1A17 <- loadGLMCSV(modelfiledir, "zz1NEETGender1A17.csv")
+models$zz1NEETGender1A19 <- loadGLMCSV(modelfiledir, "zz1NEETGender1A19.csv")
+models$zz1NEETGender1A21 <- loadGLMCSV(modelfiledir, "zz1NEETGender1A21.csv")
+
+########################################################################
+attach(env.base$simframe, name="simframe")
+
+#Female
+
+pNEET <- c(3.3,  5.5625 , 8.7875 ,12.0125 ,15.2375, 18.4625)/100		
+
+
+temp <- models$zz1NEETGender0A16	
+
+modeldf$zz1NEETGender0A16[1, 3]<- getIntercept( pNEET[1], temp, set = z1genderLvl1 == 0)
+
+temp$coefficients[1] <- modeldf$zz1NEETGender0A16[1, 3]
+
+z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+
+
+print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+
+write.csv(modeldf$zz1NEETGender0A16, paste(modelfiledir, "z1NEETGender0A16.csv", sep = ""), row.names = FALSE) 
+
+temp <- models$zz1NEETGender0A17	
+
+modeldf$zz1NEETGender0A17[1, 3]<- getIntercept( pNEET[2], temp, set = z1genderLvl1 == 0)
+
+temp$coefficients[1] <- modeldf$zz1NEETGender0A16[1, 3]
+
+z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+
+
+print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+
+
+write.csv(modeldf$zz1NEETGender0A17, paste(modelfiledir, "z1NEETGender0A17.csv", sep = ""), row.names = FALSE) 
+
+
+temp <- models$zz1NEETGender0A18
+
+z1ScoreLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[,17]
+
+
+modeldf$zz1NEETGender0A18[1, 3]<- getIntercept( pNEET[3], temp, set = z1genderLvl1 == 0)
+
+temp$coefficients[1] <- modeldf$zz1NEETGender0A18[1, 3]
+
+z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+
+
+print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+
+write.csv(modeldf$zz1NEETGender0A18, paste(modelfiledir, "z1NEETGender0A18.csv", sep = ""), row.names = FALSE) 
+
+
+
+temp <- models$zz1NEETGender0A19	
+
+z1ScoreLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[,17]
+
+
+modeldf$zz1NEETGender0A19[1, 3]<- getIntercept( pNEET[4], temp, set = z1genderLvl1 == 0)
+
+temp$coefficients[1] <- modeldf$zz1NEETGender0A19[1, 3]
+
+z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+
+
+print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+
+write.csv(modeldf$zz1NEETGender0A19, paste(modelfiledir, "z1NEETGender0A19.csv", sep = ""), row.names = FALSE) 
+
+
+
+temp <- models$zz1NEETGender0A20
+
+z1ScoreLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[,17]
+
+
+modeldf$zz1NEETGender0A20[1, 3]<- getIntercept( pNEET[5], temp, set = z1genderLvl1 == 0)
+
+temp$coefficients[1] <- modeldf$zz1NEETGender0A20[1, 3]
+
+z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+
+
+print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+
+write.csv(modeldf$zz1NEETGender0A20, paste(modelfiledir, "z1NEETGender0A20.csv", sep = ""), row.names = FALSE) 
+
+
+
+temp <- models$zz1NEETGender0A21
+
+z1ScoreLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[,17]
+
+
+modeldf$zz1NEETGender0A21[1, 3]<- getIntercept( pNEET[6], temp, set = z1genderLvl1 == 0)
+
+temp$coefficients[1] <- modeldf$zz1NEETGender0A21[1, 3]
+
+z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+
+
+print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+
+write.csv(modeldf$zz1NEETGender0A21, paste(modelfiledir, "z1NEETGender0A21.csv", sep = ""), row.names = FALSE) 
+
+
+
+#Male
+
+pNEET <- c( 2.88 , 5.1375,  7.3125 , 9.4875, 11.6625, 13.8375)/100		
+
+
+temp <- models$zz1NEETGender1A16	
+
+modeldf$zz1NEETGender1A16[1, 3]<- getIntercept( pNEET[1], temp, set = z1genderLvl1 == 0)
+
+temp$coefficients[1] <- modeldf$zz1NEETGender1A16[1, 3]
+
+z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+
+
+print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+
+write.csv(modeldf$zz1NEETGender1A16, paste(modelfiledir, "z1NEETGender1A16.csv", sep = ""), row.names = FALSE) 
+
+temp <- models$zz1NEETGender1A17	
+
+modeldf$zz1NEETGender1A17[1, 3]<- getIntercept( pNEET[2], temp, set = z1genderLvl1 == 0)
+
+temp$coefficients[1] <- modeldf$zz1NEETGender1A16[1, 3]
+
+z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+
+
+print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+
+
+write.csv(modeldf$zz1NEETGender1A17, paste(modelfiledir, "z1NEETGender1A17.csv", sep = ""), row.names = FALSE) 
+
+
+temp <- models$zz1NEETGender1A18
+
+z1ScoreLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[,17]
+
+
+modeldf$zz1NEETGender1A18[1, 3]<- getIntercept( pNEET[3], temp, set = z1genderLvl1 == 0)
+
+temp$coefficients[1] <- modeldf$zz1NEETGender1A18[1, 3]
+
+z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+
+
+print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+
+write.csv(modeldf$zz1NEETGender1A18, paste(modelfiledir, "z1NEETGender1A18.csv", sep = ""), row.names = FALSE) 
+
+
+
+temp <- models$zz1NEETGender1A19	
+
+z1ScoreLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[,17]
+
+
+modeldf$zz1NEETGender1A19[1, 3]<- getIntercept( pNEET[4], temp, set = z1genderLvl1 == 0)
+
+temp$coefficients[1] <- modeldf$zz1NEETGender1A19[1, 3]
+
+z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+
+
+print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+
+write.csv(modeldf$zz1NEETGender1A19, paste(modelfiledir, "z1NEETGender1A19.csv", sep = ""), row.names = FALSE) 
+
+
+
+temp <- models$zz1NEETGender1A20
+
+z1ScoreLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[,17]
+
+
+modeldf$zz1NEETGender1A20[1, 3]<- getIntercept( pNEET[5], temp, set = z1genderLvl1 == 0)
+
+temp$coefficients[1] <- modeldf$zz1NEETGender1A20[1, 3]
+
+z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+
+
+print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+
+write.csv(modeldf$zz1NEETGender1A20, paste(modelfiledir, "z1NEETGender1A20.csv", sep = ""), row.names = FALSE) 
+
+
+
+temp <- models$zz1NEETGender1A21
+
+z1ScoreLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[,17]
+
+
+modeldf$zz1NEETGender1A21[1, 3]<- getIntercept( pNEET[6], temp, set = z1genderLvl1 == 0)
+
+temp$coefficients[1] <- modeldf$zz1NEETGender1A21[1, 3]
+
+z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+
+
+print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+
+write.csv(modeldf$zz1NEETGender1A21, paste(modelfiledir, "z1NEETGender1A21.csv", sep = ""), row.names = FALSE) 
+
+
+
+
+detach("simframe")
+
+
+
+
+
+
+
+
 
 
 
