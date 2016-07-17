@@ -45,6 +45,11 @@ saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 
 ##########################################################################################
 
+tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1", grpbyName = "z1genderLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1", grpbyName = "r1stchildethn")
+
+
 tableBuilderNew(env.base, statistic = "mean", "Score")
 
 tableBuilderNew(env.base, statistic = "mean", "Score", grpbyName = "z1genderLvl1")

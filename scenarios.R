@@ -28,10 +28,15 @@ source("SimmoduleMELC1_21.R")
 
 Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
-Simenv.scenario$cat.adjustments$z1cond[5,] <- c(0,1)	
+Simenv.scenario$cat.adjustments$r1mBMI[1,] <- c(0.90, 0.05,0.05, 0)	
 
-subgroupExpression <- "mhrswrk<21"	
-Simenv.scenario <- setGlobalSubgroupFilterExpression(Simenv.scenario, subgroupExpression)
+Simenv.scenario$cat.adjustments$SESBTH[1,] <- c(0.90, 0.05,0.05)	
+Simenv.scenario$cat.adjustments$BREAST[1,] <- c(1, rep(0,12))
+
+Simenv.scenario$cat.adjustments$z1CaesareanLvl1[1,] <- c(0.90, 0.05)	
+
+# subgroupExpression <- "mhrswrk<21"	
+# Simenv.scenario <- setGlobalSubgroupFilterExpression(Simenv.scenario, subgroupExpression)
 
 # Initiate cluster
 cl <- makeCluster(detectCores())
@@ -44,9 +49,18 @@ clusterSetRNGStream(cl, 1)
 
 Simenv.scenario <- simulatePShiny(cl, Simenv.scenario, 4)
 
+#Simenv.scenario <- simulateNP(Simenv.scenario, 4)
+
 stopCluster(cl)
 
 
+tableBuilderNew(env = Simenv.scenario, statistic="freq", variableName="r1mBMI")
+tableBuilderNew(env = Simenv.scenario, statistic="freq", variableName="SESBTH")
+tableBuilderNew(env = Simenv.scenario, statistic="freq", variableName="SESBTHLvl1")
+tableBuilderNew(env = Simenv.scenario, statistic="freq", variableName="z1CaesareanLvl1")
+
+
+tableBuilderNew(env = Simenv.scenario, statistic="freq", variableName="BREAST")
 
 
 tableBuilderNew(env = env.base, statistic="freq", variableName="z1accomLvl1", grpbyName = "bthorder")

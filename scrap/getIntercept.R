@@ -1173,8 +1173,6 @@ models$zz1NEETGender1A19 <- loadGLMCSV(modelfiledir, "zz1NEETGender1A19.csv")
 models$zz1NEETGender1A21 <- loadGLMCSV(modelfiledir, "zz1NEETGender1A21.csv")
 
 ########################################################################
-attach(env.base$simframe, name="simframe")
-
 #Female
 
 pNEET <- c(3.3,  5.5625 , 8.7875 ,12.0125 ,15.2375, 18.4625)/100		
@@ -1382,6 +1380,70 @@ z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
 print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
 
 write.csv(modeldf$zz1NEETGender1A21, paste(modelfiledir, "z1NEETGender1A21.csv", sep = ""), row.names = FALSE) 
+
+#############################################################################
+
+modelfiledir <- paste(getwd(),"/models/",sep="")
+
+#models <- loadMELCModels(modelfiledir)
+#checkModelVars(models, simframe.master)
+
+models$zz1BullyA15 <- loadGLMCSV(modelfiledir, "zz1BullyA15.csv")
+models$zz1BullyA16 <- loadGLMCSV(modelfiledir, "zz1BullyA16.csv")
+models$zz1BullyA17_21 <- loadGLMCSV(modelfiledir, "zz1BullyA17_21.csv")
+
+
+########################################################################
+#Bully
+
+
+pBully <- c(6.8, 4.2, 3.5)/100
+
+
+temp <- models$zz1BullyA15	
+
+modeldf$zz1BullyA15[1, 3]<- getIntercept( pBully[1], temp)
+
+temp$coefficients[1] <- modeldf$zz1BullyA15[1, 3]
+
+z1BullyLvl1 <- predSimBinom(temp)
+
+
+print(table(z1BullyLvl1)[2]/5000)
+
+write.csv(modeldf$zz1BullyA15, paste(modelfiledir, "z1BullyA15.csv", sep = ""), row.names = FALSE) 
+
+temp <- models$zz1BullyA16	
+
+
+modeldf$zz1BullyA16[1, 3]<- getIntercept( pBully[2], temp)
+
+temp$coefficients[1] <- modeldf$zz1BullyA16[1, 3]
+
+z1BullyLvl1 <- predSimBinom(temp)
+
+
+print(table(z1BullyLvl1)[2]/5000)
+
+write.csv(modeldf$zz1BullyA16, paste(modelfiledir, "z1BullyA16.csv", sep = ""), row.names = FALSE) 
+
+temp <- models$zz1BullyA17_21	
+
+modeldf$zz1BullyA17_21[1, 3]<- getIntercept( pBully[3], temp)
+
+temp$coefficients[1] <- modeldf$zz1BullyA17_21[1, 3]
+
+z1BullyLvl1 <- predSimBinom(temp)
+
+
+print(table(z1BullyLvl1)[2]/5000)
+
+write.csv(modeldf$zz1BullyA17_21, paste(modelfiledir, "z1BullyA17_21.csv", sep = ""), row.names = FALSE) 
+
+
+
+
+
 
 
 

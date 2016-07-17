@@ -1155,9 +1155,11 @@ simulateKnowLab <- function(Simmodule, simenv) {
     r1ParentEducLvl2 <- ifelse(r1ParentEduc == 2, 1, 0)		
     r1ParentEducLvl3 <- ifelse(r1ParentEduc == 3, 1, 0)
     
-    r1mBMILvl1 <- ifelse(r1mBMI == 1, 1, 0)
-    r1mBMILvl2 <- ifelse(r1mBMI == 2, 1, 0)		
-    r1mBMILvl3 <- ifelse(r1mBMI == 3, 1, 0)
+    #browser()
+    
+    # r1mBMILvl1 <- ifelse(r1mBMI == 1, 1, 0)
+    # r1mBMILvl2 <- ifelse(r1mBMI == 2, 1, 0)		
+    # r1mBMILvl3 <- ifelse(r1mBMI == 3, 1, 0)
     
     
     if(iteration>=2 ) {			
@@ -1335,6 +1337,24 @@ simulateKnowLab <- function(Simmodule, simenv) {
    
   }
   
+  simulate_Bully <- function() {	 		 
+    
+    if(iteration >=15 & iteration <= 16){
+      
+      z1BullyLvl1 <<- 
+        predSimBinom(models[[paste("z1BullyA", iteration, sep = "")]])	   
+    
+    } else if(iteration >=17 & iteration <= 21){
+      
+      z1BullyLvl1 <<- 
+        predSimBinom(models$z1BullyA17_21)	   
+      
+    } else      {
+      z1BullyLvl1 <<- NAs
+    }  
+    
+  }
+  
   
   pre_simulation_setup <- function() {
     
@@ -1359,8 +1379,21 @@ simulateKnowLab <- function(Simmodule, simenv) {
     #when look at collated means - can see the effect from y2 onwards but doesn't show effect for y1
     
     school <- sapply(1:5000, function(i) sample(1:100, 1, prob = transition_probabilities$r1School[i,]))
+
+    r1SchoolFunding <<-
+    c(2, 2, 0, 2, 2, 2, 2, 0, 1, 2, 0, 2, 2, 1, 2, 0, 2, 2, 2, 
+      2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 1, 2, 2, 1, 2,
+      2, 2, 2, 2, 2 ,2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 
+      2, 1, 2, 2, 2, 2, 2, 2, 0, 1, 2, 2, 2, 2, 2, 2, 2, 1,
+      2, 2, 2, 2, 2, 2, 0, 2 ,2, 2, 2, 2, 2, 2, 2, 0, 2, 1, 2, 
+      1, 2, 1, 2, 1, 1, 2)[school]
+    
+    r1SchoolFundingLvl1 <<- ifelse(r1SchoolFunding == 1, 1,0)
+    r1SchoolFundingLvl2 <<- ifelse(r1SchoolFunding == 2, 1,0)
+    
     
     r1School <<- school
+
   }
   
   
@@ -1424,6 +1457,10 @@ simulateKnowLab <- function(Simmodule, simenv) {
     
     simulate_Score()
     simulate_NEET()
+    
+    
+    simulate_Bully()
+    
     
     #MELC models	
     simulate_family_household()      

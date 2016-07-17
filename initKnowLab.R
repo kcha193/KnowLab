@@ -564,6 +564,10 @@ initSim <- function(num.iterations){
     models$z1NEETGender1A19 <- loadGLMCSV(modelfiledir, "z1NEETGender1A19.csv")
     models$z1NEETGender1A21 <- loadGLMCSV(modelfiledir, "z1NEETGender1A21.csv")
     
+    models$z1BullyA15 <- loadGLMCSV(modelfiledir, "z1BullyA15.csv")
+    models$z1BullyA16 <- loadGLMCSV(modelfiledir, "z1BullyA16.csv")
+    models$z1BullyA17_21 <- loadGLMCSV(modelfiledir, "z1BullyA17_21.csv")
+    
     
     cat("Loaded models\n")
     models

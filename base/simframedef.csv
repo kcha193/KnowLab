@@ -275,6 +275,7 @@ z1CaesareanLvl1,,z1CaesareanLvl1,categorical,,years1_21
 z1BreakfastLvl1,,z1BreakfastLvl1,categorical,,years1_21
 r1mBMI,,r1mBMI,categorical,,years1_21
 r1ParentEduc,,r1ParentEduc,categorical,,years1_21
+r1mBMILvl0,,as.integer(r1mBMI == 0),categorical,,
 r1mBMILvl1,,as.integer(r1mBMI == 1),categorical,,
 r1mBMILvl2,,as.integer(r1mBMI == 2),categorical,,
 r1mBMILvl3,,as.integer(r1mBMI == 3),categorical,,
@@ -347,7 +348,7 @@ IQ_previous6,,as.integer(NA),,,
 IQ_previous7,,as.integer(NA),,,
 IQ_previous8,,as.integer(NA),,,
 r1Region,,r1Region,categorical,,years1_21
-r1School,,as.integer(NA),categorical,,years1_21
+r1School,,as.integer(NA),categorical,years1_21,
 r1RegionLvl1,,as.integer(r1Region==1),categorical,,
 r1RegionLvl2,,as.integer(r1Region==2),categorical,,
 r1RegionLvl3,,as.integer(r1Region==3),categorical,,
@@ -365,3 +366,10 @@ r1RegionLvl14,,as.integer(r1Region==14),categorical,,
 r1RegionLvl15,,as.integer(r1Region==15),categorical,,
 r1RegionLvl16,,as.integer(r1Region==16),categorical,,
 z1NEETLvl1,,as.integer(NA),categorical,years1_21,
+z1BullyLvl1,,as.integer(NA),categorical,years1_21,
+r1SchoolFunding,,as.integer(NA),categorical,years1_21,
+r1SchoolFundingLvl1,,as.integer(NA),categorical,,
+r1SchoolFundingLvl2,,as.integer(NA),categorical,,
+r1SchoolGender,,as.integer(NA),categorical,,
+r1SchoolGenderLvl1,,as.integer(NA),categorical,,
+r1SchoolGenderLvl2,,as.integer(NA),categorical,,
