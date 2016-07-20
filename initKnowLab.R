@@ -506,7 +506,7 @@ initSim <- function(num.iterations){
     models$NPRESCH <- loadGLMCSV(modelfiledir, "Npresch.csv")
     models$INTERACT <- loadGLMCSV(modelfiledir, "Interact.csv")
     models$PUNISH <- loadGLMCSV(modelfiledir, "Punish.csv")	
-    models$depression <- loadGLMCSV(modelfiledir, "depression.csv")
+   # models$depression <- loadGLMCSV(modelfiledir, "depression.csv")
     
     models$z1OverweightA2 <- loadGLMCSV(modelfiledir, "z1OverweightA2.csv")
     models$z1OverweightA3 <- loadGLMCSV(modelfiledir, "z1OverweightA3.csv")
@@ -568,6 +568,21 @@ initSim <- function(num.iterations){
     models$z1BullyA16 <- loadGLMCSV(modelfiledir, "z1BullyA16.csv")
     models$z1BullyA17_21 <- loadGLMCSV(modelfiledir, "z1BullyA17_21.csv")
     
+    models$z1AlcAbuseA15 <- loadGLMCSV(modelfiledir, "z1AlcAbuseA15.csv")
+    models$z1AlcAbuseA16 <- loadGLMCSV(modelfiledir, "z1AlcAbuseA16.csv")
+    models$z1AlcAbuseA17 <- loadGLMCSV(modelfiledir, "z1AlcAbuseA17.csv")
+    models$z1AlcAbuseA18 <- loadGLMCSV(modelfiledir, "z1AlcAbuseA18.csv")
+    models$z1AlcAbuseA19 <- loadGLMCSV(modelfiledir, "z1AlcAbuseA19.csv")
+    models$z1AlcAbuseA20 <- loadGLMCSV(modelfiledir, "z1AlcAbuseA20.csv")
+    models$z1AlcAbuseA21 <- loadGLMCSV(modelfiledir, "z1AlcAbuseA21.csv")    
+  
+    models$z1DepressA15 <- loadGLMCSV(modelfiledir, "z1DepressA15.csv")
+    models$z1DepressA16 <- loadGLMCSV(modelfiledir, "z1DepressA16.csv")
+    models$z1DepressA17 <- loadGLMCSV(modelfiledir, "z1DepressA17.csv")
+    models$z1DepressA18 <- loadGLMCSV(modelfiledir, "z1DepressA18.csv")
+    models$z1DepressA19 <- loadGLMCSV(modelfiledir, "z1DepressA19.csv")
+    models$z1DepressA20 <- loadGLMCSV(modelfiledir, "z1DepressA20.csv")
+    models$z1DepressA21 <- loadGLMCSV(modelfiledir, "z1DepressA21.csv")    
     
     cat("Loaded models\n")
     models

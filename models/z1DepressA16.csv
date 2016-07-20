@@ -1,0 +1,14 @@
+"Variable","ClassVal0","Estimate"
+"Intercept",NA,-2.88031017747582
+"z1gender",1,-0.5190258
+"r1stchildethn",2,0.4446858
+"r1stchildethn",3,0.4382549
+"r1stchildethn",4,-0.2613648
+"SESBTH",2,0
+"SESBTH",3,1.095273
+"z1ParentDepress",1,0.9820785
+"z1Bully",1,0.5538851
+"z1INTERACT",1,-0.7520614
+"z1PUNISH",1,0.4317824
+"z1genderLvl0*z1Overweight",1,0.5423243
+"z1genderLvl1*z1Overweight",1,0.2700271

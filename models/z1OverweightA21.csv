@@ -1,6 +1,6 @@
 "Variable","ClassVal0","Estimate"
-"Intercept",NA,0.0843381963205203
-"z1gender",1,0.138892
+"Intercept",NA,0.149539921714782
+"z1gender",1,0.006243517
 "r1stchildethn",2,0.5
 "r1stchildethn",3,0.9
 "r1stchildethn",4,-0.3498412

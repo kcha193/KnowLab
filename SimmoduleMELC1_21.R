@@ -495,10 +495,15 @@ simulateKnowLab <- function(Simmodule, simenv) {
       z1chres.prev[chres_previous>0] <- 1
       z1chres.prev[chres_previous==0] <- 0
       if (iteration<=5) {
-        z1chres <- predSimBinomsSelect_notChangeScores(z1chres.prev, models$z1chresPrev0.a2_5, models$z1chresPrev1.a2_5)
+        z1chres <- predSimBinomsSelect_notChangeScores(z1chres.prev, 
+                                                       models$z1chresPrev0.a2_5, 
+                                                       models$z1chresPrev1.a2_5)
       } else if (iteration>5 & iteration<=13) {
-        z1chres <- predSimBinomsSelect_notChangeScores(z1chres.prev, models$z1chresPrev0.a6_13, models$z1chresPrev1.a6_13)
+        z1chres <- predSimBinomsSelect_notChangeScores(z1chres.prev, 
+                                                       models$z1chresPrev0.a6_13, 
+                                                       models$z1chresPrev1.a6_13)
       } 
+      
       #for children that do have a change in residence, simulate the number of changes
       if (iteration<=5) {
         chres.pre <- predSimNBinom(models$chres.a2_5) + 1
@@ -1068,18 +1073,7 @@ simulateKnowLab <- function(Simmodule, simenv) {
     
   }
   
-  
-  simulate_depression <- function() {
-    if (iteration==18) {
-      alcabuseLvl1 <<- rbinom(NUMCHILDREN, 1, .163)
-      depressionLvl1 <<- predSimBinom(models$depression)	
-    } else {
-      alcabuseLvl1 <<- NAs
-      depressionLvl1 <<- NAs
-    }
-  }
-  
-  
+
   simulate_Sleep <- function(){
     
     
@@ -1355,6 +1349,46 @@ simulateKnowLab <- function(Simmodule, simenv) {
     
   }
   
+  simulate_AlcAbuse <- function() {	 		 
+    
+    if(iteration >=15 & iteration <= 21){
+      
+      z1ParentAlcLvl1 <<- 
+        suppressWarnings(apply(cbind(sapply(parentAlcohol$mother[match(MAGE+iteration, parentAlcohol$Age)], function(x) rbinom(1,1,x)), 
+                                     sapply(parentAlcohol$father[match(fage_imputed+iteration, parentAlcohol$Age)], function(x) rbinom(1,1,x))), 1,
+                               function(x) max(x, na.rm = TRUE)))
+      
+      z1AlcAbuseLvl1 <<- 
+        predSimBinom(models[[paste("z1AlcAbuseA", iteration, sep = "")]])	   
+    
+      
+    } else      {
+      z1AlcAbuseLvl1 <<- NAs
+    }  
+    
+  }
+  
+  simulate_Depress <- function() {	 		 
+    
+    
+    if(iteration >=15 & iteration <= 21){
+      
+      z1ParentDepressLvl1 <<- 
+        suppressWarnings(apply(cbind(sapply(parentDepress$mother[match(MAGE+iteration, parentDepress$Age)], 
+                                            function(x) rbinom(1,1,x)), 
+                                     sapply(parentDepress$father[match(fage_imputed+iteration, parentDepress$Age)], 
+                                            function(x) rbinom(1,1,x))), 1,
+                               function(x) max(x, na.rm = TRUE)))
+     
+      z1DepressLvl1 <<- 
+        predSimBinom(models[[paste("z1DepressA", iteration, sep = "")]])	   
+   
+      
+    } else      {
+      z1DepressLvl1 <<- NAs
+    }  
+    
+  }
   
   pre_simulation_setup <- function() {
     
@@ -1394,6 +1428,32 @@ simulateKnowLab <- function(Simmodule, simenv) {
     
     r1School <<- school
 
+    alcoholModel <- 
+      data.frame( Age = c(29.5, 39.5, 49.5, 59.5, 69.5, 79.5), 
+                  male = c(28.6, 27.1, 25.4, 20.8, 14.8, 5.4),
+                  female = c(15.5, 12.5, 11.7, 6.1, 3.1, 0.8))
+    
+    pA <- data.frame(Age = 25:90 )
+    
+    pA$father <- predict(lm(male ~ Age, alcoholModel), pA)/100
+    pA$mother <-predict(lm(female ~ Age, alcoholModel),pA)/100
+    pA$mother[pA$mother < 0.008] <- 0.008
+    
+    parentAlcohol <<-pA
+    
+    depressModel <- 
+      data.frame( Age = c(29.5, 39.5, 49.5, 59.5, 69.5, 79.5), 
+                  male = c(5.3, 5.3, 5.0, 4.5, 3.4, 3.3),
+                  female = c(10.0, 9.2, 6.2, 6.0, 4.4, 3.3))
+    
+    pD <- data.frame(Age = 25:90 )
+    
+    pD$father <- predict(lm(male ~ Age, depressModel), pD)/100
+    pD$mother <-predict(lm(female ~ Age, depressModel),pD)/100
+    pD$mother[pD$mother < 0.0018] <- 0.0018
+    
+    
+    parentDepress <<- pD
   }
   
   
@@ -1460,7 +1520,8 @@ simulateKnowLab <- function(Simmodule, simenv) {
     
     
     simulate_Bully()
-    
+    simulate_AlcAbuse()
+    simulate_Depress()
     
     #MELC models	
     simulate_family_household()      
@@ -1468,7 +1529,6 @@ simulateKnowLab <- function(Simmodule, simenv) {
     simulate_employment()      
     simulate_material_circumstances()      
     simulate_behavioural_factors()      
-    simulate_depression()      
     simulate_health_service_use()      
     simulate_conduct()      
     simulate_reading()      	  

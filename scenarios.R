@@ -30,11 +30,6 @@ Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict
 
 Simenv.scenario$cat.adjustments$r1mBMI[1,] <- c(0.90, 0.05,0.05, 0)	
 
-Simenv.scenario$cat.adjustments$SESBTH[1,] <- c(0.90, 0.05,0.05)	
-Simenv.scenario$cat.adjustments$BREAST[1,] <- c(1, rep(0,12))
-
-Simenv.scenario$cat.adjustments$z1CaesareanLvl1[1,] <- c(0.90, 0.05)	
-
 # subgroupExpression <- "mhrswrk<21"	
 # Simenv.scenario <- setGlobalSubgroupFilterExpression(Simenv.scenario, subgroupExpression)
 
@@ -52,6 +47,59 @@ Simenv.scenario <- simulatePShiny(cl, Simenv.scenario, 4)
 #Simenv.scenario <- simulateNP(Simenv.scenario, 4)
 
 stopCluster(cl)
+##################################################################################################
+
+
+library(parallel)
+library(simarioV2)
+
+
+setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
+
+initialSim <<- readRDS("base/initialSim.rds")
+env.base  <<- readRDS("base/FullBaseRun.rds")
+
+
+NUM_ITERATIONS <<- 21
+dict <<- initialSim$dict
+limits <<- initialSim$limits
+binbreaks <<- initialSim$binbreaks
+catToContModels <<- initialSim$catToContModels
+models <<- initialSim$models
+PropensityModels <<- initialSim$PropensityModels
+children <<- initialSim$children
+transition_probabilities <<- initialSim$transition_probabilities
+
+source("SimmoduleMELC1_21.R")
+
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+Simenv.scenario$cat.adjustments$BREAST[1,]=c(0.18,
+                                          table(env.base$simframe$BREAST)[2:12]/5000, 0.257)
+
+cl <- makeCluster(detectCores())
+
+clusterExport(cl, c("binbreaks", "transition_probabilities", "models", 
+                    "PropensityModels", "children"))
+
+clusterEvalQ(cl, {library(simarioV2)})
+clusterSetRNGStream(cl, 1)
+
+Simenv.scenario <- simulatePShiny(cl, Simenv.scenario, 4)
+
+#Simenv.scenario <- simulateNP(Simenv.scenario, 4)
+
+stopCluster(cl)
+tableBuilderNew(env = Simenv.scenario, statistic="freq", variableName="BREAST")
+tableBuilderNew(env = env.base, statistic="freq", variableName="BREAST")
+
+
+###################################################
+Simenv.scenario$cat.adjustments$SESBTH[1,] <- c(0.90, 0.05,0.05)	
+Simenv.scenario$cat.adjustments$BREAST[1,] <- c(1, rep(0,12))
+
+Simenv.scenario$cat.adjustments$z1CaesareanLvl1[1,] <- c(0.90, 0.05)	
+
+
 
 
 tableBuilderNew(env = Simenv.scenario, statistic="freq", variableName="r1mBMI")
@@ -85,12 +133,12 @@ table(env.base$simframe$z1ECELvl1)
 
 
 apply(
-rbind(
-table(env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[which(env.base$simframe$z1ECELvl1 == 0),17])/sum(env.base$simframe$z1ECELvl1 == 0),
-table(env.base$modules[[1]]$run_results$run2$outcomes$z1ScoreLvl1[which(env.base$simframe$z1ECELvl1 == 0),17])/sum(env.base$simframe$z1ECELvl1 == 0),
-table(env.base$modules[[1]]$run_results$run3$outcomes$z1ScoreLvl1[which(env.base$simframe$z1ECELvl1 == 0),17])/sum(env.base$simframe$z1ECELvl1 == 0),
-table(env.base$modules[[1]]$run_results$run4$outcomes$z1ScoreLvl1[which(env.base$simframe$z1ECELvl1 == 0),17])/sum(env.base$simframe$z1ECELvl1 == 0)),
-2, mean)
+  rbind(
+    table(env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[which(env.base$simframe$z1ECELvl1 == 0),17])/sum(env.base$simframe$z1ECELvl1 == 0),
+    table(env.base$modules[[1]]$run_results$run2$outcomes$z1ScoreLvl1[which(env.base$simframe$z1ECELvl1 == 0),17])/sum(env.base$simframe$z1ECELvl1 == 0),
+    table(env.base$modules[[1]]$run_results$run3$outcomes$z1ScoreLvl1[which(env.base$simframe$z1ECELvl1 == 0),17])/sum(env.base$simframe$z1ECELvl1 == 0),
+    table(env.base$modules[[1]]$run_results$run4$outcomes$z1ScoreLvl1[which(env.base$simframe$z1ECELvl1 == 0),17])/sum(env.base$simframe$z1ECELvl1 == 0)),
+  2, mean)
 
 
 apply(

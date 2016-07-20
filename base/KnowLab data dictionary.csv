@@ -1,6 +1,4 @@
 Varname,Description,Codings_Expr,Description details,Options,Option codes
-alcabuseLvl1,Alcohol abuse,"c(""None""=0, ""Alcohol abuse""=1)",,,
-depressionLvl1,Depression,"c(""None""=0, ""Depression""=1)",,,
 z1accomLvl1,Accommodation undetached ,"c(""Detached house""=0, ""Undetached house""=1)",,False/True,==0/==1
 z1accom_previous,Accommodation undetached (prev year),,,,
 age,Age,,,,
@@ -111,10 +109,6 @@ z1kids_previous,Kids (prev year),,,,
 meankids,Kids (years 1 - 5),,,,
 MAGE.2cat,Maternal age at birth,"c(""Young""=1, ""Old""=2)",,,
 MAGE.4cat,Maternal age at birth,"c(""<20""=1, ""20-24""=2, ""25-29""=3, ""30+""=4)",(range 0-10),Less than/Greater than/Less than or equal to/Greater than or equal to/Equals,</>/<=/>=/==
-INTERACT,Maternal emotional responsiveness,,,,
-INTERACTadj,Maternal emotional responsiveness (higher = greater responsiveness),,(range 0-5),Less than/Greater than/Less than or equal to/Greater than or equal to/Equals,</>/<=/>=/==
-PUNISH,Maternal punitiveness,,,,
-PUNISHadj,Maternal punitiveness (higher = greater punitiveness),,,,
 msmoke_previous,Mother cigarettes smoked previous,,,,
 z1mhrswrk,Mother employed,,,,
 z1mhrswrkLvl1,Mother employed,"c(""Employed""=0, ""Not in the workforce""=1)",,,
@@ -347,3 +341,13 @@ r1SchoolFundingLvl1,School Funding Integrated,"c(""Not Integrated"" = 0, ""Integ
 r1SchoolGender,School Type,"c(""Co-ed"" = 0, ""Boys"" = 1, ""Girls"" = 2)",,,
 r1SchoolGenderLvl1,School Type Boys,"c(""Not Boys"" = 0, ""Boys"" = 1)",,,
 r1SchoolGenderLvl2,School Type Girls,"c(""Not Girls"" = 0, ""Girls"" = 1)",,,
+z1AlcAbuseLvl1,Alcohol abuse,"c(""None""=0, ""Alcohol abuse""=1)",,,
+z1DepressLvl1,Depression,"c(""None""=0, ""Depression""=1)",,,
+INTERACT,Maternal emotional responsiveness,,,,
+INTERACTadj,Maternal emotional responsiveness (higher = greater responsiveness),,(range 0-5),Less than/Greater than/Less than or equal to/Greater than or equal to/Equals,</>/<=/>=/==
+PUNISH,Maternal punitiveness,,,,
+PUNISHadj,Maternal punitiveness (higher = greater punitiveness),,,,
+z1PUNISHLvl1,Maternal punitiveness - Yes,"c(""No""=0, ""Yes""=1)",,,
+z1INTERACTLvl1,Maternal emotional responsiveness - Yes,"c(""No""=0, ""Yes""=1)",,,
+z1ParentAlcLvl1,Parental Alcohol Abuse,"c(""No""=0, ""Yes""=1)",,,
+z1ParentDepressLvl1,Parental Depression,"c(""No""=0, ""Yes""=1)",,,
