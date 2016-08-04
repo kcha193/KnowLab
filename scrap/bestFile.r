@@ -291,9 +291,7 @@ for( iteration in 2:18){
 		sleepTime[z1genderLvl1 == 0] <- rnorm(sum(z1genderLvl1 == 0), 10.5, 0.6)
 		sleepTime[z1genderLvl1 == 1] <- rnorm(sum(z1genderLvl1 == 1), 10.5 - 9/60, 0.6)
 		
-		
-		sleepTime[sleepTime < quantile(sleepTime)[2]] = sleepTime[sleepTime < quantile(sleepTime)[2]] + 0.5
-		
+	
 		r1Sleep[sleepTime>11.5] <- 3
 		r1Sleep[sleepTime<=11.5 & sleepTime>=9.5] <- 2
 		r1Sleep[sleepTime<9.5] <- 1
@@ -305,8 +303,7 @@ for( iteration in 2:18){
 		sleepTime[z1genderLvl1 == 0] <- rnorm(sum(z1genderLvl1 == 0), 12, 0.6)
 		sleepTime[z1genderLvl1 == 1] <- rnorm(sum(z1genderLvl1 == 1), 12 - 11/60, 0.6)
 		
-		sleepTime[sleepTime < quantile(sleepTime)[2]] = sleepTime[sleepTime < quantile(sleepTime)[2]] + 0.5
-				
+
 		r1Sleep[sleepTime>13] <- 3
 		r1Sleep[sleepTime<=13 & sleepTime>=11] <- 2
 		r1Sleep[sleepTime<11] <- 1	
@@ -318,8 +315,7 @@ for( iteration in 2:18){
 		sleepTime[z1genderLvl1 == 1] <- rnorm(sum(z1genderLvl1 == 1), 10 - 16 /60, 0.6)
 	
 
-			sleepTime[sleepTime < quantile(sleepTime)[2]] = sleepTime[sleepTime < quantile(sleepTime)[2]] + 0.5
-			
+	
 		r1Sleep[sleepTime>11] <- 3
 		r1Sleep[sleepTime<=11& sleepTime>=9] <- 2
 		r1Sleep[sleepTime<9] <- 1
@@ -331,8 +327,6 @@ for( iteration in 2:18){
 		
 		sleepTime<- rnorm(5000, 10, 0.6)	
 
-		sleepTime[sleepTime < quantile(sleepTime)[2]] = sleepTime[sleepTime < quantile(sleepTime)[2]] + 0.5
-				
 		r1Sleep[sleepTime>11] <- 3
 		r1Sleep[sleepTime<=11 & sleepTime>=9] <- 2
 		r1Sleep[sleepTime<9] <- 1
@@ -343,8 +337,7 @@ for( iteration in 2:18){
 		
 		sleepTime <- rnorm(5000, 8.875, 0.6)
 		
-		sleepTime[sleepTime < quantile(sleepTime)[2]] = sleepTime[sleepTime < quantile(sleepTime)[2]] + 0.5
-				
+	
 		r1Sleep[sleepTime>10] <- 3
 		r1Sleep[sleepTime<=10 & sleepTime>=8] <- 2
 		r1Sleep[sleepTime<8] <- 1	

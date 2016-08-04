@@ -24,11 +24,23 @@ PropensityModels <<- initialSim$PropensityModels
 children <<- initialSim$children
 transition_probabilities <<- initialSim$transition_probabilities
 
+tableBuilderNew(env.base, "freq", "z1ScoreLvl1")
+
+tableBuilderNew(env.base, "freq", "z1ScoreLvl1", logisetexpr = "z1ECELvl1 == 0")
+
 source("SimmoduleMELC1_21.R")
 
 Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+#Simenv.scenario$cat.adjustments$z1ECELvl1[1,] <- c(0,1)	
 
-Simenv.scenario$cat.adjustments$r1mBMI[1,] <- c(0.90, 0.05,0.05, 0)	
+tableBuilderNew(env.base, "freq", "r1mBMI")
+
+Simenv.scenario$cat.adjustments$r1mBMI[1,] <- c(0.77, 0.02, 0.135, 0.075)	
+
+tableBuilderNew(env.base, "freq", "z1BreakfastLvl1")
+
+Simenv.scenario$cat.adjustments$z1Breakfast[1,] <- c(0, 1)
+
 
 # subgroupExpression <- "mhrswrk<21"	
 # Simenv.scenario <- setGlobalSubgroupFilterExpression(Simenv.scenario, subgroupExpression)
@@ -42,13 +54,130 @@ clusterExport(cl, c("binbreaks", "transition_probabilities", "models",
 clusterEvalQ(cl, {library(simarioV2)})
 clusterSetRNGStream(cl, 1)
 
-Simenv.scenario <- simulatePShiny(cl, Simenv.scenario, 4)
+Simenv.scenario <- simulatePShiny(cl, Simenv.scenario, 10)
 
 #Simenv.scenario <- simulateNP(Simenv.scenario, 4)
 
 stopCluster(cl)
-##################################################################################################
 
+
+##################################################################################################
+library(xlsx)
+
+tableBuilderNew(env.base, "freq", "z1OverweightLvl1") %>% filter(Var == "Overweight") %>% 
+  write.xlsx("z1BreakfastScenario.xlsx", sheetName = "Base", row.names = FALSE)
+
+tableBuilderNew(Simenv.scenario, "freq", "z1OverweightLvl1") %>% filter(Var == "Overweight")%>% 
+  write.xlsx("z1BreakfastScenario.xlsx", sheetName = "Scenario", row.names = FALSE, append = TRUE)
+
+
+tableBuilderNew(env.base, "freq", "z1OverweightLvl1", logisetexpr = "r1stchildethn == 2") %>% 
+  filter(Var == "Overweight") %>% 
+  write.xlsx("z1BreakfastScenario.xlsx", sheetName = "BaseMaori", row.names = FALSE, append = TRUE)
+
+tableBuilderNew(Simenv.scenario, "freq", "z1OverweightLvl1", logisetexpr = "r1stchildethn == 2") %>% 
+  filter(Var == "Overweight") %>% 
+  write.xlsx("z1BreakfastScenario.xlsx", sheetName = "ScenarioMaori", row.names = FALSE, append = TRUE)
+
+
+tableBuilderNew(env.base, "freq", "z1OverweightLvl1", logisetexpr = "r1stchildethn == 3") %>% 
+  filter(Var == "Overweight")%>% 
+  write.xlsx("z1BreakfastScenario.xlsx", sheetName = "BasePacific", row.names = FALSE, append = TRUE)
+
+
+tableBuilderNew(Simenv.scenario, "freq", "z1OverweightLvl1", logisetexpr = "r1stchildethn == 3") %>% 
+  filter(Var == "Overweight")%>% 
+  write.xlsx("z1BreakfastScenario.xlsx", sheetName = "ScenarioPacific", row.names = FALSE, append = TRUE)
+
+
+tableBuilderNew(env.base, "freq", "z1OverweightLvl1", logisetexpr = "SESBTH == 3") %>% 
+  filter(Var == "Overweight")%>% 
+  write.xlsx("z1BreakfastScenario.xlsx", sheetName = "BaseLowSES", row.names = FALSE, append = TRUE)
+
+
+tableBuilderNew(Simenv.scenario, "freq", "z1OverweightLvl1", logisetexpr = "SESBTH == 3") %>% 
+  filter(Var == "Overweight")%>% 
+  write.xlsx("z1BreakfastScenario.xlsx", sheetName = "ScenarioLowSES", row.names = FALSE, append = TRUE)
+
+
+
+
+
+compare = 
+  function(env.base, env.scenario){
+    
+    Base <-	
+      sapply(env.base$modules[[1]]$run_results, function(x) apply(x$outcome$z1OverweightLvl1[-1],  2, table))
+                                                                  
+    
+    Scenario <-
+      sapply(env.scenario$modules[[1]]$run_results, function(x) apply(x$freqs$z1OverweightLvl1[-1], function(y) y[2]/5000))	
+    
+    results <- numeric(3)
+    
+    for(i in 1:20){
+      lm.fit <- lm(c(Base[i,], Scenario[i,]) ~ factor(rep(c("B", "S"), each = 10)))
+      
+      results <- 
+        rbind(results,c(summary(lm.fit )$coef[2,1],confint(	lm.fit )[2,]))
+    }
+    
+    results <- cbind((1:21)/100, results)
+    
+    colnames(results) <- c("Age", "Mean Diff", "Lower CI", "Upper CI")
+    results <- results[-1,]
+    
+    round(results*100, 4)	
+  }
+
+compare(env.base, Simenv.scenario)
+
+
+
+
+
+
+
+tableBuilderNew(Simenv.scenario, "freq", "z1ScoreLvl1", logisetexpr = "z1ECELvl1 == 0")
+
+temp <- Simenv.scenario
+temp$simframe <- env.base$simframe
+
+
+tableBuilderNew(env.base, "freq", "z1ScoreLvl1", logisetexpr = "z1ECELvl1 == 0")  %>% 
+  filter(Year == 17 & Var == "Passed")
+
+tableBuilderNew(Simenv.scenario, "freq", "z1ScoreLvl1", logisetexpr = "z1ECELvl1 == 0", 
+                simframe = env.base$simframe)  %>%
+  filter(Year == 17 & Var == "Passed")
+
+tableBuilderNew(env.base, "freq", "z1ScoreLvl1", logisetexpr = "z1ECELvl1 == 0", 
+                grpbyName = "z1genderLvl1")  %>% 
+  filter(Year == 17 & Var == "Passed")
+
+tableBuilderNew(temp, "freq", "z1ScoreLvl1", logisetexpr = "z1ECELvl1 == 0", 
+                grpbyName = "z1genderLvl1")  %>%
+  filter(Year == 17 & Var == "Passed")
+
+
+tableBuilderNew(env.base, "freq", "z1ScoreLvl1", logisetexpr = "z1ECELvl1 == 0", 
+                grpbyName = "r1stchildethn") %>% filter(Year == 17 & Var == "Passed")
+
+tableBuilderNew(temp, "freq", "z1ScoreLvl1", logisetexpr = "z1ECELvl1 == 0", 
+                grpbyName = "r1stchildethn")  %>% filter(Year == 17 & Var == "Passed")
+
+
+tableBuilderNew(env.base, "freq", "z1FailLvl1", logisetexpr = "z1ECELvl1 == 0")
+
+tableBuilderNew(temp, "freq", "z1FailLvl1", logisetexpr = "z1ECELvl1 == 0")
+
+
+tableBuilderNew(env.base, "freq", "z1DropLvl1", logisetexpr = "z1ECELvl1 == 0")
+
+tableBuilderNew(temp, "freq", "z1DropLvl1", logisetexpr = "z1ECELvl1 == 0")
+
+
+#########################################################################################
 
 library(parallel)
 library(simarioV2)

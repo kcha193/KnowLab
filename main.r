@@ -16,10 +16,13 @@ source("SimmoduleMELC1_21.R")
 
 NUM_ITERATIONS <- 21
 
+
 initialSim <- initSim(NUM_ITERATIONS)
 
 saveRDS(initialSim, "base/initialSim.rds")
 saveRDS(initialSim, "../KnowLabShiny/base/initialSim.rds")
+
+
 
 Simenv <- createSimenv("Base", initialSim$simframe, initialSim$dict, "years1_21")
 
@@ -33,9 +36,14 @@ clusterExport(cl, c("binbreaks", "transition_probabilities", "models",
 clusterEvalQ(cl, {library(simarioV2)})
 clusterSetRNGStream(cl, 1)
 
+
 env.base <- simulatePShiny(cl, Simenv, 10)
 
-#env.base <- simulateNP(Simenv, 2)
+# p <- 
+#   profvis({
+#     env.base <- simulateNP(Simenv, 2)
+#   })
+
 stopCluster(cl)
 
 saveRDS(env.base, "base/FullBaseRun.rds")
@@ -43,7 +51,15 @@ saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 
 .rs.restartR()
 
+
+
 ##########################################################################################
+
+temp <- tableBuilderNew(env.base, statistic = "freq", "r1School")
+temp%>% filter(Year == 1)
+
+
+tableBuilderNew(env.base, statistic = "freq", "r1Sleep")
 
 
 tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1")
@@ -282,6 +298,17 @@ test <- tableBuilder(env = env.base, statistic="frequencies", variableName="z1ac
 
 head(env.base$simframe$z1genderLvl1)
 head(env.base$simframe$z1genderLvl0)
+
+
+
+
+
+
+
+
+
+
+
 
 
 

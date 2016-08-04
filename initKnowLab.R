@@ -1,9 +1,5 @@
 
 
-
-
-
-
 initSim <- function(num.iterations){
   
   #' List of breaks codings for adjustable continuous variables.  

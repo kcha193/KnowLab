@@ -133,7 +133,7 @@ r1SleepLvl2 <- numeric(5000)
 r1SleepLvl3 <- numeric(5000)
 
 
-sleepTime <- get(paste("r1SleepA", 2, sep =""))
+sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,2]
 
 
 r1SleepLvl3[sleepTime==3] <- 1
@@ -150,10 +150,7 @@ z1OverweightLvl1 <- predSimBinom(temp)
 
 print(table(z1OverweightLvl1)[2]/5000)
 
-
 write.csv(modeldf$zz1OverweightA2, paste(modelfiledir, "z1OverweightA", 2, ".csv", sep = ""), row.names = FALSE) 
-
-
 
 temp <- models$zz1OverweightA3
 
@@ -162,7 +159,7 @@ r1SleepLvl2 <- numeric(5000)
 r1SleepLvl3 <- numeric(5000)
 
 
-sleepTime <- get(paste("r1SleepA", 3, sep =""))
+sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,3]
 
 
 r1SleepLvl3[sleepTime==3] <- 1
@@ -193,7 +190,7 @@ r1SleepLvl2 <- numeric(5000)
 r1SleepLvl3 <- numeric(5000)
 
 
-sleepTime <- get(paste("r1SleepA", 4, sep =""))
+sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,4]
 
 
 r1SleepLvl3[sleepTime==3] <- 1
@@ -223,8 +220,7 @@ r1SleepLvl2 <- numeric(5000)
 r1SleepLvl3 <- numeric(5000)
 
 
-sleepTime <- get(paste("r1SleepA", 5, sep =""))
-
+sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,4]
 
 r1SleepLvl3[sleepTime==3] <- 1
 r1SleepLvl2[sleepTime==2] <- 1
@@ -250,7 +246,7 @@ temp <- models$zz1OverweightA6_7
 
 for( i in 6:7){
   
-  sleepTime <- get(paste("r1SleepA", i, sep =""))
+  sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,i]
   
   
   r1SleepLvl1 <- numeric(5000)
@@ -289,7 +285,7 @@ r1SleepLvl2 <- numeric(5000)
 r1SleepLvl3 <- numeric(5000)
 
 
-sleepTime <- get(paste("r1SleepA", 8, sep =""))
+sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,8]
 
 
 r1SleepLvl3[sleepTime==3] <- 1
@@ -317,7 +313,7 @@ r1SleepLvl2 <- numeric(5000)
 r1SleepLvl3 <- numeric(5000)
 
 
-sleepTime <- get(paste("r1SleepA", 9, sep =""))
+sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,9]
 
 
 r1SleepLvl3[sleepTime==3] <- 1
@@ -343,9 +339,7 @@ temp <- models$zz1OverweightA10_12
 
 for( i in 10:12){
   
-  
-  
-  sleepTime <- get(paste("r1SleepA", i, sep =""))
+  sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,i]
   
   
   r1SleepLvl1 <- numeric(5000)
@@ -377,9 +371,7 @@ temp <- models$zz1OverweightA13_14
 
 for( i in 13:14){
   
-  
-  sleepTime <- get(paste("r1SleepA", i, sep =""))
-  
+  sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,i]
   
   r1SleepLvl1 <- numeric(5000)
   r1SleepLvl2 <- numeric(5000)
@@ -410,9 +402,7 @@ temp <- models$zz1OverweightA15_18
 
 for( i in 15:18){
   
-  
-  sleepTime <- get(paste("r1SleepA", i, sep =""))
-  
+  sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,i]
   
   r1SleepLvl1 <- numeric(5000)
   r1SleepLvl2 <- numeric(5000)
@@ -1484,8 +1474,8 @@ parentAlcohol$mother <-predict(lm(female ~ Age, alcoholModel),parentAlcohol)/100
 parentAlcohol$mother[parentAlcohol$mother < 0.008] <- 0.008
 
 
-pAlcAbuse <- c(10.794723, 10.794723, 10.794723, 
-               33.883287, 33.883287, 33.883287, 33.883287)/100
+pAlcAbuse <- c(3, 6, 23.4, 
+               30, 33, 35, 35)/100
 
 
 temp <- models$zz1AlcAbuseA15	
