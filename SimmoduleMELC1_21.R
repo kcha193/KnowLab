@@ -1420,13 +1420,11 @@ simulateKnowLab <- function(Simmodule, simenv) {
     mage_years <<- MAGE + 1
     #when look at collated means - can see the effect from y2 onwards but doesn't show effect for y1
     
+    school <-sapply(1:5000, function(i) sample(1:100, 1, prob = transition_probabilities$r1School[i,]))
     
+      
+   
     
-    school <- integer(5000)
-      
-    for( i in 1:5000) school[i] <-sample(1:100, 1, prob = transition_probabilities$r1School[i,])
-      
-  
     r1SchoolFunding <<-
     c(2, 2, 0, 2, 2, 2, 2, 0, 1, 2, 0, 2, 2, 1, 2, 0, 2, 2, 2, 
       2, 0, 2, 2, 0, 2, 2, 2, 2, 2, 0, 2, 2, 1, 2, 2, 1, 2,

@@ -22,35 +22,28 @@ initialSim <- initSim(NUM_ITERATIONS)
 saveRDS(initialSim, "base/initialSim.rds")
 saveRDS(initialSim, "../KnowLabShiny/base/initialSim.rds")
 
-
-
 Simenv <- createSimenv("Base", initialSim$simframe, initialSim$dict, "years1_21")
 
-
-# Initiate cluster
-cl <- makeCluster(detectCores())
-
-clusterExport(cl, c("binbreaks", "transition_probabilities", "models", 
-                    "PropensityModels", "children"))
-
-clusterEvalQ(cl, {library(simarioV2)})
-clusterSetRNGStream(cl, 1)
-
-
-env.base <- simulatePShiny(cl, Simenv, 10)
+env.base <- simulateSimario(Simenv, 10)
 
 # p <- 
 #   profvis({
 #     env.base <- simulateNP(Simenv, 2)
 #   })
 
-stopCluster(cl)
-
 saveRDS(env.base, "base/FullBaseRun.rds")
 saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 
 .rs.restartR()
 
+########################################################################################
+temp <- env.base$modules[[1]]$run_results
+
+temp1 <-
+lapply(temp, function(x) lapply (x$outcomes, 
+                                 function(y) y[,!apply(y, 2, function(z) all(is.na(z)))]))
+object_size(temp1)
+object_size(temp)
 
 
 ##########################################################################################

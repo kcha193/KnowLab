@@ -46,25 +46,52 @@ Simenv.scenario$cat.adjustments$z1Breakfast[1,] <- c(0, 1)
 # Simenv.scenario <- setGlobalSubgroupFilterExpression(Simenv.scenario, subgroupExpression)
 
 # Initiate cluster
-cl <- makeCluster(detectCores())
 
-clusterExport(cl, c("binbreaks", "transition_probabilities", "models", 
-                    "PropensityModels", "children"))
-
-clusterEvalQ(cl, {library(simarioV2)})
-clusterSetRNGStream(cl, 1)
-
-Simenv.scenario <- simulatePShiny(cl, Simenv.scenario, 10)
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10)
 
 #Simenv.scenario <- simulateNP(Simenv.scenario, 4)
 
-stopCluster(cl)
 
+###################################################################################################
+
+length(env.base$modules$run_results$run1)
+
+index <- 
+mapply(all.equal, env.base$modules$run_results$run1, 
+       Simenv.scenario$modules$run_results$run1) != "TRUE"
+
+Simenv.scenario$modules$run_results <- 
+  lapply(Simenv.scenario$modules$run_results, function(x) x[index])
+  
+
+index <-
+!names(env.base$modules$run_results$run1) %in%
+  names(Simenv.scenario$modules$run_results$run1)  
+
+combineSimario <-
+  function(base, scenario, index){
+    for(i in 1:length(base))
+      scenario[[i]]<-  c(base[[i]][index], scenario[[i]])
+    
+    scenario
+  }
+  
+    
+Simenv.scenario$modules$run_results <- 
+  combineSimario(env.base$modules$run_results, 
+         Simenv.scenario$modules$run_results, index)
+
+
+tableBuilderNew(env.base, "freq", "z1OverweightLvl1") 
+
+tableBuilderNew(Simenv.scenario, "freq", "z1OverweightLvl1", envBase = env.base) 
+
+tableBuilderNew(Simenv.scenario, "freq", "z1ScoreLvl1", envBase = env.base) 
 
 ##################################################################################################
 library(xlsx)
 
-tableBuilderNew(env.base, "freq", "z1OverweightLvl1") %>% filter(Var == "Overweight") %>% 
+tableBuilderNew(env = env.base, "freq", "z1OverweightLvl1") %>% filter(Var == "Overweight") %>% 
   write.xlsx("z1BreakfastScenario.xlsx", sheetName = "Base", row.names = FALSE)
 
 tableBuilderNew(Simenv.scenario, "freq", "z1OverweightLvl1") %>% filter(Var == "Overweight")%>% 
