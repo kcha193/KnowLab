@@ -537,11 +537,7 @@ initSim <- function(num.iterations){
     models$IQA9 <- loadGLMCSV(modelfiledir, "IQA9.csv")
     models$IQA10 <- loadGLMCSV(modelfiledir, "IQA10.csv")
     models$IQA11 <- loadGLMCSV(modelfiledir, "IQA11_16.csv")
-    # models$IQA12 <- loadGLMCSV(modelfiledir, "IQA12.csv")
-    # models$IQA13 <- loadGLMCSV(modelfiledir, "IQA13.csv")
-    # models$IQA14 <- loadGLMCSV(modelfiledir, "IQA14.csv")
-    # models$IQA15 <- loadGLMCSV(modelfiledir, "IQA15.csv")
-    # models$IQA16 <- loadGLMCSV(modelfiledir, "IQA16.csv")
+
     
     models$ScoreA17 <- loadGLMCSV(modelfiledir, "ScoreA17.csv")
     models$ScoreA17Ethn2 <- loadGLMCSV(modelfiledir, "ScoreA17Ethn2.csv")
@@ -560,9 +556,11 @@ initSim <- function(num.iterations){
     models$z1NEETGender1A19 <- loadGLMCSV(modelfiledir, "z1NEETGender1A19.csv")
     models$z1NEETGender1A21 <- loadGLMCSV(modelfiledir, "z1NEETGender1A21.csv")
     
+    models$z1BullyA13 <- loadGLMCSV(modelfiledir, "z1BullyA13.csv")
+    models$z1BullyA14 <- loadGLMCSV(modelfiledir, "z1BullyA14.csv")
     models$z1BullyA15 <- loadGLMCSV(modelfiledir, "z1BullyA15.csv")
     models$z1BullyA16 <- loadGLMCSV(modelfiledir, "z1BullyA16.csv")
-    models$z1BullyA17_21 <- loadGLMCSV(modelfiledir, "z1BullyA17_21.csv")
+    models$z1BullyA17 <- loadGLMCSV(modelfiledir, "z1BullyA17.csv")
     
     models$z1AlcAbuseA15 <- loadGLMCSV(modelfiledir, "z1AlcAbuseA15.csv")
     models$z1AlcAbuseA16 <- loadGLMCSV(modelfiledir, "z1AlcAbuseA16.csv")

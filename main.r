@@ -1,22 +1,18 @@
 
 
 rm(list = ls())
-
 .rs.restartR()
 
 #devtools::install_github("kcha193/simarioV2")
 
-library(parallel)
 library(simarioV2)
+# library(profvis)
 
 setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
 
-source("initKnowLab.R")
-source("SimmoduleMELC1_21.R")
-
 NUM_ITERATIONS <- 21
 
-
+source("initKnowLab.R")
 initialSim <- initSim(NUM_ITERATIONS)
 
 saveRDS(initialSim, "base/initialSim.rds")
@@ -24,29 +20,240 @@ saveRDS(initialSim, "../KnowLabShiny/base/initialSim.rds")
 
 Simenv <- createSimenv("Base", initialSim$simframe, initialSim$dict, "years1_21")
 
-env.base <- simulateSimario(Simenv, 10)
 
-# p <- 
+source("SimmoduleMELC1_21.R")
+
+env.base <- simulateSimario(Simenv, 10, simulateKnowLab)
+
+# p <-
 #   profvis({
-#     env.base <- simulateNP(Simenv, 2)
-#   })
+#    env.base <- simulateSimario(Simenv, 2, simulateKnowLab, parallel = FALSE)
+#  })
 
 saveRDS(env.base, "base/FullBaseRun.rds")
 saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 
 .rs.restartR()
 
-########################################################################################
-temp <- env.base$modules[[1]]$run_results
+#####################################################################################
+tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1", grpbyName = "z1genderLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1", grpbyName = "r1stchildethn")
 
-temp1 <-
-lapply(temp, function(x) lapply (x$outcomes, 
-                                 function(y) y[,!apply(y, 2, function(z) all(is.na(z)))]))
-object_size(temp1)
-object_size(temp)
+tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1", grpbyName = "z1genderLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1", grpbyName = "r1stchildethn")
 
+tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1", grpbyName = "z1genderLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1", grpbyName = "r1stchildethn")
+
+#################################################################################################
+#SES
+
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+tableBuilderNew(env.base, "freq", "SESBTH")
+
+Simenv.scenario$cat.adjustments$SESBTH[1,] <- c(1, 0, 0)	
+
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
+
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1")
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1AlcAbuseLvl1")
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1")
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1DepressLvl1")
+
+#################################################################################################
+#ADHD
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+tableBuilderNew(env.base, "freq", "z1ADHDLvl1")
+
+Simenv.scenario$cat.adjustments$z1ADHD[1,] <- c(1, 0)	
+
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
+
+tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1")
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1AlcAbuseLvl1")
+
+tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1", logisetexpr = "z1ADHDLvl1 == 1" )
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1AlcAbuseLvl1", logisetexpr = "z1ADHDLvl1 == 1" )
+
+tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1",
+                logisetexpr = "z1ADHDLvl1 == 1", simframe = env.base$simframe)
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1AlcAbuseLvl1",
+                logisetexpr = "z1ADHDLvl1 == 1", simframe = env.base$simframe)
+
+
+#################################################################################################
+
+tableBuilderNew(env.base, statistic = "freq", "z1INTERACTLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1PUNISHLvl1")
+
+
+#################################################################################################
+#PUNISH 
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+Simenv.scenario$cat.adjustments$z1PUNISH[,1] <- 0.7
+Simenv.scenario$cat.adjustments$z1PUNISH[,2] <- 0.3
+
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
+
+tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1")
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1AlcAbuseLvl1")
+
+tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1")
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1DepressLvl1")
+
+#################################################################################################
+#INTERACT 
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+Simenv.scenario$cat.adjustments$z1INTERACT[,1] <- 0
+Simenv.scenario$cat.adjustments$z1INTERACT[,2] <- 1
+
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
+
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1INTERACTLvl1")
+
+tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1")
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1AlcAbuseLvl1")
+
+tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1")
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1DepressLvl1")
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1", logisetexpr = "z1INTERACTLvl1 == 0" )
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1DepressLvl1", logisetexpr = "z1INTERACTLvl1 == 0" )
+
+tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1", 
+                logisetexpr = "z1INTERACTLvl1 == 0", envBase = env.base, basePop = TRUE )
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1DepressLvl1", 
+                logisetexpr = "z1INTERACTLvl1 == 0", envBase = env.base, basePop = TRUE )
+
+
+#################################################################################################
+#Bulley 
+
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1")
+
+Simenv.scenario$cat.adjustments$z1Bully[13:21,1]<-1
+Simenv.scenario$cat.adjustments$z1Bully[13:21,2]<-0
+	
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1")
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1BullyLvl1")
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1")
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1AlcAbuseLvl1")
+
+tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1")
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1DepressLvl1")
+
+tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1", 
+                logisetexpr = "z1BullyLvl1 == 1")
+tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1", 
+                logisetexpr = "z1BullyLvl1 == 0")
+
+
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1DepressLvl1", 
+                logisetexpr = "z1BullyLvl1 == 1")
+
+tableBuilderNew(env.base, statistic = "freq", 
+                "z1DepressLvl1", envBase = env.base, basePop = TRUE, 
+                logisetexpr = "z1BullyLvl1 == 1")
+
+
+tableBuilderNew(Simenv.scenario, statistic = "freq", 
+                "z1DepressLvl1", envBase = env.base, basePop = TRUE, 
+                logisetexpr = "z1BullyLvl1 == 1")
+tableBuilderNew(Simenv.scenario, statistic = "freq", 
+                "z1DepressLvl1", envBase = env.base, basePop = TRUE, 
+                logisetexpr = "z1BullyLvl1 == 0")
+
+####################################################################################
+#Parental alcohol abuse to 14%
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+tableBuilderNew(env.base, statistic = "freq", "z1ParentAlcLvl1")
+
+Simenv.scenario$cat.adjustments$z1ParentAlc[15,] <- c(0.9, 0.1)
+Simenv.scenario$cat.adjustments$z1ParentAlc[16,] <- c(0.9, 0.1)
+Simenv.scenario$cat.adjustments$z1ParentAlc[17,] <- c(0.9, 0.1)
+Simenv.scenario$cat.adjustments$z1ParentAlc[18,] <- c(0.9, 0.1)
+Simenv.scenario$cat.adjustments$z1ParentAlc[19,] <- c(0.9, 0.1)
+Simenv.scenario$cat.adjustments$z1ParentAlc[20,] <- c(0.9, 0.1)
+Simenv.scenario$cat.adjustments$z1ParentAlc[21,] <- c(0.9, 0.1)
+
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
+
+tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1")
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1AlcAbuseLvl1")
+
+
+####################################################################################
+#Parental depression to 14%
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+tableBuilderNew(env.base, statistic = "freq", "z1ParentDepressLvl1")
+
+Simenv.scenario$cat.adjustments$z1ParentDepress[15,] <- c(0.9,  0.1)
+Simenv.scenario$cat.adjustments$z1ParentDepress[16,] <- c(0.9,  0.1)
+Simenv.scenario$cat.adjustments$z1ParentDepress[17,] <- c(0.9,  0.1)
+Simenv.scenario$cat.adjustments$z1ParentDepress[18,] <- c(0.9,  0.1)
+Simenv.scenario$cat.adjustments$z1ParentDepress[19,] <- c(0.9,  0.1)
+Simenv.scenario$cat.adjustments$z1ParentDepress[20,] <- c(0.9,  0.1)
+Simenv.scenario$cat.adjustments$z1ParentDepress[21,] <- c(0.9,  0.1)
+
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
+
+tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1")
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1DepressLvl1")
 
 ##########################################################################################
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1") %>% 
+  filter(Var == "Overweight")
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", 
+                grpbyName = "r1stchildethn") %>% 
+  filter(Var == "Overweight")
+
+
+tableBuilderNew(env.base, statistic = "mean", "BMI")
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1") %>% 
+  filter(Var == "Overweight")
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1") %>% 
+  filter(Var == "Obese")
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "z1genderLvl1") %>% 
+  filter(Var == "Overweight")
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1", grpbyName = "z1genderLvl1") %>% 
+  filter(Var == "Overweight")
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1") %>% 
+  filter(Var == "Obese")
+
+
+tableBuilderNew(env.base, statistic = "mean", "BMI")
+
+tableBuilderNew(env.base, statistic = "mean", "burt")
+
 
 temp <- tableBuilderNew(env.base, statistic = "freq", "r1School")
 temp%>% filter(Year == 1)

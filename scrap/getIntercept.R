@@ -19,7 +19,6 @@ modelCoef <-function(px, py, OR, RR = FALSE, n = 5000){
   d <-px*n-c
   
   return(c(intercept =  b/a, OR=log(OR)))		
-  
 }
 
 
@@ -102,18 +101,6 @@ for(i in 1:length(modelName)) {
   
 }	
 
-models$zz1OverweightA2 <- loadGLMCSV(modelfiledir, "zz1OverweightA2.csv")
-models$zz1OverweightA3 <- loadGLMCSV(modelfiledir, "zz1OverweightA3.csv")
-models$zz1OverweightA4 <- loadGLMCSV(modelfiledir, "zz1OverweightA4.csv")
-models$zz1OverweightA5 <- loadGLMCSV(modelfiledir, "zz1OverweightA5.csv")
-models$zz1OverweightA6_7 <- loadGLMCSV(modelfiledir, "zz1OverweightA6_7.csv")
-models$zz1OverweightA8 <- loadGLMCSV(modelfiledir, "zz1OverweightA8.csv")
-models$zz1OverweightA9 <- loadGLMCSV(modelfiledir, "zz1OverweightA9.csv")
-models$zz1OverweightA10_12 <- loadGLMCSV(modelfiledir, "zz1OverweightA10_12.csv")
-models$zz1OverweightA13_14 <- loadGLMCSV(modelfiledir, "zz1OverweightA13_14.csv")
-models$zz1OverweightA15_18 <- loadGLMCSV(modelfiledir, "zz1OverweightA15_18.csv")
-models$zz1OverweightA19_21 <- loadGLMCSV(modelfiledir, "zz1OverweightA19_21.csv")
-
 
 attach(env.base$simframe, name="simframe")
 
@@ -133,7 +120,7 @@ r1SleepLvl2 <- numeric(5000)
 r1SleepLvl3 <- numeric(5000)
 
 
-sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,2]
+sleepTime <- env.base$modules$run_results$run1$r1Sleep[,2]
 
 
 r1SleepLvl3[sleepTime==3] <- 1
@@ -159,7 +146,7 @@ r1SleepLvl2 <- numeric(5000)
 r1SleepLvl3 <- numeric(5000)
 
 
-sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,3]
+sleepTime <- env.base$modules$run_results$run1$r1Sleep[,3]
 
 
 r1SleepLvl3[sleepTime==3] <- 1
@@ -190,7 +177,7 @@ r1SleepLvl2 <- numeric(5000)
 r1SleepLvl3 <- numeric(5000)
 
 
-sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,4]
+sleepTime <- env.base$modules$run_results$run1$r1Sleep[,4]
 
 
 r1SleepLvl3[sleepTime==3] <- 1
@@ -220,7 +207,7 @@ r1SleepLvl2 <- numeric(5000)
 r1SleepLvl3 <- numeric(5000)
 
 
-sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,4]
+sleepTime <- env.base$modules$run_results$run1$r1Sleep[,4]
 
 r1SleepLvl3[sleepTime==3] <- 1
 r1SleepLvl2[sleepTime==2] <- 1
@@ -246,7 +233,7 @@ temp <- models$zz1OverweightA6_7
 
 for( i in 6:7){
   
-  sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,i]
+  sleepTime <- env.base$modules$run_results$run1$r1Sleep[,i]
   
   
   r1SleepLvl1 <- numeric(5000)
@@ -285,7 +272,7 @@ r1SleepLvl2 <- numeric(5000)
 r1SleepLvl3 <- numeric(5000)
 
 
-sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,8]
+sleepTime <- env.base$modules$run_results$run1$r1Sleep[,8]
 
 
 r1SleepLvl3[sleepTime==3] <- 1
@@ -313,7 +300,7 @@ r1SleepLvl2 <- numeric(5000)
 r1SleepLvl3 <- numeric(5000)
 
 
-sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,9]
+sleepTime <- env.base$modules$run_results$run1$r1Sleep[,9]
 
 
 r1SleepLvl3[sleepTime==3] <- 1
@@ -339,7 +326,7 @@ temp <- models$zz1OverweightA10_12
 
 for( i in 10:12){
   
-  sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,i]
+  sleepTime <- env.base$modules$run_results$run1$r1Sleep[,i]
   
   
   r1SleepLvl1 <- numeric(5000)
@@ -371,7 +358,7 @@ temp <- models$zz1OverweightA13_14
 
 for( i in 13:14){
   
-  sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,i]
+  sleepTime <- env.base$modules$run_results$run1$r1Sleep[,i]
   
   r1SleepLvl1 <- numeric(5000)
   r1SleepLvl2 <- numeric(5000)
@@ -402,7 +389,7 @@ temp <- models$zz1OverweightA15_18
 
 for( i in 15:18){
   
-  sleepTime <- env.base$modules[[1]]$run_results$run1$outcomes$r1Sleep[,i]
+  sleepTime <- env.base$modules$run_results$run1$r1Sleep[,i]
   
   r1SleepLvl1 <- numeric(5000)
   r1SleepLvl2 <- numeric(5000)
@@ -1074,20 +1061,20 @@ env.base$modules$years1_21$run_results_collated$means$Score
 env.base$modules$years1_21$run_results_collated$freqs$z1ScoreLvl1
 
 
-env.base$modules$years1_21$run_results[[1]]$means$IQ
+env.base$modules$years1_21$run_results$means$IQ
 
-cor(env.base$modules$years1_21$run_results[[1]]$outcomes$IQ)
+cor(env.base$modules$years1_21$run_results$IQ)
 
-apply(env.base$modules$years1_21$run_results[[1]]$outcomes$IQ, 2, sd)
-apply(env.base$modules$years1_21$run_results[[1]]$outcomes$Score, 2, sd)
+apply(env.base$modules$years1_21$run_results$IQ, 2, sd)
+apply(env.base$modules$years1_21$run_results$Score, 2, sd)
 
-round(cor(env.base$modules$years1_21$run_results[[1]]$outcomes$IQ)[2:16,2:16], 4)
+round(cor(env.base$modules$years1_21$run_results$IQ)[2:16,2:16], 4)
 
-round(cor(env.base$modules$years1_21$run_results[[5]]$outcomes$IQ)[2:16,2:16], 4)
+round(cor(env.base$modules$years1_21$run_results[[5]]$IQ)[2:16,2:16], 4)
 
 
-cor(env.base$modules$years1_21$run_results[[2]]$outcomes$IQ[,16],
-    env.base$modules$years1_21$run_results[[2]]$outcomes$Score[,17])
+cor(env.base$modules$years1_21$run_results[[2]]$IQ[,16],
+    env.base$modules$years1_21$run_results[[2]]$Score[,17])
 
 
 compare = 
@@ -1149,19 +1136,6 @@ modelfiledir <- paste(getwd(),"/models/",sep="")
 #models <- loadMELCModels(modelfiledir)
 #checkModelVars(models, simframe.master)
 
-models$zz1NEETGender0A16 <- loadGLMCSV(modelfiledir, "zz1NEETGender0A16.csv")
-models$zz1NEETGender0A18 <- loadGLMCSV(modelfiledir, "zz1NEETGender0A18.csv")
-models$zz1NEETGender0A20 <- loadGLMCSV(modelfiledir, "zz1NEETGender0A20.csv")
-models$zz1NEETGender0A17 <- loadGLMCSV(modelfiledir, "zz1NEETGender0A17.csv")
-models$zz1NEETGender0A19 <- loadGLMCSV(modelfiledir, "zz1NEETGender0A19.csv")
-models$zz1NEETGender0A21 <- loadGLMCSV(modelfiledir, "zz1NEETGender0A21.csv")
-
-models$zz1NEETGender1A16 <- loadGLMCSV(modelfiledir, "zz1NEETGender1A16.csv")
-models$zz1NEETGender1A18 <- loadGLMCSV(modelfiledir, "zz1NEETGender1A18.csv")
-models$zz1NEETGender1A20 <- loadGLMCSV(modelfiledir, "zz1NEETGender1A20.csv")
-models$zz1NEETGender1A17 <- loadGLMCSV(modelfiledir, "zz1NEETGender1A17.csv")
-models$zz1NEETGender1A19 <- loadGLMCSV(modelfiledir, "zz1NEETGender1A19.csv")
-models$zz1NEETGender1A21 <- loadGLMCSV(modelfiledir, "zz1NEETGender1A21.csv")
 
 ########################################################################
 #Female
@@ -1199,7 +1173,7 @@ write.csv(modeldf$zz1NEETGender0A17, paste(modelfiledir, "z1NEETGender0A17.csv",
 
 temp <- models$zz1NEETGender0A18
 
-z1ScoreLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[,17]
+z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,17]
 
 
 modeldf$zz1NEETGender0A18[1, 3]<- getIntercept( pNEET[3], temp, set = z1genderLvl1 == 0)
@@ -1217,7 +1191,7 @@ write.csv(modeldf$zz1NEETGender0A18, paste(modelfiledir, "z1NEETGender0A18.csv",
 
 temp <- models$zz1NEETGender0A19	
 
-z1ScoreLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[,17]
+z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,17]
 
 
 modeldf$zz1NEETGender0A19[1, 3]<- getIntercept( pNEET[4], temp, set = z1genderLvl1 == 0)
@@ -1235,7 +1209,7 @@ write.csv(modeldf$zz1NEETGender0A19, paste(modelfiledir, "z1NEETGender0A19.csv",
 
 temp <- models$zz1NEETGender0A20
 
-z1ScoreLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[,17]
+z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,17]
 
 
 modeldf$zz1NEETGender0A20[1, 3]<- getIntercept( pNEET[5], temp, set = z1genderLvl1 == 0)
@@ -1253,7 +1227,7 @@ write.csv(modeldf$zz1NEETGender0A20, paste(modelfiledir, "z1NEETGender0A20.csv",
 
 temp <- models$zz1NEETGender0A21
 
-z1ScoreLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[,17]
+z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,17]
 
 
 modeldf$zz1NEETGender0A21[1, 3]<- getIntercept( pNEET[6], temp, set = z1genderLvl1 == 0)
@@ -1304,7 +1278,7 @@ write.csv(modeldf$zz1NEETGender1A17, paste(modelfiledir, "z1NEETGender1A17.csv",
 
 temp <- models$zz1NEETGender1A18
 
-z1ScoreLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[,17]
+z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,17]
 
 
 modeldf$zz1NEETGender1A18[1, 3]<- getIntercept( pNEET[3], temp, set = z1genderLvl1 == 0)
@@ -1322,7 +1296,7 @@ write.csv(modeldf$zz1NEETGender1A18, paste(modelfiledir, "z1NEETGender1A18.csv",
 
 temp <- models$zz1NEETGender1A19	
 
-z1ScoreLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[,17]
+z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,17]
 
 
 modeldf$zz1NEETGender1A19[1, 3]<- getIntercept( pNEET[4], temp, set = z1genderLvl1 == 0)
@@ -1340,7 +1314,7 @@ write.csv(modeldf$zz1NEETGender1A19, paste(modelfiledir, "z1NEETGender1A19.csv",
 
 temp <- models$zz1NEETGender1A20
 
-z1ScoreLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[,17]
+z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,17]
 
 
 modeldf$zz1NEETGender1A20[1, 3]<- getIntercept( pNEET[5], temp, set = z1genderLvl1 == 0)
@@ -1358,7 +1332,7 @@ write.csv(modeldf$zz1NEETGender1A20, paste(modelfiledir, "z1NEETGender1A20.csv",
 
 temp <- models$zz1NEETGender1A21
 
-z1ScoreLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1ScoreLvl1[,17]
+z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,17]
 
 
 modeldf$zz1NEETGender1A21[1, 3]<- getIntercept( pNEET[6], temp, set = z1genderLvl1 == 0)
@@ -1379,21 +1353,77 @@ modelfiledir <- paste(getwd(),"/models/",sep="")
 #models <- loadMELCModels(modelfiledir)
 #checkModelVars(models, simframe.master)
 
-models$zz1BullyA15 <- loadGLMCSV(modelfiledir, "zz1BullyA15.csv")
-models$zz1BullyA16 <- loadGLMCSV(modelfiledir, "zz1BullyA16.csv")
-models$zz1BullyA17_21 <- loadGLMCSV(modelfiledir, "zz1BullyA17_21.csv")
 
 
 ########################################################################
 #Bully
 
 
-pBully <- c(6.8, 4.2, 3.5)/100
+pBully <- c(7.3, 7.9, 6.8, 4.2, 3.5)/100
+
+temp <- models$zz1BullyA15	
+
+tempInter <- numeric(10)
+
+for(i in 1:10) {
+  
+  r1SchoolFunding<-env.base$modules$run_results[[paste0("run", i)]]$r1SchoolFunding[,1]
+  r1SchoolFundingLvl1 <- ifelse(r1SchoolFunding == 1, 1,0)
+  r1SchoolFundingLvl2 <- ifelse(r1SchoolFunding == 2, 1,0)
+  
+  tempInter[i]<- getIntercept( pBully[1], temp)
+}
+
+modeldf$zz1BullyA15[1, 3] <- mean(tempInter)
+
+temp$coefficients[1] <- modeldf$zz1BullyA15[1, 3]
+
+z1BullyLvl1 <- predSimBinom(temp)
+
+print(table(z1BullyLvl1)[2]/5000)
+
+write.csv(modeldf$zz1BullyA15, paste(modelfiledir, "z1BullyA13.csv", sep = ""), row.names = FALSE) 
 
 
 temp <- models$zz1BullyA15	
 
-modeldf$zz1BullyA15[1, 3]<- getIntercept( pBully[1], temp)
+tempInter <- numeric(10)
+
+for(i in 1:10) {
+  
+  r1SchoolFunding<-env.base$modules$run_results[[paste0("run", i)]]$r1SchoolFunding[,1]
+  r1SchoolFundingLvl1 <- ifelse(r1SchoolFunding == 1, 1,0)
+  r1SchoolFundingLvl2 <- ifelse(r1SchoolFunding == 2, 1,0)
+  
+  tempInter[i]<- getIntercept( pBully[2], temp)
+}
+
+modeldf$zz1BullyA15[1, 3] <- mean(tempInter)
+
+temp$coefficients[1] <- modeldf$zz1BullyA15[1, 3]
+
+z1BullyLvl1 <- predSimBinom(temp)
+
+
+print(table(z1BullyLvl1)[2]/5000)
+
+write.csv(modeldf$zz1BullyA15, paste(modelfiledir, "z1BullyA14.csv", sep = ""), row.names = FALSE) 
+
+
+temp <- models$zz1BullyA15	
+
+tempInter <- numeric(10)
+
+for(i in 1:10) {
+  
+  r1SchoolFunding<-env.base$modules$run_results[[paste0("run", i)]]$r1SchoolFunding[,1]
+  r1SchoolFundingLvl1 <- ifelse(r1SchoolFunding == 1, 1,0)
+  r1SchoolFundingLvl2 <- ifelse(r1SchoolFunding == 2, 1,0)
+  
+  tempInter[i]<- getIntercept( pBully[3], temp)
+}
+
+modeldf$zz1BullyA15[1, 3] <- mean(tempInter)
 
 temp$coefficients[1] <- modeldf$zz1BullyA15[1, 3]
 
@@ -1407,7 +1437,18 @@ write.csv(modeldf$zz1BullyA15, paste(modelfiledir, "z1BullyA15.csv", sep = ""), 
 temp <- models$zz1BullyA16	
 
 
-modeldf$zz1BullyA16[1, 3]<- getIntercept( pBully[2], temp)
+tempInter <- numeric(10)
+
+for(i in 1:10) {
+  
+  r1SchoolFunding<-env.base$modules$run_results[[paste0("run", i)]]$r1SchoolFunding[,1]
+  r1SchoolFundingLvl1 <- ifelse(r1SchoolFunding == 1, 1,0)
+  r1SchoolFundingLvl2 <- ifelse(r1SchoolFunding == 2, 1,0)
+  
+  tempInter[i]<- getIntercept( pBully[4], temp)
+}
+
+modeldf$zz1BullyA16[1, 3] <- mean(tempInter)
 
 temp$coefficients[1] <- modeldf$zz1BullyA16[1, 3]
 
@@ -1420,7 +1461,18 @@ write.csv(modeldf$zz1BullyA16, paste(modelfiledir, "z1BullyA16.csv", sep = ""), 
 
 temp <- models$zz1BullyA17_21	
 
-modeldf$zz1BullyA17_21[1, 3]<- getIntercept( pBully[3], temp)
+tempInter <- numeric(10)
+
+for(i in 1:10) {
+  
+  r1SchoolFunding<-env.base$modules$run_results[[paste0("run", i)]]$r1SchoolFunding[,1]
+  r1SchoolFundingLvl1 <- ifelse(r1SchoolFunding == 1, 1,0)
+  r1SchoolFundingLvl2 <- ifelse(r1SchoolFunding == 2, 1,0)
+  
+  tempInter[i]<- getIntercept( pBully[5], temp)
+}
+
+modeldf$zz1BullyA17_21[1, 3] <- mean(tempInter)
 
 temp$coefficients[1] <- modeldf$zz1BullyA17_21[1, 3]
 
@@ -1429,7 +1481,7 @@ z1BullyLvl1 <- predSimBinom(temp)
 
 print(table(z1BullyLvl1)[2]/5000)
 
-write.csv(modeldf$zz1BullyA17_21, paste(modelfiledir, "z1BullyA17_21.csv", sep = ""), row.names = FALSE) 
+write.csv(modeldf$zz1BullyA17_21, paste(modelfiledir, "z1BullyA17.csv", sep = ""), row.names = FALSE) 
 
 
 
@@ -1457,34 +1509,16 @@ for(i in 1:length(modelName)) {
 
 attach(env.base$simframe, name="simframe")
 
+
 #############################################################################
 
 c(0.3660310, 0.3756929, 0.3852624, 0.3947411, 0.4041309, 0.4134333, 0.4226499)
 
-
-alcoholModel <- 
-data.frame( Age = c(29.5, 39.5, 49.5, 59.5, 69.5, 79.5), 
-            male = c(28.6, 27.1, 25.4, 20.8, 14.8, 5.4),
-            female = c(15.5, 12.5, 11.7, 6.1, 3.1, 0.8))
-
-parentAlcohol <- data.frame(Age = 25:90 )
-
-parentAlcohol$father <- predict(lm(male ~ Age, alcoholModel), parentAlcohol)/100
-parentAlcohol$mother <-predict(lm(female ~ Age, alcoholModel),parentAlcohol)/100
-parentAlcohol$mother[parentAlcohol$mother < 0.008] <- 0.008
-
-
-pAlcAbuse <- c(3, 6, 23.4, 
-               30, 33, 35, 35)/100
-
+pAlcAbuse <- c(3, 6, 23.4, 30, 33, 35, 35)/100
 
 temp <- models$zz1AlcAbuseA15	
 
-z1ParentAlcLvl1 <- 
-  suppressWarnings(apply(cbind(sapply(parentAlcohol$mother[match(MAGE+15, parentAlcohol$Age)], function(x) rbinom(1,1,x)), 
-        sapply(parentAlcohol$father[match(fage_imputed+15, parentAlcohol$Age)], function(x) rbinom(1,1,x))), 1,
-        function(x) max(x, na.rm = TRUE)))
-
+z1ParentAlcLvl1 <- apply(cbind(children$z1FatherAlc15Lvl1, children$z1MotherAlc15Lvl1),1, max, na.rm=TRUE)
 
 modeldf$zz1AlcAbuseA15[1, 3]<- getIntercept( pAlcAbuse[1], temp)
 
@@ -1492,20 +1526,14 @@ temp$coefficients[1] <- modeldf$zz1AlcAbuseA15[1, 3]
 
 z1AlcAbuseLvl1 <- predSimBinom(temp)
 
-
 print(table(z1AlcAbuseLvl1)[2]/ 5000)
 
 write.csv(modeldf$zz1AlcAbuseA15, paste(modelfiledir, "z1AlcAbuseA15.csv", sep = ""), row.names = FALSE) 
 
 
-
-
 temp <- models$zz1AlcAbuseA16	
 
-z1ParentAlcLvl1 <- 
-  suppressWarnings(apply(cbind(sapply(parentAlcohol$mother[match(MAGE+16, parentAlcohol$Age)], function(x) rbinom(1,1,x)), 
-                               sapply(parentAlcohol$father[match(fage_imputed+16, parentAlcohol$Age)], function(x) rbinom(1,1,x))), 1,
-                         function(x) max(x, na.rm = TRUE)))
+z1ParentAlcLvl1 <- apply(cbind(children$z1FatherAlc16Lvl1, children$z1MotherAlc16Lvl1),1, max, na.rm=TRUE)
 
 
 modeldf$zz1AlcAbuseA16[1, 3]<- getIntercept( pAlcAbuse[2], temp)
@@ -1521,13 +1549,9 @@ write.csv(modeldf$zz1AlcAbuseA16, paste(modelfiledir, "z1AlcAbuseA16.csv", sep =
 
 
 
-
 temp <- models$zz1AlcAbuseA17	
 
-z1ParentAlcLvl1 <- 
-  suppressWarnings(apply(cbind(sapply(parentAlcohol$mother[match(MAGE+17, parentAlcohol$Age)], function(x) rbinom(1,1,x)), 
-                               sapply(parentAlcohol$father[match(fage_imputed+17, parentAlcohol$Age)], function(x) rbinom(1,1,x))), 1,
-                         function(x) max(x, na.rm = TRUE)))
+z1ParentAlcLvl1 <- apply(cbind(children$z1FatherAlc17Lvl1, children$z1MotherAlc17Lvl1),1, max, na.rm=TRUE)
 
 
 modeldf$zz1AlcAbuseA17[1, 3]<- getIntercept( pAlcAbuse[3], temp)
@@ -1544,10 +1568,8 @@ write.csv(modeldf$zz1AlcAbuseA17, paste(modelfiledir, "z1AlcAbuseA17.csv", sep =
 
 temp <- models$zz1AlcAbuseA18	
 
-z1ParentAlcLvl1 <- 
-  suppressWarnings(apply(cbind(sapply(parentAlcohol$mother[match(MAGE+18, parentAlcohol$Age)], function(x) rbinom(1,1,x)), 
-                               sapply(parentAlcohol$father[match(fage_imputed+18, parentAlcohol$Age)], function(x) rbinom(1,1,x))), 1,
-                         function(x) max(x, na.rm = TRUE)))
+z1ParentAlcLvl1 <- apply(cbind(children$z1FatherAlc18Lvl1, children$z1MotherAlc18Lvl1),1, max, na.rm=TRUE)
+
 
 
 modeldf$zz1AlcAbuseA18[1, 3]<- getIntercept( pAlcAbuse[4], temp)
@@ -1564,10 +1586,8 @@ write.csv(modeldf$zz1AlcAbuseA18, paste(modelfiledir, "z1AlcAbuseA18.csv", sep =
 
 temp <- models$zz1AlcAbuseA19	
 
-z1ParentAlcLvl1 <- 
-  suppressWarnings(apply(cbind(sapply(parentAlcohol$mother[match(MAGE+19, parentAlcohol$Age)], function(x) rbinom(1,1,x)), 
-                               sapply(parentAlcohol$father[match(fage_imputed+19, parentAlcohol$Age)], function(x) rbinom(1,1,x))), 1,
-                         function(x) max(x, na.rm = TRUE)))
+z1ParentAlcLvl1 <- apply(cbind(children$z1FatherAlc19Lvl1, children$z1MotherAlc19Lvl1),1, max, na.rm=TRUE)
+
 
 
 modeldf$zz1AlcAbuseA19[1, 3]<- getIntercept( pAlcAbuse[5], temp)
@@ -1584,10 +1604,8 @@ write.csv(modeldf$zz1AlcAbuseA19, paste(modelfiledir, "z1AlcAbuseA19.csv", sep =
 
 temp <- models$zz1AlcAbuseA20
 
-z1ParentAlcLvl1 <- 
-  suppressWarnings(apply(cbind(sapply(parentAlcohol$mother[match(MAGE+20, parentAlcohol$Age)], function(x) rbinom(1,1,x)), 
-                               sapply(parentAlcohol$father[match(fage_imputed+20, parentAlcohol$Age)], function(x) rbinom(1,1,x))), 1,
-                         function(x) max(x, na.rm = TRUE)))
+z1ParentAlcLvl1 <- apply(cbind(children$z1FatherAlc20Lvl1, children$z1MotherAlc20Lvl1),1, max, na.rm=TRUE)
+
 
 
 modeldf$zz1AlcAbuseA20[1, 3]<- getIntercept( pAlcAbuse[6], temp)
@@ -1604,11 +1622,7 @@ write.csv(modeldf$zz1AlcAbuseA20, paste(modelfiledir, "z1AlcAbuseA20.csv", sep =
 
 temp <- models$zz1AlcAbuseA21	
 
-z1ParentAlcLvl1 <- 
-  suppressWarnings(apply(cbind(sapply(parentAlcohol$mother[match(MAGE+21, parentAlcohol$Age)], function(x) rbinom(1,1,x)), 
-                               sapply(parentAlcohol$father[match(fage_imputed+21, parentAlcohol$Age)], function(x) rbinom(1,1,x))), 1,
-                         function(x) max(x, na.rm = TRUE)))
-
+z1ParentAlcLvl1 <- apply(cbind(children$z1FatherAlc21Lvl1, children$z1MotherAlc21Lvl1),1, max, na.rm=TRUE)
 
 modeldf$zz1AlcAbuseA21[1, 3]<- getIntercept( pAlcAbuse[7], temp)
 
@@ -1625,36 +1639,33 @@ write.csv(modeldf$zz1AlcAbuseA21, paste(modelfiledir, "z1AlcAbuseA21.csv", sep =
 ##############################################################################################################
 
 
-depressModel <- 
-  data.frame( Age = c(29.5, 39.5, 49.5, 59.5, 69.5, 79.5), 
-              male = c(5.3, 5.3, 5.0, 4.5, 3.4, 3.3),
-              female = c(10.0, 9.2, 6.2, 6.0, 4.4, 3.3))
 
-parentDepress <- data.frame(Age = 25:90 )
+total = c(8.1, 14.1, 17.3, 17.6, 18.0, 15.0, 10.9)
+age = c(19.5, 29.5, 39.5, 49.5, 59.5, 69.5, 79.5)
 
-parentDepress$father <- predict(lm(male ~ Age, depressModel), parentDepress)/100
-parentDepress$mother <-predict(lm(female ~ Age, depressModel),parentDepress)/100
-parentDepress$mother[parentDepress$mother < 0.0018] <- 0.0018
+pDepress <- predict(lm(total ~ I(age) + I(age^2)),  data.frame(age = 15:21 ))/100
 
-
-pDepress<- c(7.619521)/100
-
-z1INTERACTLvl1<- ifelse(env.base$modules[[1]]$run_results$run1$outcomes$INTERACT[,5] > 0,1,0)
-z1PUNISHLvl1<- ifelse(env.base$modules[[1]]$run_results$run1$outcomes$PUNISH[,5] > 0,1,0)
+z1ParentDepressLvl1 <- apply(cbind(children$z1FatherDepress15Lvl1, 
+                                   children$z1MotherDepress15Lvl1),1, max, na.rm=TRUE)
 
 
 temp <- models$zz1DepressA15	
 
-z1ParentDepressLvl1 <- 
-  suppressWarnings(apply(cbind(sapply(parentDepress$mother[match(MAGE+15, parentDepress$Age)], function(x) rbinom(1,1,x)), 
-                               sapply(parentDepress$father[match(fage_imputed+15, parentDepress$Age)], function(x) rbinom(1,1,x))), 1,
-                         function(x) max(x, na.rm = TRUE)))
+tempInter <- numeric(10)
 
-z1BullyLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1BullyLvl1[,15]
-z1OverweightLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1OverweightLvl1[,15]
+for(i in 1:10) {
+  
+  z1INTERACTLvl1<- ifelse(env.base$modules$run_results[[paste0("run", i)]]$INTERACT[,1] > 0,1,0)
+  z1PUNISHLvl1<- ifelse(env.base$modules$run_results[[paste0("run", i)]]$PUNISH[,1] > 0,1,0)
+  
+  z1BullyLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1BullyLvl1[,"15"]
+  z1OverweightLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1OverweightLvl1[,"15"]
+  
+  tempInter[i]<- getIntercept(pDepress[1], temp)
+}
 
+modeldf$zz1DepressA15[1, 3] <- mean(tempInter)
 
-modeldf$zz1DepressA15[1, 3]<- getIntercept( pDepress, temp)
 
 temp$coefficients[1] <- modeldf$zz1DepressA15[1, 3]
 
@@ -1666,19 +1677,29 @@ print(table(z1DepressLvl1)[2]/ 5000)
 write.csv(modeldf$zz1DepressA15, paste(modelfiledir, "z1DepressA15.csv", sep = ""), row.names = FALSE) 
 
 
+temp <- models$zz1DepressA15	
+
+z1ParentDepressLvl1 <- apply(cbind(children$z1FatherDepress16Lvl1, 
+                                   children$z1MotherDepress16Lvl1),1, max, na.rm=TRUE)
 
 
 temp <- models$zz1DepressA15	
 
-z1ParentDepressLvl1 <- 
-  suppressWarnings(apply(cbind(sapply(parentDepress$mother[match(MAGE+16, parentDepress$Age)], function(x) rbinom(1,1,x)), 
-                               sapply(parentDepress$father[match(fage_imputed+16, parentDepress$Age)], function(x) rbinom(1,1,x))), 1,
-                         function(x) max(x, na.rm = TRUE)))
+tempInter <- numeric(10)
 
-z1BullyLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1BullyLvl1[,16]
-z1OverweightLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1OverweightLvl1[,16]
+for(i in 1:10) {
+  
+  z1INTERACTLvl1<- ifelse(env.base$modules$run_results[[paste0("run", i)]]$INTERACT[,1] > 0,1,0)
+  z1PUNISHLvl1<- ifelse(env.base$modules$run_results[[paste0("run", i)]]$PUNISH[,1] > 0,1,0)
+  
+  z1BullyLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1BullyLvl1[,"16"]
+  z1OverweightLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1OverweightLvl1[,"16"]
+  
+  tempInter[i]<- getIntercept(pDepress[2], temp)
+}
 
-modeldf$zz1DepressA15[1, 3]<- getIntercept( pDepress, temp)
+modeldf$zz1DepressA15[1, 3] <- mean(tempInter)
+
 
 temp$coefficients[1] <- modeldf$zz1DepressA15[1, 3]
 
@@ -1690,20 +1711,29 @@ print(table(z1DepressLvl1)[2]/ 5000)
 write.csv(modeldf$zz1DepressA15, paste(modelfiledir, "z1DepressA16.csv", sep = ""), row.names = FALSE) 
 
 
+temp <- models$zz1DepressA15	
+
+z1ParentDepressLvl1 <- apply(cbind(children$z1FatherDepress17Lvl1, 
+                                   children$z1MotherDepress17Lvl1),1, max, na.rm=TRUE)
 
 
 temp <- models$zz1DepressA15	
 
-z1ParentDepressLvl1 <- 
-  suppressWarnings(apply(cbind(sapply(parentDepress$mother[match(MAGE+17, parentDepress$Age)], function(x) rbinom(1,1,x)), 
-                               sapply(parentDepress$father[match(fage_imputed+17, parentDepress$Age)], function(x) rbinom(1,1,x))), 1,
-                         function(x) max(x, na.rm = TRUE)))
+tempInter <- numeric(10)
 
-z1BullyLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1BullyLvl1[,17]
-z1OverweightLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1OverweightLvl1[,17]
+for(i in 1:10) {
+  
+  z1INTERACTLvl1<- ifelse(env.base$modules$run_results[[paste0("run", i)]]$INTERACT[,1] > 0,1,0)
+  z1PUNISHLvl1<- ifelse(env.base$modules$run_results[[paste0("run", i)]]$PUNISH[,1] > 0,1,0)
+  
+  z1BullyLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1BullyLvl1[,"17"]
+  z1OverweightLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1OverweightLvl1[,"17"]
+  
+  tempInter[i]<- getIntercept(pDepress[3], temp)
+}
 
+modeldf$zz1DepressA15[1, 3] <- mean(tempInter)
 
-modeldf$zz1DepressA15[1, 3]<- getIntercept( pDepress, temp)
 
 temp$coefficients[1] <- modeldf$zz1DepressA15[1, 3]
 
@@ -1717,16 +1747,27 @@ write.csv(modeldf$zz1DepressA15, paste(modelfiledir, "z1DepressA17.csv", sep = "
 
 temp <- models$zz1DepressA15	
 
-z1ParentDepressLvl1 <- 
-  suppressWarnings(apply(cbind(sapply(parentDepress$mother[match(MAGE+18, parentDepress$Age)], function(x) rbinom(1,1,x)), 
-                               sapply(parentDepress$father[match(fage_imputed+18, parentDepress$Age)], function(x) rbinom(1,1,x))), 1,
-                         function(x) max(x, na.rm = TRUE)))
-
-z1BullyLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1BullyLvl1[,18]
-z1OverweightLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1OverweightLvl1[,18]
+z1ParentDepressLvl1 <- apply(cbind(children$z1FatherDepress18Lvl1, 
+                                   children$z1MotherDepress18Lvl1),1, max, na.rm=TRUE)
 
 
-modeldf$zz1DepressA15[1, 3]<- getIntercept( pDepress, temp)
+temp <- models$zz1DepressA15	
+
+tempInter <- numeric(10)
+
+for(i in 1:10) {
+  
+  z1INTERACTLvl1<- ifelse(env.base$modules$run_results[[paste0("run", i)]]$INTERACT[,1] > 0,1,0)
+  z1PUNISHLvl1<- ifelse(env.base$modules$run_results[[paste0("run", i)]]$PUNISH[,1] > 0,1,0)
+  
+  z1BullyLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1BullyLvl1[,"18"]
+  z1OverweightLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1OverweightLvl1[,"18"]
+  
+  tempInter[i]<- getIntercept(pDepress[4], temp)
+}
+
+modeldf$zz1DepressA15[1, 3] <- mean(tempInter)
+
 
 temp$coefficients[1] <- modeldf$zz1DepressA15[1, 3]
 
@@ -1740,16 +1781,27 @@ write.csv(modeldf$zz1DepressA15, paste(modelfiledir, "z1DepressA18.csv", sep = "
 
 temp <- models$zz1DepressA15	
 
-z1ParentDepressLvl1 <- 
-  suppressWarnings(apply(cbind(sapply(parentDepress$mother[match(MAGE+19, parentDepress$Age)], function(x) rbinom(1,1,x)), 
-                               sapply(parentDepress$father[match(fage_imputed+19, parentDepress$Age)], function(x) rbinom(1,1,x))), 1,
-                         function(x) max(x, na.rm = TRUE)))
-
-z1BullyLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1BullyLvl1[,19]
-z1OverweightLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1OverweightLvl1[,19]
+z1ParentDepressLvl1 <- apply(cbind(children$z1FatherDepress19Lvl1, 
+                                   children$z1MotherDepress19Lvl1),1, max, na.rm=TRUE)
 
 
-modeldf$zz1DepressA15[1, 3]<- getIntercept( pDepress, temp)
+temp <- models$zz1DepressA15	
+
+tempInter <- numeric(10)
+
+for(i in 1:10) {
+  
+  z1INTERACTLvl1<- ifelse(env.base$modules$run_results[[paste0("run", i)]]$INTERACT[,1] > 0,1,0)
+  z1PUNISHLvl1<- ifelse(env.base$modules$run_results[[paste0("run", i)]]$PUNISH[,1] > 0,1,0)
+  
+  z1BullyLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1BullyLvl1[,"19"]
+  z1OverweightLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1OverweightLvl1[,"19"]
+  
+  tempInter[i]<- getIntercept(pDepress[5], temp)
+}
+
+modeldf$zz1DepressA15[1, 3] <- mean(tempInter)
+
 
 temp$coefficients[1] <- modeldf$zz1DepressA15[1, 3]
 
@@ -1763,16 +1815,27 @@ write.csv(modeldf$zz1DepressA15, paste(modelfiledir, "z1DepressA19.csv", sep = "
 
 temp <- models$zz1DepressA15
 
-z1ParentDepressLvl1 <- 
-  suppressWarnings(apply(cbind(sapply(parentDepress$mother[match(MAGE+20, parentDepress$Age)], function(x) rbinom(1,1,x)), 
-                               sapply(parentDepress$father[match(fage_imputed+20, parentDepress$Age)], function(x) rbinom(1,1,x))), 1,
-                         function(x) max(x, na.rm = TRUE)))
-
-z1BullyLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1BullyLvl1[,20]
-z1OverweightLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1OverweightLvl1[,20]
+z1ParentDepressLvl1 <- apply(cbind(children$z1FatherDepress20Lvl1, 
+                                   children$z1MotherDepress20Lvl1),1, max, na.rm=TRUE)
 
 
-modeldf$zz1DepressA15[1, 3]<- getIntercept( pDepress, temp)
+temp <- models$zz1DepressA15	
+
+tempInter <- numeric(10)
+
+for(i in 1:10) {
+  
+  z1INTERACTLvl1<- ifelse(env.base$modules$run_results[[paste0("run", i)]]$INTERACT[,1] > 0,1,0)
+  z1PUNISHLvl1<- ifelse(env.base$modules$run_results[[paste0("run", i)]]$PUNISH[,1] > 0,1,0)
+  
+  z1BullyLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1BullyLvl1[,"20"]
+  z1OverweightLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1OverweightLvl1[,"20"]
+  
+  tempInter[i]<- getIntercept(pDepress[6], temp)
+}
+
+modeldf$zz1DepressA15[1, 3] <- mean(tempInter)
+
 
 temp$coefficients[1] <- modeldf$zz1DepressA15[1, 3]
 
@@ -1786,16 +1849,27 @@ write.csv(modeldf$zz1DepressA15, paste(modelfiledir, "z1DepressA20.csv", sep = "
 
 temp <- models$zz1DepressA15	
 
-z1ParentDepressLvl1 <- 
-  suppressWarnings(apply(cbind(sapply(parentDepress$mother[match(MAGE+21, parentDepress$Age)], function(x) rbinom(1,1,x)), 
-                               sapply(parentDepress$father[match(fage_imputed+21, parentDepress$Age)], function(x) rbinom(1,1,x))), 1,
-                         function(x) max(x, na.rm = TRUE)))
-
-z1BullyLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1BullyLvl1[,21]
-z1OverweightLvl1 <- env.base$modules[[1]]$run_results$run1$outcomes$z1OverweightLvl1[,21]
+z1ParentDepressLvl1 <- apply(cbind(children$z1FatherDepress21vl1, 
+                                   children$z1MotherDepress21Lvl1),1, max, na.rm=TRUE)
 
 
-modeldf$zz1DepressA15[1, 3]<- getIntercept( pDepress, temp)
+temp <- models$zz1DepressA15	
+
+tempInter <- numeric(10)
+
+for(i in 1:10) {
+  
+  z1INTERACTLvl1<- ifelse(env.base$modules$run_results[[paste0("run", i)]]$INTERACT[,1] > 0,1,0)
+  z1PUNISHLvl1<- ifelse(env.base$modules$run_results[[paste0("run", i)]]$PUNISH[,1] > 0,1,0)
+  
+  z1BullyLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1BullyLvl1[,"21"]
+  z1OverweightLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1OverweightLvl1[,"21"]
+  
+  tempInter[i]<- getIntercept(pDepress[7], temp)
+}
+
+modeldf$zz1DepressA15[1, 3] <- mean(tempInter)
+
 
 temp$coefficients[1] <- modeldf$zz1DepressA15[1, 3]
 
@@ -1805,11 +1879,6 @@ z1DepressLvl1 <- predSimBinom(temp)
 print(table(z1DepressLvl1)[2]/ 5000)
 
 write.csv(modeldf$zz1DepressA15, paste(modelfiledir, "z1DepressA21.csv", sep = ""), row.names = FALSE) 
-
-
-
-
-
 
 
 

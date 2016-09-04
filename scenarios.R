@@ -4,7 +4,6 @@ rm(list = ls())
 
 #devtools::install_github("kcha193/simarioV2")
 
-library(parallel)
 library(simarioV2)
 
 
@@ -25,8 +24,11 @@ children <<- initialSim$children
 transition_probabilities <<- initialSim$transition_probabilities
 
 tableBuilderNew(env.base, "freq", "z1ScoreLvl1")
+tableBuilderNew(env.base, "freq", "z1OverweightLvl1")
 
 tableBuilderNew(env.base, "freq", "z1ScoreLvl1", logisetexpr = "z1ECELvl1 == 0")
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "r1stchildethn")
+
 
 source("SimmoduleMELC1_21.R")
 

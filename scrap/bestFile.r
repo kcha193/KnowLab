@@ -408,5 +408,146 @@ apply(base[,-c(1:4)], 2, function(x) apply(as.matrix(table(base[,3], x)), 1,
 			function(y) round(y/sum(y), 2))
 
  ##############################################################################
+
+ 
+ attach(env.base$simframe, name="simframe")
+ 
+ library(bindata)
+ set.seed(2092016)
+ 
+ 
+ alcoholModel <- 
+   data.frame( Age = c(29.5, 39.5, 49.5, 59.5, 69.5, 79.5), 
+               male = c(28.6, 27.1, 25.4, 20.8, 14.8, 5.4),
+               female = c(15.5, 12.5, 11.7, 6.1, 3.1, 0.8))
+ 
+ parentAlcohol <- data.frame(Age = 25:90 )
+ 
+ parentAlcohol$father <- predict(lm(male ~ I(Age) + I(Age^2), alcoholModel), parentAlcohol)/100
+ parentAlcohol$mother <-predict(lm(female ~ I(Age) + I(Age^2), alcoholModel),parentAlcohol)/100
+ parentAlcohol$mother[parentAlcohol$mother < 0.002] <- 0.002
+ parentAlcohol$father[parentAlcohol$father < 0.034] <- 0.034
+ 
+ 
+ x <- matrix(NA, ncol = 2, nrow = 5000)
+ 
+for( i in 15:21){
+  print(i)
+  ParentAlc <- 
+   cbind(parentAlcohol$mother[match(MAGE+i, parentAlcohol$Age)], 
+         parentAlcohol$father[match(fage_imputed+i, parentAlcohol$Age)])
+  
+  ParentAlc[ParentAlc == 0] <- 0.004
+  
+  indexFULL <- !apply(ParentAlc, 1, function(y) any(is.na(y)))
+  
+  temp <- apply(ParentAlc[indexFULL,], 1,  function(y) 
+   rmvbin(1, margprob =y, bincorr = matrix(c(1,0.12,0.12,1), ncol = 2, nrow = 2)))
+  x[indexFULL,] <- t(temp)
+  
+  indexAnyNA <- apply(ParentAlc, 1, function(y) any(is.na(y)))
+  
+  x[indexAnyNA,] <- suppressWarnings(apply(ParentAlc[indexAnyNA,], 2, 
+                                           function(y) sapply(y, function(z) rbinom(1,1,z))))
+  
+  print(cor(x, use = "pairwise.complete.obs", method="spearman"))
+  
+  assign(paste0("z1MotherAlc", i, "Lvl1"), x[,1])
+  assign(paste0("z1FatherAlc", i, "Lvl1"), x[,2])
+}
+ 
+
+ 
+ 
+ total = c(8.1, 14.1, 17.3, 17.6, 18.0, 15.0, 10.9)
+ age = c(19.5, 29.5, 39.5, 49.5, 59.5, 69.5, 79.5)
+ 
+ pDepress <- predict(lm(total ~ I(age) + I(age^2)),  data.frame(age = 15:21 ))/100
+ 
+ 
+ depressModel <- 
+   data.frame( Age = c(29.5, 39.5, 49.5, 59.5, 69.5, 79.5), 
+               male = c(9.2, 11.8, 13.3, 13.3, 10.4, 7.6),
+               female = c(18.8, 22.3, 21.6, 22.4, 19.3, 13.4)              )
+ 
+ parentDepress <- data.frame(Age = 25:90 )
+ 
+ parentDepress$father <- predict(lm(male ~ I(Age) + I(Age^2) , depressModel), parentDepress)/100
+ parentDepress$mother <-predict(lm(female ~ I(Age) + I(Age^2), depressModel),parentDepress)/100
+ 
+ x <- matrix(NA, ncol = 2, nrow = 5000)
+ 
+ for( i in 15:21){
+   print(i)
+   ParentDep <- 
+     cbind(parentDepress$mother[match(MAGE+i, parentDepress$Age)], 
+           parentDepress$father[match(fage_imputed+i, parentDepress$Age)])
+   
+   ParentDep[ParentDep == 0] <- 0.004
+   
+   indexFULL <- !apply(ParentDep, 1, function(y) any(is.na(y)))
+   
+   temp <- apply(ParentDep[indexFULL,], 1,  function(y) 
+     rmvbin(1, margprob =y, bincorr = matrix(c(1,0.12,0.12,1), ncol = 2, nrow = 2)))
+   x[indexFULL,] <- t(temp)
+   
+   indexAnyNA <- apply(ParentDep, 1, function(y) any(is.na(y)))
+   
+   x[indexAnyNA,] <- suppressWarnings(apply(ParentDep[indexAnyNA,], 2, 
+                                            function(y) sapply(y, function(z) rbinom(1,1,z))))
+   
+   print(cor(x, use = "pairwise.complete.obs", method="spearman"))
+  
+   assign(paste0("z1MotherDepress", i, "Lvl1"), x[,1])
+   assign(paste0("z1FatherDepress", i, "Lvl1"), x[,2])
+ }
+ 
+ pAD <- data.frame(X = 1:5000)
+ 
+ colNames <- c()
+ 
+ for(i in 15:21){
+   pAD <- cbind(pAD, 
+         get(paste0("z1MotherAlc", i, "Lvl1")),
+         get(paste0("z1FatherAlc", i, "Lvl1")),
+         get(paste0("z1MotherDepress", i, "Lvl1")),
+         get(paste0("z1FatherDepress", i, "Lvl1")))
+   
+   colNames <- c(colNames, paste0("z1MotherAlc", i, "Lvl1"), paste0("z1FatherAlc", i, "Lvl1"),
+     paste0("z1MotherDepress", i, "Lvl1"), paste0("z1FatherDepress", i, "Lvl1"))
+   
+ }
+ 
+pAD <- pAD[,-1]
+
+names(pAD) <- colNames
+
+apply(pAD, 2,  function(x) prop.table(table(x)))
+
+cor(pAD, use = "pairwise.complete.obs", method="spearman")
+
+write.csv(pAD, "parentalAlcDepress.csv")
+ 
+
+ 
+##########################################################################################################
+
+
+detach("simframe")
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
