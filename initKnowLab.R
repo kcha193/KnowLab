@@ -31,22 +31,22 @@ initSim <- function(num.iterations){
     
     #binbreaks$ga <- c(0,34,35,36,37,max(children$ga, na.rm=TRUE))
     #names(binbreaks$ga) <- c(NA, "< 35", "35", "36", "37", "38+")
-    binbreaks$ga <- c(0,34,35,36,42,max(children$ga, na.rm=TRUE))
-    names(binbreaks$ga) <- c(NA, "<35", "35", "36", "37-42", "43+")
+    # binbreaks$ga <- c(0,34,35,36,42,max(children$ga, na.rm=TRUE))
+    # names(binbreaks$ga) <- c(NA, "<35", "35", "36", "37-42", "43+")
     
     binbreaks$BREAST <- c(-1:11, max(children$BREAST, na.rm=TRUE))
     names(binbreaks$BREAST) <- c(NA, 0:11, "12+")
     #names(binbreaks$BREAST) <- c(NA, names(dict.MELC$codings$BREAST))
     #table(bin(children$ga,binbreaks$ga))
     
-    binbreaks$INTERACT <- c(-1, 2:10)
-    names(binbreaks$INTERACT) <- c(NA, "<3", 3:10)
-    
-    binbreaks$NPRESCH <- c(-1:3)
-    names(binbreaks$NPRESCH) <- c(NA, 0:3)
-    
-    binbreaks$PUNISH <- c(-1:5)
-    names(binbreaks$PUNISH) <- c(NA, 0:5)
+    # binbreaks$INTERACT <- c(-1, 2:10)
+    # names(binbreaks$INTERACT) <- c(NA, "<3", 3:10)
+    # 
+    # binbreaks$NPRESCH <- c(-1:3)
+    # names(binbreaks$NPRESCH) <- c(NA, 0:3)
+    # 
+    # binbreaks$PUNISH <- c(-1:5)
+    # names(binbreaks$PUNISH) <- c(NA, 0:5)
     
     binbreaks$MAGE <- c(0, 19, 24, 29, 34, 39, 98) 
     names(binbreaks$MAGE) <- c(NA, "<20", "20-24", "25-29", "30-34", "35-39", "40+")
@@ -84,15 +84,15 @@ initSim <- function(num.iterations){
     binbreaks$fhrswrk <- c(-1, 0, 20, 35, 40, 45, 50, 999)
     names(binbreaks$fhrswrk) <- c(NA, "0", "1-20", "21-35", "36-40", "41-45", "46-50", "51+")
     
-    binbreaks$INTERACT <- c(-1,2,3,4,5,6,7,8,9,10)
-    names(binbreaks$INTERACT) <- c(NA, "<3", 3:10)
-    
-    binbreaks$PUNISH <- c(-1,0,1,2,3,4,5)
-    names(binbreaks$PUNISH) <- c(NA, 0:5)
-    
-    binbreaks$NPRESCH <- c(-1,0,1,2,3)
-    names(binbreaks$NPRESCH) <- c(NA, 0:3)
-    
+    # binbreaks$INTERACT <- c(-1,2,3,4,5,6,7,8,9,10)
+    # names(binbreaks$INTERACT) <- c(NA, "<3", 3:10)
+    # 
+    # binbreaks$PUNISH <- c(-1,0,1,2,3,4,5)
+    # names(binbreaks$PUNISH) <- c(NA, 0:5)
+    # 
+    # binbreaks$NPRESCH <- c(-1,0,1,2,3)
+    # names(binbreaks$NPRESCH) <- c(NA, 0:3)
+    # 
     binbreaks
   }
   
@@ -803,7 +803,7 @@ initSim <- function(num.iterations){
   dict<- createDict(descriptions_dataframe, codings_dataframe)
   
   #load initial basefile
-  children <- loadBaseFileCSV(basefiledir, "synthBasefile_MhrswrkFixed_5000_New.csv") 
+  children <- loadBaseFileCSV(basefiledir, "synthBasefile_MhrswrkFixed_5000_New1.csv") 
   
   #create simframe
   sfdef <- read_file(basefiledir, "simframedef.csv")

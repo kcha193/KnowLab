@@ -5,7 +5,11 @@ rm(list = ls())
 
 #devtools::install_github("kcha193/simarioV2")
 
+
+detach("simframe")
+
 library(simarioV2)
+library(dplyr)
 # library(profvis)
 
 setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
@@ -20,7 +24,6 @@ saveRDS(initialSim, "../KnowLabShiny/base/initialSim.rds")
 
 Simenv <- createSimenv("Base", initialSim$simframe, initialSim$dict, "years1_21")
 
-
 source("SimmoduleMELC1_21.R")
 
 env.base <- simulateSimario(Simenv, 10, simulateKnowLab)
@@ -34,6 +37,163 @@ saveRDS(env.base, "base/FullBaseRun.rds")
 saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 
 .rs.restartR()
+
+##########################################################################################
+
+tableBuilderNew(env.base, statistic = "freq", "z1ParentAlcLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1ParentDepressLvl1")
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1")
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1")
+
+
+tableBuilderNew(env.base, statistic = "mean", "BMI")
+
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "r1stchildethn") %>% 
+  filter(Var == "Overweight") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1", grpbyName = "r1stchildethn") %>% 
+  filter(Var == "Overweight") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1", grpbyName = "r1stchildethn") %>% 
+  filter(Var == "Obese") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+
+tableBuilderNew(env.base,statistic = "freq", "z1WatchTVLvl1")%>% 
+  select(-Lower, -Upper)  %>%  spread(Var, Mean)
+
+
+tableBuilderNew(env.base,statistic = "freq", "chres")%>% 
+  select(-Lower, -Upper)  %>%  spread(Var, Mean)
+
+tableBuilderNew(env.base,statistic = "freq", "mhrswrk", CI = FALSE)%>% 
+  select(-Lower, -Upper)  %>%  spread(Var, Mean)
+
+tableBuilderNew(env.base,statistic = "freq", "fhrswrk", CI = FALSE)%>% 
+  select(-Lower, -Upper)  %>%  spread(Var, Mean)
+
+tableBuilderNew(env.base,statistic = "mean", "fhrswrk")
+
+tableBuilderNew(env.base,statistic = "freq", "z1ParentAlcLvl1")
+tableBuilderNew(env.base,statistic = "freq", "r1SchoolFundingLvl1")
+
+tableBuilderNew(env.base,statistic = "freq", "z1accomLvl1")
+
+tableBuilderNew(env.base, statistic = "freq", "kids") 
+
+tableBuilderNew(env.base, statistic = "mean", "BMI")%>% select(-Lower, -Upper)  %>%  
+  left_join(tableBuilderNew(env.base, statistic = "mean", "BMI", grpbyName = "z1genderLvl1") %>% 
+              select(-Lower, -Upper) %>%  spread(groupByData, Mean))
+
+
+tableBuilderNew(env.base, statistic = "mean", "BMI", grpbyName = "r1stchildethn")  %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1") %>% filter(Var == "Overweight")
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "z1genderLvl1") %>% 
+  filter(Var == "Overweight") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1", grpbyName = "z1genderLvl1") %>% 
+  filter(Var == "Overweight") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1", grpbyName = "z1genderLvl1") %>% 
+  filter(Var == "Obese") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1", grpbyName = "r1stchildethn") %>% 
+  filter(Var == "Obese") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1") %>% filter(Var == "Overweight")
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1", grpbyName = "r1stchildethn") %>% 
+  filter(Var == "Overweight") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1") %>% filter(Var == "Obese")
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1", grpbyName = "z1genderLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1", grpbyName = "r1stchildethn")
+
+
+  filter(Var == "Overweight")
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", 
+                grpbyName = "r1stchildethn") %>% 
+  filter(Var == "Overweight")
+
+
+tableBuilderNew(env.base, statistic = "mean", "BMI")
+
+
+tableBuilderNew(env.base, statistic = "mean", "BMI", grpbyName = "z1genderLvl1") 
+
+tableBuilderNew(env.base, statistic = "mean", "BMI", grpbyName = "z1genderLvl1") 
+
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1") %>% 
+  filter(Var == "Overweight")
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1") %>% 
+  filter(Var == "Obese")
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1")  %>% 
+  filter(Var == "Overweight")
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "z1genderLvl1") %>% 
+  filter(Var == "Overweight")
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1", grpbyName = "z1genderLvl1") %>% 
+  filter(Var == "Overweight")
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1") %>% 
+  filter(Var == "Obese")
+
+
+tableBuilderNew(env.base, statistic = "mean", "BMI")
+
+tableBuilderNew(env.base, statistic = "mean", "burt")
+
+
+temp <- tableBuilderNew(env.base, statistic = "freq", "r1School")
+temp%>% filter(Year == 1)
+
+
+tableBuilderNew(env.base, statistic = "freq", "r1Sleep")
+
+
+
+
+
 
 #####################################################################################
 tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1")
@@ -85,9 +245,9 @@ tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1", logisetexpr = "z
 tableBuilderNew(Simenv.scenario, statistic = "freq", "z1AlcAbuseLvl1", logisetexpr = "z1ADHDLvl1 == 1" )
 
 tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1",
-                logisetexpr = "z1ADHDLvl1 == 1", simframe = env.base$simframe)
+                logisetexpr = "z1ADHDLvl1 == 1")
 tableBuilderNew(Simenv.scenario, statistic = "freq", "z1AlcAbuseLvl1",
-                logisetexpr = "z1ADHDLvl1 == 1", simframe = env.base$simframe)
+                logisetexpr = "z1ADHDLvl1 == 1", envBase = env.base, basePop = TRUE )
 
 
 #################################################################################################
@@ -99,10 +259,10 @@ tableBuilderNew(env.base, statistic = "freq", "z1PUNISHLvl1")
 #################################################################################################
 #PUNISH 
 Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
-Simenv.scenario$cat.adjustments$z1PUNISH[,1] <- 0.7
-Simenv.scenario$cat.adjustments$z1PUNISH[,2] <- 0.3
+Simenv.scenario$cat.adjustments$z1PUNISH[6,1] <- 0.7
+Simenv.scenario$cat.adjustments$z1PUNISH[6,2] <- 0.3
 
-Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab, parallel = FALSE)
 
 tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1")
 tableBuilderNew(Simenv.scenario, statistic = "freq", "z1AlcAbuseLvl1")
@@ -120,6 +280,8 @@ Simenv.scenario$cat.adjustments$z1INTERACT[,2] <- 1
 Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
 
 tableBuilderNew(Simenv.scenario, statistic = "freq", "z1INTERACTLvl1")
+
+tableBuilderNew(env.base, statistic = "freq", "z1INTERACTLvl1")
 
 tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1")
 tableBuilderNew(Simenv.scenario, statistic = "freq", "z1AlcAbuseLvl1")
@@ -222,57 +384,18 @@ tableBuilderNew(Simenv.scenario, statistic = "freq", "z1DepressLvl1")
 
 ##########################################################################################
 
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1") %>% 
-  filter(Var == "Overweight")
-
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", 
-                grpbyName = "r1stchildethn") %>% 
-  filter(Var == "Overweight")
 
 
-tableBuilderNew(env.base, statistic = "mean", "BMI")
-
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1") %>% 
-  filter(Var == "Overweight")
-
-tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1") %>% 
-  filter(Var == "Obese")
-
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "z1genderLvl1") %>% 
-  filter(Var == "Overweight")
 
 
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1", grpbyName = "z1genderLvl1") %>% 
-  filter(Var == "Overweight")
 
 
-tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1") %>% 
-  filter(Var == "Obese")
 
 
-tableBuilderNew(env.base, statistic = "mean", "BMI")
-
-tableBuilderNew(env.base, statistic = "mean", "burt")
 
 
-temp <- tableBuilderNew(env.base, statistic = "freq", "r1School")
-temp%>% filter(Year == 1)
 
 
-tableBuilderNew(env.base, statistic = "freq", "r1Sleep")
-
-
-tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1")
-tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1", grpbyName = "z1genderLvl1")
-tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1", grpbyName = "r1stchildethn")
-
-tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1")
-tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1", grpbyName = "z1genderLvl1")
-tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1", grpbyName = "r1stchildethn")
-
-tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1")
-tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1", grpbyName = "z1genderLvl1")
-tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1", grpbyName = "r1stchildethn")
 
 
 tableBuilderNew(env.base, statistic = "mean", "Score")
