@@ -78,7 +78,8 @@ simulateKnowLab <- function(run, simenv) {
     mult.factor <- c(NA, 1.208, 1.230, 1.148, 1.096, 1.134, 1.055, 1.043, 1.091, 1.068, 1.065, 1.071, 1.062, rep(1, 8))
     prop1 <- mean(z1singleLvl1)*mult.factor[iteration]
     calib.cat.adjust <- c(1-prop1, prop1)
-    z1singleLvl1 <- adjustCatVarCalib(z1singleLvl1, "z1single", propens=z1singlePropensities, desiredProps=calib.cat.adjust, simenv = simenv, iteration = iteration)
+    z1singleLvl1 <- adjustCatVarCalib(z1singleLvl1, "z1single", propens=z1singlePropensities, 
+                                      desiredProps=calib.cat.adjust, simenv = simenv, iteration = iteration)
     
     #scenarios
     z1singleLvl1 <<- adjustCatVar(z1singleLvl1, "z1single", propens=z1singlePropensities, simenv = simenv, iteration = iteration)
@@ -256,7 +257,8 @@ simulateKnowLab <- function(run, simenv) {
     fage_years[impute_fathers_age] <- as.integer(round(predSimNorm(models$fage_years, set=impute_fathers_age)))
     #fage years will be about 78 if mage_years 99 was used - write in some code to correct it if fage_years is this old
     if (any(fage_years[impute_fathers_age]>78)) {
-      fage_years[(impute_fathers_age==TRUE)&(fage_years>78)] <- sample(fage_years[(!is.na(fage_years))&(fage_years<78)], length(which((impute_fathers_age==TRUE)&(fage_years>78))))
+      fage_years[(impute_fathers_age==TRUE)&(fage_years>78)] <- sample(fage_years[(!is.na(fage_years))&(fage_years<78)], 
+                                                                       length(which((impute_fathers_age==TRUE)&(fage_years>78))))
     }
     
     #double-check for NAs - there should be none
@@ -361,7 +363,8 @@ simulateKnowLab <- function(run, simenv) {
     #	change_children_num[bthorder>=3] <- bthorder3.change[bthorder>=3]
     
     #consistency tweak
-    change_children_num[change_children_num < 1 - kids_previous] <- (1 - kids_previous)[change_children_num < 1 - kids_previous]
+    change_children_num[change_children_num < 1 - kids_previous] <- 
+      (1 - kids_previous)[change_children_num < 1 - kids_previous]
     
     kids <- kids_previous + change_children_num
     
@@ -374,7 +377,8 @@ simulateKnowLab <- function(run, simenv) {
     kidsmodels <- PropensityModels[["kids"]]
     kidsPropensities <- predictOrdinal(kidsmodels, NUMCHILDREN, stochastic=TRUE)
     
-    kids <- adjustContVar(kids, "kids", propens=kidsPropensities[,-ncol(kidsPropensities)], simenv = simenv, iteration = iteration)
+    kids <- adjustContVar(kids, "kids", propens=kidsPropensities[,-ncol(kidsPropensities)], 
+                          simenv = simenv, iteration = iteration)
     
     kids[kids<1] <- 1
     kids[kids>10] <- 10
@@ -435,9 +439,11 @@ simulateKnowLab <- function(run, simenv) {
     #####  z1chpar  ####
     ####################
     if (iteration<=5) {
-      z1chparLvl1 <- predSimBinomsSelect_notChangeScores(z1chpar_previousLvl1, models$z1chparPrev0A2_5, models$z1chparPrev1A2_5)
+      z1chparLvl1 <- predSimBinomsSelect_notChangeScores(z1chpar_previousLvl1, 
+                                                         models$z1chparPrev0A2_5, models$z1chparPrev1A2_5)
     } else if (iteration>5) {
-      z1chparLvl1 <- predSimBinomsSelect_notChangeScores(z1chpar_previousLvl1, models$z1chparPrev0A6_13, models$z1chparPrev1A6_13)
+      z1chparLvl1 <- predSimBinomsSelect_notChangeScores(z1chpar_previousLvl1, 
+                                                         models$z1chparPrev0A6_13, models$z1chparPrev1A6_13)
     } 
     ##switching 0s and 1s for children that previously had a change in parents 
     ##(z1chpar different kind of change score to e.g. z1single or welfare) 
@@ -610,13 +616,19 @@ simulateKnowLab <- function(run, simenv) {
     #simulate for the current iteration whether the father works or not
     #first create separate vectors of length number of children for each dadgroup model
     if (iteration<=5) {
-      z1fhrs1 <- predSimBinomsSelect_notChangeScores(z1fhrs.prev, models$z1fhrswrk.prev0.a2_5.dg1 , models$z1fhrswrk.prev1.a2_5.dg1)	
-      z1fhrs2 <- predSimBinomsSelect_notChangeScores(z1fhrs.prev, models$z1fhrswrk.prev0.a2_5.dg2 , models$z1fhrswrk.prev1.a2_5.dg2)	
-      z1fhrs3 <- predSimBinomsSelect_notChangeScores(z1fhrs.prev, models$z1fhrswrk.prev0.a2_5.dg3 , models$z1fhrswrk.prev1.a2_5.dg3)
+      z1fhrs1 <- predSimBinomsSelect_notChangeScores(z1fhrs.prev, models$z1fhrswrk.prev0.a2_5.dg1 , 
+                                                     models$z1fhrswrk.prev1.a2_5.dg1)	
+      z1fhrs2 <- predSimBinomsSelect_notChangeScores(z1fhrs.prev, models$z1fhrswrk.prev0.a2_5.dg2 , 
+                                                     models$z1fhrswrk.prev1.a2_5.dg2)	
+      z1fhrs3 <- predSimBinomsSelect_notChangeScores(z1fhrs.prev, models$z1fhrswrk.prev0.a2_5.dg3 , 
+                                                     models$z1fhrswrk.prev1.a2_5.dg3)
     } else if (iteration>5) {
-      z1fhrs1 <- predSimBinomsSelect_notChangeScores(z1fhrs.prev, models$z1fhrswrk.prev0.a6_13.dg1 , models$z1fhrswrk.prev1.a6_13.dg1)	
-      z1fhrs2 <- predSimBinomsSelect_notChangeScores(z1fhrs.prev, models$z1fhrswrk.prev0.a6_13.dg2 , models$z1fhrswrk.prev1.a6_13.dg2)	
-      z1fhrs3 <- predSimBinomsSelect_notChangeScores(z1fhrs.prev, models$z1fhrswrk.prev0.a6_13.dg3 , models$z1fhrswrk.prev1.a6_13.dg3)
+      z1fhrs1 <- predSimBinomsSelect_notChangeScores(z1fhrs.prev, models$z1fhrswrk.prev0.a6_13.dg1 , 
+                                                     models$z1fhrswrk.prev1.a6_13.dg1)	
+      z1fhrs2 <- predSimBinomsSelect_notChangeScores(z1fhrs.prev, models$z1fhrswrk.prev0.a6_13.dg2 ,
+                                                     models$z1fhrswrk.prev1.a6_13.dg2)	
+      z1fhrs3 <- predSimBinomsSelect_notChangeScores(z1fhrs.prev, models$z1fhrswrk.prev0.a6_13.dg3 , 
+                                                     models$z1fhrswrk.prev1.a6_13.dg3)
     }
     #then assign to the variable denoting whether the father works or not, the values from the vector corresponding to his dadgroup
     z1fhrs <- rep(NA, length(fhrswrk_previous))
@@ -630,7 +642,10 @@ simulateKnowLab <- function(run, simenv) {
     if (iteration<=5) {
       fhrswrk.pre <- predSimNorm(models$fhrswrk.a2_5)
     } else if (iteration>5) {
-      fhrswrk.pre <- predSimNormsSelect3Models(dadgroup, models$fhrswrk.a6_13.dg1, models$fhrswrk.a6_13.dg2, models$fhrswrk.a6_13.dg3)
+      fhrswrk.pre <- predSimNormsSelect3Models(dadgroup, 
+                                               models$fhrswrk.a6_13.dg1, 
+                                               models$fhrswrk.a6_13.dg2,
+                                               models$fhrswrk.a6_13.dg3)
     }
     
     fhrswrk <- fhrswrk.pre
@@ -650,7 +665,8 @@ simulateKnowLab <- function(run, simenv) {
     fhrswrkmodels <- PropensityModels[["fhrswrk"]]
     fhrswrkPropensities <- predictOrdinal(fhrswrkmodels, NUMCHILDREN, stochastic=TRUE)
     
-    fhrswrk <- adjustContVar(fhrswrk, "fhrswrk", propens=mhrswrkPropensities[,-ncol(fhrswrkPropensities)], simenv = simenv, iteration = iteration)
+    fhrswrk <- adjustContVar(fhrswrk, "fhrswrk", propens=mhrswrkPropensities[,-ncol(fhrswrkPropensities)], 
+                             simenv = simenv, iteration = iteration)
     checkNAs(fhrswrk)
     
     
@@ -677,7 +693,8 @@ simulateKnowLab <- function(run, simenv) {
     mult.factor <- c(NA, 2.05, 1.22, 1.04, 1.03, 1.29, 1.26, 1.23, 1.23, 1.17, 1.15, 1.12, 1.09, rep(1, 8))
     prop1 <- mean(welfareLvl1)*mult.factor[iteration]
     calib.cat.adjust <- c(1-prop1, prop1)
-    welfareLvl1 <- adjustCatVarCalib(welfareLvl1, "welfare", propens=welfarePropensities, desiredProps=calib.cat.adjust, simenv = simenv, iteration = iteration)
+    welfareLvl1 <- adjustCatVarCalib(welfareLvl1, "welfare", propens=welfarePropensities, 
+                                     desiredProps=calib.cat.adjust, simenv = simenv, iteration = iteration)
     
     #Scenarios
     welfareLvl1 <<- adjustCatVar(welfareLvl1, "welfare", propens=welfarePropensities, simenv = simenv, iteration = iteration)
@@ -730,12 +747,16 @@ simulateKnowLab <- function(run, simenv) {
     mult.factor <- c(NA, 1.14, 1.17, 1.10, 1.07, 1.12, 1.12, 1.09, 1.11, 1.12, 1.09, 1.11, 1.13,  rep(1, 8))
     prop1 <- mean(z1homeownLvl1)*mult.factor[iteration]
     calib.cat.adjust <- c(1-prop1, prop1)
-    z1homeownLvl1 <- adjustCatVarCalib(z1homeownLvl1, "z1homeown", propens=z1homeownPropensities, desiredProps=calib.cat.adjust, simenv = simenv, iteration = iteration)
+    z1homeownLvl1 <- adjustCatVarCalib(z1homeownLvl1, "z1homeown", propens=z1homeownPropensities, 
+                                       desiredProps=calib.cat.adjust, simenv = simenv, iteration = iteration)
     
     #SCENARIOS
-    z1accomLvl1 <<- adjustCatVar(z1accomLvl1, "z1accom", propens=z1accomPropensities, simenv = simenv, iteration = iteration)
-    z1homeownLvl1 <<- adjustCatVar(z1homeownLvl1, "z1homeown", propens=z1homeownPropensities, simenv = simenv, iteration = iteration)
-    z1overcrowdLvl1 <<- adjustCatVar(z1overcrowdLvl1, "z1overcrowd", propens=z1overcrowdPropensities, simenv = simenv, iteration = iteration)
+    z1accomLvl1 <<- adjustCatVar(z1accomLvl1, "z1accom", 
+                                 propens=z1accomPropensities, simenv = simenv, iteration = iteration)
+    z1homeownLvl1 <<- adjustCatVar(z1homeownLvl1, "z1homeown", 
+                                   propens=z1homeownPropensities, simenv = simenv, iteration = iteration)
+    z1overcrowdLvl1 <<- adjustCatVar(z1overcrowdLvl1, "z1overcrowd",
+                                     propens=z1overcrowdPropensities, simenv = simenv, iteration = iteration)
     
     checkNAs(z1accomLvl1)
     checkNAs(z1homeownLvl1)
@@ -819,10 +840,12 @@ simulateKnowLab <- function(run, simenv) {
       w2 <- w/sum(w)
       props1 <- (1-prop0)*w2
       calib.cat.adjust <- c(prop0, props1)
-      msmoke <- adjustContVarCalib(msmoke, "msmoke", propens=msmokePropensities, desiredProps=calib.cat.adjust, simenv = simenv, iteration = iteration)
+      msmoke <- adjustContVarCalib(msmoke, "msmoke", propens=msmokePropensities,
+                                   desiredProps=calib.cat.adjust, simenv = simenv, iteration = iteration)
       
       #sceanrios
-      msmoke <- adjustContVar(msmoke, "msmoke", propens=msmokePropensities[,-ncol(msmokePropensities)], simenv = simenv, iteration = iteration)
+      msmoke <- adjustContVar(msmoke, "msmoke", propens=msmokePropensities[,-ncol(msmokePropensities)], 
+                              simenv = simenv, iteration = iteration)
       checkNAs(msmoke)
       
       #fsmoke
@@ -876,7 +899,8 @@ simulateKnowLab <- function(run, simenv) {
       w2 <- w/sum(w)
       props1 <- (1-prop0)*w2
       calib.cat.adjust <- c(prop0, props1)
-      fsmoke <- adjustContVarCalib(fsmoke, "fsmoke", propens=fsmokePropensities, desiredProps=calib.cat.adjust, simenv = simenv, iteration = iteration)
+      fsmoke <- adjustContVarCalib(fsmoke, "fsmoke", propens=fsmokePropensities,
+                                   desiredProps=calib.cat.adjust, simenv = simenv, iteration = iteration)
       
       #scenarios
       fsmoke <- adjustContVar(fsmoke, "fsmoke", propens=fsmokePropensities[,-ncol(fsmokePropensities)], simenv = simenv, iteration = iteration)
@@ -1027,6 +1051,9 @@ simulateKnowLab <- function(run, simenv) {
       INTERACT <<- NAs
       PUNISH <<- NAs
       NPRESCH <<- NAs
+      z1INTERACTLvl1 <<- NAs
+      z1PUNISHLvl1 <<- NAs
+      
     } else if (iteration==5) {
       #NPRESCH
       mean_householdsize1_5 <<- apply(outcomes$householdsize[,1:5], ROW, mean)
@@ -1042,7 +1069,7 @@ simulateKnowLab <- function(run, simenv) {
       #INTERACT
       mean_kids1_5 <<- apply(outcomes$kids[,1:5], ROW, mean)
       mean_mhrswrk1_5 <<- apply(outcomes$mhrswrk[,1:5], ROW, mean)
-      mean_welfare1_5 <<- Qapply(outcomes$welfareLvl1[,1:5], ROW, mean) 
+      mean_welfare1_5 <<- apply(outcomes$welfareLvl1[,1:5], ROW, mean) 
       mean_z1accom1_5 <<- apply(outcomes$z1accomLvl1[,1:5], ROW, mean) 
       mean_z1overcrowd1_5 <<- apply(outcomes$z1overcrowdLvl1[,1:5], ROW, mean) 
       mean_z1chpar1_5 <<- apply(outcomes$z1chparLvl1[,1:5], ROW, mean) 
@@ -1065,22 +1092,12 @@ simulateKnowLab <- function(run, simenv) {
       z1INTERACTLvl1 <<- ifelse(INTERACT > 6, 1, 0)
       z1PUNISHLvl1 <<- ifelse(PUNISH > 1, 1, 0)
       
-      
-    } else if(iteration > 5){
-      INTERACT <<- INTERACT
-      PUNISH <<- PUNISH
-      
-      z1INTERACTLvl1 <<-ifelse(INTERACT > 6, 1, 0)
-      z1PUNISHLvl1 <<- ifelse(PUNISH > 1, 1, 0)
-      
-    }
+    } 
     
-    z1INTERACTLvl1 <<- ifelse(INTERACT > 6, 1, 0)
-    z1PUNISHLvl1 <<- ifelse(PUNISH > 1, 1, 0)
-    
-    
-    z1INTERACTLvl1 <<- adjustCatVar(z1INTERACTLvl1, "z1INTERACTLvl1", simenv = simenv, iteration = iteration)
-    z1PUNISHLvl1 <<- adjustCatVar(z1PUNISHLvl1, "z1PUNISHLvl1", simenv = simenv, iteration = iteration)
+    z1INTERACTLvl1 <<- adjustCatVar(z1INTERACTLvl1, "z1INTERACTLvl1", 
+                                    simenv = simenv, iteration = iteration)
+    z1PUNISHLvl1 <<- adjustCatVar(z1PUNISHLvl1, "z1PUNISHLvl1", 
+                                  simenv = simenv, iteration = iteration)
     
     
   }
@@ -1162,47 +1179,6 @@ simulateKnowLab <- function(run, simenv) {
     r1SleepLvl3 <<- ifelse(r1Sleep == 3, 1, 0)
   }
   
-  
-  simulate_BMI <- function(){
-    
-    bmiSD <- apply(children[,c( names(children)[grep("^BMI", names(children))])], 2, function(x) 
-      tapply(x, children$z1gender, sd)) 
-    
-    bmiInter <- bmiSD * 0.81 * 0.4456
-    
-    z1WatchTVLvl1 <<- adjustCatVar(z1WatchTVLvl1, "z1WatchTVLvl1", simenv = simenv, iteration = iteration)
-    
-    # if( iteration >=3 & iteration <=12){
-    #   BMI <<- apply(cbind(children[,c(paste0("BMI", iteration), "z1gender") ], z1WatchTVLvl1) , 1,
-    #                 function(x)  ifelse(x[2]==1,
-    #                                     rnorm(1, mean = bmiInter[2, iteration-1] + x[1] - bmiSD[2, iteration-1]*0.81 * x[3], sd = sdBMI[iteration-1, 1]/100),
-    #                                     rnorm(1, mean = bmiInter[1, iteration-1] + x[1] - bmiSD[1, iteration-1]*0.81 * x[3], sd = sdBMI[iteration-1, 2]/100)))
-    #   
-    # }else { 
-      BMI <<- apply(children[,c(paste0("BMI", iteration), "z1gender") ], 1,
-                    function(x)  ifelse(x[2]==1,
-                                        rnorm(1, mean = x[1], sd = sdBMI[iteration-1, 1]/50),
-                                        rnorm(1, mean = x[1], sd = sdBMI[iteration-1, 2]/50)))
-    # }
-    
-      
-      
-    z1OverweightBMILvl1 <<- numeric(5000) 
-    z1ObeseLvl1 <<- numeric(5000) 
-    
-    z1OverweightBMILvl1[children$z1gender==1] <<- 
-      ifelse(BMI[children$z1gender==1] >= overweightCutoff[iteration-1, 1],1,0)
-    z1OverweightBMILvl1[children$z1gender==0] <<- 
-      ifelse(BMI[children$z1gender==0] >= overweightCutoff[iteration-1, 2],1,0)
-    
-    z1ObeseLvl1[children$z1gender==1] <<- 
-      ifelse(BMI[children$z1gender==1] >= obeseCutoff[iteration-1, 1],1,0)
-    z1ObeseLvl1[children$z1gender==0] <<- 
-      ifelse(BMI[children$z1gender==0] >= obeseCutoff[iteration-1, 2],1,0)
-    
-  }
-  
-  
   simulate_childrenOverweight <- function() {  	  
     
     # if(iteration<19)	  
@@ -1235,6 +1211,46 @@ simulateKnowLab <- function(run, simenv) {
     #browser()
   }
   
+  
+  simulate_BMI <- function(){
+    
+    bmiSD <- apply(children[,c( names(children)[grep("^BMI", names(children))])], 2, function(x) 
+      tapply(x, children$z1gender, sd)) 
+    
+    bmiInter <- bmiSD * 0.81 * 0.4456
+    
+    z1WatchTVLvl1 <<- adjustCatVar(z1WatchTVLvl1, "z1WatchTVLvl1", simenv = simenv, iteration = iteration)
+    
+    # if( iteration >=3 & iteration <=12){
+    #   BMI <<- apply(cbind(children[,c(paste0("BMI", iteration), "z1gender") ], z1WatchTVLvl1) , 1,
+    #                 function(x)  ifelse(x[2]==1,
+    #rnorm(1, mean = bmiInter[2, iteration-1] + x[1] - bmiSD[2, iteration-1]*0.81 * x[3], sd = sdBMI[iteration-1, 1]/100),
+    #rnorm(1, mean = bmiInter[1, iteration-1] + x[1] - bmiSD[1, iteration-1]*0.81 * x[3], sd = sdBMI[iteration-1, 2]/100)))
+    #   
+    # }else { 
+      BMI <<- apply(children[,c(paste0("BMI", iteration), "z1gender") ], 1,
+                    function(x)  ifelse(x[2]==1,
+                                        rnorm(1, mean = x[1], sd = sdBMI[iteration-1, 1]),
+                                        rnorm(1, mean = x[1], sd = sdBMI[iteration-1, 2])))
+    # }
+    
+    z1OverweightBMILvl1 <<- numeric(5000) 
+    z1ObeseLvl1 <<- numeric(5000) 
+    
+    z1OverweightBMILvl1[children$z1gender==1] <<- 
+      ifelse(BMI[children$z1gender==1] >= overweightCutoff[iteration-1, 1],1,0)
+    z1OverweightBMILvl1[children$z1gender==0] <<- 
+      ifelse(BMI[children$z1gender==0] >= overweightCutoff[iteration-1, 2],1,0)
+    
+    z1ObeseLvl1[children$z1gender==1] <<- 
+      ifelse(BMI[children$z1gender==1] >= obeseCutoff[iteration-1, 1],1,0)
+    z1ObeseLvl1[children$z1gender==0] <<- 
+      ifelse(BMI[children$z1gender==0] >= obeseCutoff[iteration-1, 2],1,0)
+    
+  }
+  
+  
+
   
   
   simulate_IQ <- function() {	 	
@@ -1397,12 +1413,14 @@ simulateKnowLab <- function(run, simenv) {
       
     } 
     
+    z1BullyLvl1 <<- adjustCatVar(z1BullyLvl1, "z1BullyLvl1", 
+                                 simenv = simenv, iteration = iteration)
+    
   }
   
   simulate_AlcAbuse <- function() {	 		 
     
-    z1PUNISHLvl1 <<- adjustCatVar(z1INTERACTLvl1, "z1PUNISHLvl1", simenv = simenv, iteration = iteration)
-    
+      
     fage_imputed[fage_imputed ==99] <- NA
     
     male = c(11.5, 43.2, 28.6, 27.1, 25.4, 20.8, 14.8, 5.4)/100
@@ -1521,7 +1539,8 @@ simulateKnowLab <- function(run, simenv) {
     z1MotherDepressLvl1 <<- z1MotherDepressLvl1
     z1FatherDepressLvl1 <<- z1FatherDepressLvl1
     
-    z1ParentDepressLvl1 <<- apply(cbind(z1MotherDepressLvl1, z1FatherDepressLvl1),1, max, na.rm=TRUE)
+    z1ParentDepressLvl1 <<- apply(cbind(z1MotherDepressLvl1,
+                                        z1FatherDepressLvl1),1, max, na.rm=TRUE)
     
     if( iteration > 2 ){
       temp <- t(chol(matrix(c(1,0.93, 0.93,1), ncol = 2))) %*% 
@@ -1541,10 +1560,7 @@ simulateKnowLab <- function(run, simenv) {
     
     
     if(iteration >=15 & iteration <= 21){
-      browser()
-      
-      #z1BullyLvl1 <<- adjustCatVar(z1BullyLvl1, "z1BullyLvl1", simenv = simenv, iteration = iteration)
-       
+ 
       z1DepressLvl1 <<- 
         predSimBinom(models[[paste("z1DepressA", iteration, sep = "")]])	 
   
@@ -1610,9 +1626,7 @@ simulateKnowLab <- function(run, simenv) {
              ncol = 2)
     
     
-    
     school <- apply(transition_probabilities$r1School, 1, function(x) sample(1:100, 1, prob = x))
-    
     
     
     r1SchoolFunding <<-
