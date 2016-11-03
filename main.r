@@ -42,27 +42,45 @@ saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 ##########################################################################################
 
 
-tableBuilderNew(env.base, statistic = "qu", "BMI")
+tableBuilderNew(env.base, statistic = "freq", "MAGE")
+
+
+
+tableBuilderNew(env.base, statistic = "qu", "MAGE")
+
+
+
+tableBuilderNew(env.base, statistic = "mean", "BMI")
+
+tableBuilderNew(env.base, statistic = "mean", "BMI", grpbyName = "z1genderLvl1")
 
 
 
 
 
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1")%>% 
+  filter(Var == "Overweight") 
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1")%>% 
+  filter(Var == "Overweight") 
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1") %>% 
+  filter(Var == "Obese")
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "r1stchildethn") %>% 
+  filter(Var == "Overweight") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1", grpbyName = "r1stchildethn") %>% 
+  filter(Var == "Overweight") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
 
 
 
-
-tableBuilderNew(env.base, statistic = "freq", "z1ParentAlcLvl1")
-tableBuilderNew(env.base, statistic = "freq", "z1ParentDepressLvl1")
-
-
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1")
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1")
-
-
-
-
-tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1", grpbyName = "r1stchildethn") %>% 
+  filter(Var == "Obese") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
 
 
 tableBuilderNew(env.base, statistic = "mean", "BMI")
@@ -90,21 +108,14 @@ tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1", grpbyName =
   select(-Lower, -Upper) %>%  spread(groupByData, Mean)
 
 
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "r1stchildethn") %>% 
-  filter(Var == "Overweight") %>% 
-  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
 
 
 
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1", grpbyName = "r1stchildethn") %>% 
-  filter(Var == "Overweight") %>% 
-  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+tableBuilderNew(env.base, statistic = "freq", "z1ParentAlcLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1ParentDepressLvl1")
 
 
-
-tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1", grpbyName = "r1stchildethn") %>% 
-  filter(Var == "Obese") %>% 
-  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
 
 
 
@@ -391,19 +402,20 @@ tableBuilderNew(Simenv.scenario, statistic = "freq",
 
 ####################################################################################
 #Parental alcohol abuse to 14%
+
+source("SimmoduleMELC1_21.R")
+
 Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
-tableBuilderNew(env.base, statistic = "freq", "z1ParentAlcLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1ParentAlcLvl1")%>% filter(Var == "Yes")
 
 Simenv.scenario$cat.adjustments$z1ParentAlc[15,] <- c(0.9, 0.1)
-Simenv.scenario$cat.adjustments$z1ParentAlc[16,] <- c(0.9, 0.1)
-Simenv.scenario$cat.adjustments$z1ParentAlc[17,] <- c(0.9, 0.1)
-Simenv.scenario$cat.adjustments$z1ParentAlc[18,] <- c(0.9, 0.1)
-Simenv.scenario$cat.adjustments$z1ParentAlc[19,] <- c(0.9, 0.1)
-Simenv.scenario$cat.adjustments$z1ParentAlc[20,] <- c(0.9, 0.1)
-Simenv.scenario$cat.adjustments$z1ParentAlc[21,] <- c(0.9, 0.1)
+
 
 Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
+
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1ParentAlcLvl1") %>% filter(Var == "Yes")
+
 
 tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1")
 tableBuilderNew(Simenv.scenario, statistic = "freq", "z1AlcAbuseLvl1")
@@ -416,14 +428,8 @@ Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict
 tableBuilderNew(env.base, statistic = "freq", "z1ParentDepressLvl1")
 
 Simenv.scenario$cat.adjustments$z1ParentDepress[15,] <- c(0.9,  0.1)
-Simenv.scenario$cat.adjustments$z1ParentDepress[16,] <- c(0.9,  0.1)
-Simenv.scenario$cat.adjustments$z1ParentDepress[17,] <- c(0.9,  0.1)
-Simenv.scenario$cat.adjustments$z1ParentDepress[18,] <- c(0.9,  0.1)
-Simenv.scenario$cat.adjustments$z1ParentDepress[19,] <- c(0.9,  0.1)
-Simenv.scenario$cat.adjustments$z1ParentDepress[20,] <- c(0.9,  0.1)
-Simenv.scenario$cat.adjustments$z1ParentDepress[21,] <- c(0.9,  0.1)
 
-Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab) %>% filter(Var == "Yes")
 
 tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1")
 tableBuilderNew(Simenv.scenario, statistic = "freq", "z1DepressLvl1")

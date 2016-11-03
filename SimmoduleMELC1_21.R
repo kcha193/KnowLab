@@ -1463,21 +1463,21 @@ simulateKnowLab <- function(run, simenv) {
     
     #browser()
 
-    z1ParentAlcLvl1 <<- apply(cbind(z1MotherAlcLvl1, z1FatherAlcLvl1), 1, max, na.rm = TRUE)
+    z1ParentAlcLvl1 <- apply(cbind(z1MotherAlcLvl1, z1FatherAlcLvl1), 1, max, na.rm = TRUE)
     
 
     if( iteration > 2 ){
       temp <- t(chol(matrix(c(1,0.96, 0.96,1), ncol = 2))) %*% rbind(z1ParentAlcPreLvl1, z1ParentAlcLvl1)
       
       temp <- temp[2,]
-      temp[temp>1] <- 1
-      
       temp <- temp * mean(z1ParentAlcLvl1)/mean(temp)
+      temp[temp>1] <- 1
       
       z1ParentAlcLvl1 <- sapply(temp, function(x) rbinom(1,1,x))
       
     }
-    
+  
+      
     z1ParentAlcLvl1 <<- adjustCatVar(z1ParentAlcLvl1, "z1ParentAlcLvl1", 
                                      simenv = simenv, iteration = iteration)
     
@@ -1539,7 +1539,7 @@ simulateKnowLab <- function(run, simenv) {
     z1MotherDepressLvl1 <<- z1MotherDepressLvl1
     z1FatherDepressLvl1 <<- z1FatherDepressLvl1
     
-    z1ParentDepressLvl1 <<- apply(cbind(z1MotherDepressLvl1,
+    z1ParentDepressLvl1 <- apply(cbind(z1MotherDepressLvl1,
                                         z1FatherDepressLvl1),1, max, na.rm=TRUE)
     
     if( iteration > 2 ){
@@ -1547,9 +1547,9 @@ simulateKnowLab <- function(run, simenv) {
         rbind(z1ParentDepressPreLvl1, z1ParentDepressLvl1)
       
       temp <- temp[2,]
-      temp[temp>1] <- 1
-      
+    
       temp <- temp * mean(z1ParentDepressLvl1)/mean(temp)
+      temp[temp>1] <- 1
       
       z1ParentDepressLvl1 <- sapply(temp, function(x) rbinom(1,1,x))
       
