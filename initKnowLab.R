@@ -603,25 +603,37 @@ initSim <- function(num.iterations){
     catToContModels$NPRESCH <- list()
     
     catToContModels$MAGE <- list(loadGLMCSV(modelfiledir, "mage1_20.csv"),
-                                 loadGLMCSV(modelfiledir, "mage20_24.csv"), loadGLMCSV(modelfiledir, "mage25_29.csv"),
-                                 loadGLMCSV(modelfiledir, "mage30_34.csv"), loadGLMCSV(modelfiledir, "mage35_39.csv"),
+                                 loadGLMCSV(modelfiledir, "mage20_24.csv"), 
+                                 loadGLMCSV(modelfiledir, "mage25_29.csv"),
+                                 loadGLMCSV(modelfiledir, "mage30_34.csv"), 
+                                 loadGLMCSV(modelfiledir, "mage35_39.csv"),
                                  loadGLMCSV(modelfiledir, "mage40Plus.csv"))
     catToContModels$fhrswrk <- list(loadGLMCSV(modelfiledir, "fhrs0.csv"), 
-                                    loadGLMCSV(modelfiledir, "fhrs1_20.csv"), loadGLMCSV(modelfiledir, "fhrs21_35.csv"),
-                                    loadGLMCSV(modelfiledir, "fhrs36_40.csv"), loadGLMCSV(modelfiledir, "fhrs41_45.csv"),
-                                    loadGLMCSV(modelfiledir, "fhrs46_50.csv"), loadGLMCSV(modelfiledir, "fhrsGT50.csv"))
+                                    loadGLMCSV(modelfiledir, "fhrs1_20.csv"), 
+                                    loadGLMCSV(modelfiledir, "fhrs21_35.csv"),
+                                    loadGLMCSV(modelfiledir, "fhrs36_40.csv"), 
+                                    loadGLMCSV(modelfiledir, "fhrs41_45.csv"),
+                                    loadGLMCSV(modelfiledir, "fhrs46_50.csv"), 
+                                    loadGLMCSV(modelfiledir, "fhrsGT50.csv"))
     catToContModels$mhrswrk <- list(loadGLMCSV(modelfiledir, "mhrs0.csv"), 
-                                    loadGLMCSV(modelfiledir, "mhrs1_10.csv"), loadGLMCSV(modelfiledir, "mhrs11_20.csv"),
-                                    loadGLMCSV(modelfiledir, "mhrs21_30.csv"), loadGLMCSV(modelfiledir, "mhrs31_40.csv"),
+                                    loadGLMCSV(modelfiledir, "mhrs1_10.csv"), 
+                                    loadGLMCSV(modelfiledir, "mhrs11_20.csv"),
+                                    loadGLMCSV(modelfiledir, "mhrs21_30.csv"), 
+                                    loadGLMCSV(modelfiledir, "mhrs31_40.csv"),
                                     loadGLMCSV(modelfiledir, "mhrsGT40.csv"))
     catToContModels$chres <- list(loadGLMCSV(modelfiledir, "chres0.csv"), 
-                                  loadGLMCSV(modelfiledir, "chres1.csv"), loadGLMCSV(modelfiledir, "chres2plus.csv"))
+                                  loadGLMCSV(modelfiledir, "chres1.csv"), 
+                                  loadGLMCSV(modelfiledir, "chres2plus.csv"))
     catToContModels$kids <- list(loadGLMCSV(modelfiledir, "kids1.csv"), 
-                                 loadGLMCSV(modelfiledir, "kids2.csv"), loadGLMCSV(modelfiledir, "kids3.csv"),
-                                 loadGLMCSV(modelfiledir, "kids4.csv"), loadGLMCSV(modelfiledir, "kids5plus.csv"))
+                                 loadGLMCSV(modelfiledir, "kids2.csv"), 
+                                 loadGLMCSV(modelfiledir, "kids3.csv"),
+                                 loadGLMCSV(modelfiledir, "kids4.csv"), 
+                                 loadGLMCSV(modelfiledir, "kids5plus.csv"))
     catToContModels$householdsize <- list(loadGLMCSV(modelfiledir, "householdsize2.csv"), 
-                                          loadGLMCSV(modelfiledir, "householdsize3.csv"), loadGLMCSV(modelfiledir, "householdsize4.csv"),
-                                          loadGLMCSV(modelfiledir, "householdsize5.csv"), loadGLMCSV(modelfiledir, "householdsize6plus.csv"))
+                                          loadGLMCSV(modelfiledir, "householdsize3.csv"), 
+                                          loadGLMCSV(modelfiledir, "householdsize4.csv"),
+                                          loadGLMCSV(modelfiledir, "householdsize5.csv"), 
+                                          loadGLMCSV(modelfiledir, "householdsize6plus.csv"))
     catToContModels$msmoke <- list(loadGLMCSV(modelfiledir, "msmoke0.csv"), 
                                    loadGLMCSV(modelfiledir, "msmoke1_10.csv"), loadGLMCSV(modelfiledir, "msmoke11_20.csv"),
                                    loadGLMCSV(modelfiledir, "msmokeGT20.csv"))
@@ -639,8 +651,10 @@ initSim <- function(num.iterations){
                                     loadGLMCSV(modelfiledir, "pregalc6.csv"), loadGLMCSV(modelfiledir, "pregalc7.csv"),
                                     loadGLMCSV(modelfiledir, "pregalc8Plus.csv"))
     catToContModels$bwkg <- list(loadGLMCSV(modelfiledir, "bwkgLT25.csv"), 
-                                 loadGLMCSV(modelfiledir, "bwkg25_29.csv"), loadGLMCSV(modelfiledir, "bwkg30_34.csv"),
-                                 loadGLMCSV(modelfiledir, "bwkg35_39.csv"), loadGLMCSV(modelfiledir, "bwkg4Plus.csv"))
+                                 loadGLMCSV(modelfiledir, "bwkg25_29.csv"), 
+                                 loadGLMCSV(modelfiledir, "bwkg30_34.csv"),
+                                 loadGLMCSV(modelfiledir, "bwkg35_39.csv"), 
+                                 loadGLMCSV(modelfiledir, "bwkg4Plus.csv"))
     catToContModels$ga <- list(loadGLMCSV(modelfiledir, "gaLT35.csv"), 
                                loadGLMCSV(modelfiledir, "ga35.csv"), loadGLMCSV(modelfiledir, "ga36.csv"),
                                loadGLMCSV(modelfiledir, "ga37_42.csv"), loadGLMCSV(modelfiledir, "gaGT42.csv"))
@@ -803,7 +817,7 @@ initSim <- function(num.iterations){
   dict<- createDict(descriptions_dataframe, codings_dataframe)
   
   #load initial basefile
-  children <- loadBaseFileCSV(basefiledir, "synthBasefile_MhrswrkFixed_5000_New1.csv") 
+  children <- loadBaseFileCSV(basefiledir, "synthBasefile_MhrswrkFixed_5000_New.csv") 
   
   #create simframe
   sfdef <- read_file(basefiledir, "simframedef.csv")

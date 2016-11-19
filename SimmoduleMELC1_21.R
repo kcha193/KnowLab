@@ -1376,17 +1376,31 @@ simulateKnowLab <- function(run, simenv) {
       
       Score <<- currectScore
       
-      z1ScoreLvl1 <<- ifelse(currectScore > 88, 1,0)
+      z1ScoreLvl1 <- ifelse(currectScore > 87, 1,0)
       
-      z1FailLvl1 <<- ifelse(currectScore <= 78.5, 1,0)
+      z1DropLvl1 <- ifelse(currectScore <= 80.5, 1,0)
       
-      z1DropLvl1 <<- ifelse(currectScore > 78.5 & currectScore <= 88, 1,0)
+      z1FailLvl1 <- ifelse(currectScore > 80.5 & currectScore <= 87, 1,0)
+      
+      
+      z1ScoreLvl1 <<- adjustCatVar(z1ScoreLvl1, "z1ScoreLvl1", 
+                                           simenv = simenv, iteration = iteration)
+      z1FailLvl1 <<- adjustCatVar(z1FailLvl1, "z1FailLvl1", 
+                                   simenv = simenv, iteration = iteration)
+      z1DropLvl1 <<- adjustCatVar(z1DropLvl1, "z1DropLvl1", 
+                                   simenv = simenv, iteration = iteration)
+      
       
     } 
   }
   
   
   simulate_NEET <- function() {	 		 
+    
+    
+    
+    
+    
     
     if(iteration >=16 & iteration <= 21){
       

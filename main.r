@@ -45,9 +45,7 @@ saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 tableBuilderNew(env.base, statistic = "freq", "MAGE")
 
 
-
 tableBuilderNew(env.base, statistic = "qu", "MAGE")
-
 
 
 tableBuilderNew(env.base, statistic = "mean", "BMI")
@@ -241,7 +239,18 @@ tableBuilderNew(env.base, statistic = "freq", "r1Sleep")
 
 
 
+#####################################################################################
+#BWKG
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+tableBuilderNew(env.base, "freq", "bwkg")
+Simenv.scenario$cat.adjustments$bwkg[1,] <- c(0, 0, 0, 0, 1)	
 
+Simenv.scenario <- simulateSimario(Simenv.scenario, 2, simulateKnowLab)
+
+tableBuilderNew(Simenv.scenario, "freq", "bwkg")
+
+tableBuilderNew(env.base, "mean", "bwkg")
+tableBuilderNew(Simenv.scenario, "mean", "bwkg")
 
 
 #####################################################################################
@@ -441,15 +450,6 @@ tableBuilderNew(Simenv.scenario, statistic = "freq", "z1DepressLvl1")
 
 
 
-
-
-
-
-
-
-
-
-
 tableBuilderNew(env.base, statistic = "mean", "Score")
 
 tableBuilderNew(env.base, statistic = "mean", "Score", grpbyName = "z1genderLvl1")
@@ -465,10 +465,12 @@ tableBuilderNew(env.base, statistic = "mean", "Score", grpbyName = "r1stchildeth
 
 tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1") %>% 
   filter(Var == "Passed" & Year == 17)
+
 tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1") %>% 
   filter(Var == "Dropout" & Year == 17)
 tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1") %>% 
   filter(Var == "Failed" & Year == 17)
+
 
 tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1", grpbyName = "z1genderLvl1") %>% 
   filter(Var == "Passed" & Year == 17)

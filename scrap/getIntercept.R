@@ -983,7 +983,7 @@ inter = meanScore - (-4.15 * mean(z1genderLvl1[r1stchildethn != 2])  -
                        0.3 * sdScore * mean(r1ParentEducLvl3[r1stchildethn != 2]) +
                        d(0.3) * sdScore * mean(z1PrintExpLvl1[r1stchildethn != 2]) + 
                        0.137*sdScore * mean(z1ECELvl1[r1stchildethn != 2]) -
-                       d(0.32) * sdScore * mean(z1ADHDLvl1[r1stchildethn != 2]) + 
+                       d(-0.32) * sdScore * mean(z1ADHDLvl1[r1stchildethn != 2]) + 
                        0.35* sdScore* mean(z1ParentInvolveLvl1[r1stchildethn != 2]) + 0.6 * 100 )
 
 inter
@@ -992,7 +992,7 @@ eMean <-  inter -4.15 * (z1genderLvl1[r1stchildethn != 2]) -0 * r1stchildethnLvl
   4.075 * r1stchildethnLvl3[r1stchildethn != 2] + 6.125 * r1stchildethnLvl4[r1stchildethn != 2] - 
   0.27 * sdScore * (SESBTHLvl3[r1stchildethn != 2]) -  0.3 * sdScore * (r1ParentEducLvl3[r1stchildethn != 2]) +
   d(0.3) * sdScore * (z1PrintExpLvl1[r1stchildethn != 2]) + 0.137*sdScore * (z1ECELvl1[r1stchildethn != 2])-
-  d(0.32) * sdScore * (z1ADHDLvl1[r1stchildethn != 2]) +  0.35* sdScore* mean(z1ParentInvolveLvl1[r1stchildethn != 2]) + 0.6 * 100
+  d(-0.32) * sdScore * (z1ADHDLvl1[r1stchildethn != 2]) +  0.35* sdScore* mean(z1ParentInvolveLvl1[r1stchildethn != 2]) + 0.6 * 100
 
 
 
@@ -1012,7 +1012,7 @@ inter = meanScore - (-1.5 * mean(z1genderLvl1[r1stchildethn == 2])  -
                        0.3 * sdScore * mean(r1ParentEducLvl3[r1stchildethn == 2]) +
                        d(0.3) * sdScore * mean(z1PrintExpLvl1[r1stchildethn == 2]) + 
                        0.137*sdScore * mean(z1ECELvl1[r1stchildethn == 2]) -
-                       d(0.32) * sdScore * mean(z1ADHDLvl1[r1stchildethn == 2]) + 
+                       d(-0.32) * sdScore * mean(z1ADHDLvl1[r1stchildethn == 2]) + 
                        0.35* sdScore* mean(z1ParentInvolveLvl1[r1stchildethn == 2]) + 0.6 * 100 )
 
 inter
