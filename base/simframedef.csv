@@ -294,7 +294,7 @@ z1stmDiabeteLvl1,,z1stmDiabeteLvl1,categorical,,years1_21
 z1HearingLvl1,,z1HearingLvl1,categorical,,years1_21
 z1ECELvl1,,z1ECELvl1,categorical,,years1_21
 z1PrintExpLvl1,,z1PrintExpLvl1,categorical,,years1_21
-z1DrinkLvl1,,z1DrinkLvl1,categorical,,
+z1DrinkLvl1,,"ifelse(pregalc > 5, 1, 0)",categorical,,
 IQ_previous,,as.integer(NA),continuous,,
 z1ADHDLvl1,,z1ADHDLvl1,categorical,,years1_21
 Score,,as.integer(NA),continuous,,

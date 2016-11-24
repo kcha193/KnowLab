@@ -461,8 +461,6 @@ tableBuilderNew(env.base, statistic = "mean", "Score", grpbyName = "r1stchildeth
                 logisetexpr = "z1genderLvl1 == 1")
 
 
-
-
 tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1") %>% 
   filter(Var == "Passed" & Year == 17)
 

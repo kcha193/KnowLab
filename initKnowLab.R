@@ -736,28 +736,41 @@ initSim <- function(num.iterations){
     
     PropensityModels$z1single0 <- list(loadGLMCSV(modelfiledir, "TempZ1single0Prob.csv"))
     PropensityModels$BREAST <- list(loadGLMCSV(modelfiledir, "TempBreastProb0.csv"),
-                                    loadGLMCSV(modelfiledir, "TempBreastProb1.csv"), loadGLMCSV(modelfiledir, "TempBreastProb2.csv"),
-                                    loadGLMCSV(modelfiledir, "TempBreastProb3.csv"), loadGLMCSV(modelfiledir, "TempBreastProb4.csv"),
-                                    loadGLMCSV(modelfiledir, "TempBreastProb5.csv"), loadGLMCSV(modelfiledir, "TempBreastProb6.csv"),
-                                    loadGLMCSV(modelfiledir, "TempBreastProb7.csv"), loadGLMCSV(modelfiledir, "TempBreastProb8.csv"),
-                                    loadGLMCSV(modelfiledir, "TempBreastProb9.csv"), loadGLMCSV(modelfiledir, "TempBreastProb10.csv"),
+                                    loadGLMCSV(modelfiledir, "TempBreastProb1.csv"), 
+                                    loadGLMCSV(modelfiledir, "TempBreastProb2.csv"),
+                                    loadGLMCSV(modelfiledir, "TempBreastProb3.csv"), 
+                                    loadGLMCSV(modelfiledir, "TempBreastProb4.csv"),
+                                    loadGLMCSV(modelfiledir, "TempBreastProb5.csv"), 
+                                    loadGLMCSV(modelfiledir, "TempBreastProb6.csv"),
+                                    loadGLMCSV(modelfiledir, "TempBreastProb7.csv"), 
+                                    loadGLMCSV(modelfiledir, "TempBreastProb8.csv"),
+                                    loadGLMCSV(modelfiledir, "TempBreastProb9.csv"), 
+                                    loadGLMCSV(modelfiledir, "TempBreastProb10.csv"),
                                     loadGLMCSV(modelfiledir, "TempBreastProb11.csv"))
     PropensityModels$INTERACT <- list(loadGLMCSV(modelfiledir, "TempInteractProb2.csv"),
-                                      loadGLMCSV(modelfiledir, "TempInteractProb3.csv"), loadGLMCSV(modelfiledir, "TempInteractProb4.csv"),
-                                      loadGLMCSV(modelfiledir, "TempInteractProb5.csv"), loadGLMCSV(modelfiledir, "TempInteractProb6.csv"),
-                                      loadGLMCSV(modelfiledir, "TempInteractProb7.csv"), loadGLMCSV(modelfiledir, "TempInteractProb8.csv"),
+                                      loadGLMCSV(modelfiledir, "TempInteractProb3.csv"), 
+                                      loadGLMCSV(modelfiledir, "TempInteractProb4.csv"),
+                                      loadGLMCSV(modelfiledir, "TempInteractProb5.csv"), 
+                                      loadGLMCSV(modelfiledir, "TempInteractProb6.csv"),
+                                      loadGLMCSV(modelfiledir, "TempInteractProb7.csv"), 
+                                      loadGLMCSV(modelfiledir, "TempInteractProb8.csv"),
                                       loadGLMCSV(modelfiledir, "TempInteractProb9.csv"))
     PropensityModels$PUNISH <- list(loadGLMCSV(modelfiledir, "TempPunishProb0.csv"),
-                                    loadGLMCSV(modelfiledir, "TempPunishProb1.csv"), loadGLMCSV(modelfiledir, "TempPunishProb2.csv"),
-                                    loadGLMCSV(modelfiledir, "TempPunishProb3.csv"), loadGLMCSV(modelfiledir, "TempPunishProb4.csv"))
+                                    loadGLMCSV(modelfiledir, "TempPunishProb1.csv"), 
+                                    loadGLMCSV(modelfiledir, "TempPunishProb2.csv"),
+                                    loadGLMCSV(modelfiledir, "TempPunishProb3.csv"), 
+                                    loadGLMCSV(modelfiledir, "TempPunishProb4.csv"))
+    
     PropensityModels$SESBTH <- list(loadGLMCSV(modelfiledir, "TempSESBTHProb1.csv"),
                                     loadGLMCSV(modelfiledir, "TempSESBTHProb2.csv"))
     PropensityModels$NPRESCH <- list(loadGLMCSV(modelfiledir, "TempNpreschProb0.csv"),
-                                     loadGLMCSV(modelfiledir, "TempNpreschProb1.csv"), loadGLMCSV(modelfiledir, "TempNpreschProb2.csv"))
+                                     loadGLMCSV(modelfiledir, "TempNpreschProb1.csv"), 
+                                     loadGLMCSV(modelfiledir, "TempNpreschProb2.csv"))
     PropensityModels$r1stchildethn <- list(loadGLMCSV(modelfiledir, "TempR1stchildethnProb1.csv"),
                                            loadGLMCSV(modelfiledir, "TempR1stchildethnProb2.csv"))
     PropensityModels$bwkg <- list(loadGLMCSV(modelfiledir, "TempBwkgProb1.csv"),
-                                  loadGLMCSV(modelfiledir, "TempBwkgProb2.csv"), loadGLMCSV(modelfiledir, "TempBwkgProb3.csv"),
+                                  loadGLMCSV(modelfiledir, "TempBwkgProb2.csv"), 
+                                  loadGLMCSV(modelfiledir, "TempBwkgProb3.csv"),
                                   loadGLMCSV(modelfiledir, "TempBwkgProb4.csv"))
     PropensityModels$r1stmeduc <- list(loadGLMCSV(modelfiledir, "TempR1stmeducProb1.csv"),
                                        loadGLMCSV(modelfiledir, "TempR1stmeducProb2.csv"))

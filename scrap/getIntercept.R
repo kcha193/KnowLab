@@ -623,10 +623,39 @@ simIQ <- round(simIQ)
 mean(simIQ)
 sd(simIQ)
 
-
 ##########################################################################
 # Using a correlation matrix (let' assume that all variables
 # have unit variance
+R <- matrix(c(1,0.86, 0.86,1 ),2,2)
+
+U = t(chol(R))
+nvars = dim(U)[1]
+numobs = 100
+set.seed(1)
+
+
+
+random.normal = matrix(rnorm(nvars*numobs,100,2), nrow=nvars, ncol=numobs);
+cor(t(random.normal))
+
+
+
+X = U %*% random.normal
+newX = t(X)
+raw = as.data.frame(newX)
+orig.raw = as.data.frame(t(random.normal))
+names(raw) = paste("A", 2:16, sep = "")
+cor(raw)
+
+
+
+
+
+
+
+##########################################################################
+# Using a correlation matrix (let' assume that all variable have unit variance
+
 temp <- c(1,0.86,0.8, 0.8, rep(0.74, 5), rep(0.70,6) )
 
 cycleDes <- function(x, start) {
@@ -642,7 +671,7 @@ R = matrix( rbind(t(sapply(1:14, function(x)
 
 U = t(chol(R))
 nvars = dim(U)[1]
-numobs = 100000
+numobs = 1000
 set.seed(1)
 random.normal = matrix(rnorm(nvars*numobs,100,15), nrow=nvars, ncol=numobs);
 X = U %*% random.normal

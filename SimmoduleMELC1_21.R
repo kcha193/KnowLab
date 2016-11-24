@@ -1250,12 +1250,10 @@ simulateKnowLab <- function(run, simenv) {
   }
   
   
-
-  
-  
   simulate_IQ <- function() {	 	
     
-    z1GALvl1 <- as.integer(ga<37)
+    z1GALvl1 <<- as.integer(ga<37)
+    z1DrinkLvl1 <<-ifelse(pregalc > 5, 1, 0)
     
     if(iteration == 2){
       IQ <- predSimNorm(models$IQA2)	

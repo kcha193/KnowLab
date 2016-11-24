@@ -35,7 +35,13 @@ source("SimmoduleMELC1_21.R")
 Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 #Simenv.scenario$cat.adjustments$z1ECELvl1[1,] <- c(0,1)	
 
-tableBuilderNew(env.base, "freq", "r1mBMI")
+tableBuilderNew(env.base, "mean", "IQ", logisetexpr = "pregalc == 0")
+
+temp <- data.frame(env.base$modules$run_results$run1$IQ, env.base$simframe$pregalc)
+
+mean(env.base$modules$run_results$run1$IQ[env.base$simframe$pregalc == 0,1])
+
+
 
 Simenv.scenario$cat.adjustments$r1mBMI[1,] <- c(0.77, 0.02, 0.135, 0.075)	
 
@@ -49,9 +55,23 @@ Simenv.scenario$cat.adjustments$z1Breakfast[1,] <- c(0, 1)
 
 # Initiate cluster
 
-Simenv.scenario <- simulateSimario(Simenv.scenario, 10)
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
 
 #Simenv.scenario <- simulateNP(Simenv.scenario, 4)
+
+#################################################################################################
+
+tableBuilderNew(env.base, "freq", "pregalc")
+tableBuilderNew(env.base, "freq", "z1DrinkLvl1")
+
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+Simenv.scenario$cat.adjustments$pregalc[1,] <- c(0.9, 0.1,0,0,0,0,0,0,0)	
+
+Simenv.scenario <- simulateSimario(Simenv.scenario, 2, simulateKnowLab)
+
+tableBuilderNew(Simenv.scenario, "freq", "pregalc")
+tableBuilderNew(Simenv.scenario, "freq", "z1DrinkLvl1")
 
 
 ###################################################################################################
