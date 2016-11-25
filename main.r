@@ -8,7 +8,7 @@ rm(list = ls())
 
 detach("simframe")
 
-library(dplyr)
+library(tidyverse)
 library(simarioV2)
 # library(profvis)
 
