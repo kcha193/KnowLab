@@ -612,11 +612,8 @@ eMean <-  inter - 11.94*z1GALvl1 - 4.98*z1LowBwLvl1 -
   6.3 * z1HearingLvl1 +
   d(0.18) * 15 * z1PrintExpLvl1 - 0.13 * 15 *z1DrinkLvl1		
 
-
-
-
-
-simIQ <- sapply(eMean, function(x) rnorm(1, x, 15-1 ))
+set.seed(1)
+simIQ <- sapply(eMean, function(x) rnorm(1, x, sqrt(abs(15^2 - sd(eMean)^2))))
 
 simIQ <- round(simIQ)
 
@@ -630,28 +627,29 @@ R <- matrix(c(1,0.86, 0.86,1 ),2,2)
 
 U = t(chol(R))
 nvars = dim(U)[1]
-numobs = 100
-set.seed(1)
+numobs = length(simIQ)
 
 
 
-random.normal = matrix(rnorm(nvars*numobs,100,2), nrow=nvars, ncol=numobs);
+random.normal = rbind(simIQ, rnorm(5000, simIQ, sqrt(abs(15^2 - sd(simIQ)^2))))
 cor(t(random.normal))
-
-
 
 X = U %*% random.normal
 newX = t(X)
 raw = as.data.frame(newX)
 orig.raw = as.data.frame(t(random.normal))
-names(raw) = paste("A", 2:16, sep = "")
 cor(raw)
 
+colMeans(raw)
 
+sd(raw[,1])
+sd(raw[,2])
 
+raw[,2] <- (scale(raw[,2]))*15  + 100
 
+colMeans(raw)
 
-
+cor(raw)
 
 ##########################################################################
 # Using a correlation matrix (let' assume that all variable have unit variance
@@ -717,13 +715,13 @@ temp <- summary(lm(A4 ~ A3 + A2 , raw2))$coef[,1]
 100 - (temp[2]*mean(raw2$A3) + temp[3]*mean(raw2$A2) + 0.27*15 * mean(z1ECELvl1))
 
 
-
 summary(lm(A5 ~ A4 + A3 + A2 , raw2))
 summary(lm(A6 ~ A5 + A4 + A3 + A2 , raw2))
 summary(lm(A7 ~ A6 + A5 + A4 + A3 + A2, raw2))
 summary(lm(A8 ~ A7 + A6 + A5 + A4 + A3 + A2, raw2))
 summary(lm(A9 ~ A8 + A7 +A6 + A5 + A4 + A3 + A2, raw2))
 summary(lm(A10 ~ A9 + A8 +A8 + A7 +A6 + A5 + A4 + A3 + A2, raw2))
+
 
 temp <- 
   rbind(
@@ -750,7 +748,7 @@ mean(
 
 
 
-#########################################################################	
+################################################################################	
 
 
 r1stchildethn <-  numeric(5000)
@@ -1169,106 +1167,106 @@ modelfiledir <- paste(getwd(),"/models/",sep="")
 ########################################################################
 #Female
 
-pNEET <- c(3.3,  5.5625 , 8.7875 ,12.0125 ,15.2375, 18.4625)/100		
+pNEET <- c(3.3,  5.5625 , 8.7875, 12.0125 ,15.2375, 18.4625)/100		
 
 
-temp <- models$zz1NEETGender0A16	
+temp <- models$zz1NEETGender0A16_17	
 
-modeldf$zz1NEETGender0A16[1, 3]<- getIntercept( pNEET[1], temp, set = z1genderLvl1 == 0)
+modeldf$zz1NEETGender0A16_17[1, 3]<- getIntercept( pNEET[1], temp, set = z1genderLvl1 == 0)
 
-temp$coefficients[1] <- modeldf$zz1NEETGender0A16[1, 3]
-
-z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
-
-
-print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
-
-write.csv(modeldf$zz1NEETGender0A16, paste(modelfiledir, "z1NEETGender0A16.csv", sep = ""), row.names = FALSE) 
-
-temp <- models$zz1NEETGender0A17	
-
-modeldf$zz1NEETGender0A17[1, 3]<- getIntercept( pNEET[2], temp, set = z1genderLvl1 == 0)
-
-temp$coefficients[1] <- modeldf$zz1NEETGender0A16[1, 3]
+temp$coefficients[1] <- modeldf$zz1NEETGender0A16_17[1, 3]
 
 z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
 
 
 print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
 
+write.csv(modeldf$zz1NEETGender0A16_17, paste(modelfiledir, "z1NEETGender0A16.csv", sep = ""), row.names = FALSE) 
 
-write.csv(modeldf$zz1NEETGender0A17, paste(modelfiledir, "z1NEETGender0A17.csv", sep = ""), row.names = FALSE) 
+temp <- models$zz1NEETGender0A16_17	
 
+modeldf$zz1NEETGender0A16_17[1, 3]<- getIntercept( pNEET[2], temp, set = z1genderLvl1 == 0)
 
-temp <- models$zz1NEETGender0A18
-
-z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,17]
-
-
-modeldf$zz1NEETGender0A18[1, 3]<- getIntercept( pNEET[3], temp, set = z1genderLvl1 == 0)
-
-temp$coefficients[1] <- modeldf$zz1NEETGender0A18[1, 3]
+temp$coefficients[1] <- modeldf$zz1NEETGender0A16_17[1, 3]
 
 z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
 
 
 print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
 
-write.csv(modeldf$zz1NEETGender0A18, paste(modelfiledir, "z1NEETGender0A18.csv", sep = ""), row.names = FALSE) 
+
+write.csv(modeldf$zz1NEETGender0A16_17, paste(modelfiledir, "z1NEETGender0A17.csv", sep = ""), row.names = FALSE) 
 
 
+temp <- models$zz1NEETGender0A18_21
 
-temp <- models$zz1NEETGender0A19	
-
-z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,17]
-
-
-modeldf$zz1NEETGender0A19[1, 3]<- getIntercept( pNEET[4], temp, set = z1genderLvl1 == 0)
-
-temp$coefficients[1] <- modeldf$zz1NEETGender0A19[1, 3]
-
-z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,1]
 
 
-print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+modeldf$zz1NEETGender0A18_21[1, 3]<- getIntercept( pNEET[3], temp, set = z1genderLvl1 == 0)
 
-write.csv(modeldf$zz1NEETGender0A19, paste(modelfiledir, "z1NEETGender0A19.csv", sep = ""), row.names = FALSE) 
-
-
-
-temp <- models$zz1NEETGender0A20
-
-z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,17]
-
-
-modeldf$zz1NEETGender0A20[1, 3]<- getIntercept( pNEET[5], temp, set = z1genderLvl1 == 0)
-
-temp$coefficients[1] <- modeldf$zz1NEETGender0A20[1, 3]
+temp$coefficients[1] <- modeldf$zz1NEETGender0A18_21[1, 3]
 
 z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
 
 
 print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
 
-write.csv(modeldf$zz1NEETGender0A20, paste(modelfiledir, "z1NEETGender0A20.csv", sep = ""), row.names = FALSE) 
+write.csv(modeldf$zz1NEETGender0A18_21, paste(modelfiledir, "z1NEETGender0A18.csv", sep = ""), row.names = FALSE) 
 
 
 
-temp <- models$zz1NEETGender0A21
+temp <- models$zz1NEETGender0A18_21	
 
-z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,17]
+z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,1]
 
 
-modeldf$zz1NEETGender0A21[1, 3]<- getIntercept( pNEET[6], temp, set = z1genderLvl1 == 0)
+modeldf$zz1NEETGender0A18_21[1, 3]<- getIntercept( pNEET[4], temp, set = z1genderLvl1 == 0)
 
-temp$coefficients[1] <- modeldf$zz1NEETGender0A21[1, 3]
+temp$coefficients[1] <- modeldf$zz1NEETGender0A18_21[1, 3]
 
 z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
 
 
 print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
 
-write.csv(modeldf$zz1NEETGender0A21, paste(modelfiledir, "z1NEETGender0A21.csv", sep = ""), row.names = FALSE) 
+write.csv(modeldf$zz1NEETGender0A18_21, paste(modelfiledir, "z1NEETGender0A19.csv", sep = ""), row.names = FALSE) 
+
+
+
+temp <- models$zz1NEETGender0A18_21
+
+z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,1]
+
+
+modeldf$zz1NEETGender0A18_21[1, 3]<- getIntercept( pNEET[5], temp, set = z1genderLvl1 == 0)
+
+temp$coefficients[1] <- modeldf$zz1NEETGender0A18_21[1, 3]
+
+z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+
+
+print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+
+write.csv(modeldf$zz1NEETGender0A18_21, paste(modelfiledir, "z1NEETGender0A20.csv", sep = ""), row.names = FALSE) 
+
+
+
+temp <- models$zz1NEETGender0A18_21
+
+z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,1]
+
+
+modeldf$zz1NEETGender0A18_21[1, 3]<- getIntercept( pNEET[6], temp, set = z1genderLvl1 == 0)
+
+temp$coefficients[1] <- modeldf$zz1NEETGender0A18_21[1, 3]
+
+z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+
+
+print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+
+write.csv(modeldf$zz1NEETGender0A18_21, paste(modelfiledir, "z1NEETGender0A21.csv", sep = ""), row.names = FALSE) 
 
 
 
@@ -1277,103 +1275,103 @@ write.csv(modeldf$zz1NEETGender0A21, paste(modelfiledir, "z1NEETGender0A21.csv",
 pNEET <- c( 2.88 , 5.1375,  7.3125 , 9.4875, 11.6625, 13.8375)/100		
 
 
-temp <- models$zz1NEETGender1A16	
+temp <- models$zz1NEETGender1A16_17	
 
-modeldf$zz1NEETGender1A16[1, 3]<- getIntercept( pNEET[1], temp, set = z1genderLvl1 == 0)
+modeldf$zz1NEETGender1A16_17[1, 3]<- getIntercept( pNEET[1], temp, set = z1genderLvl1 == 0)
 
-temp$coefficients[1] <- modeldf$zz1NEETGender1A16[1, 3]
-
-z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
-
-
-print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
-
-write.csv(modeldf$zz1NEETGender1A16, paste(modelfiledir, "z1NEETGender1A16.csv", sep = ""), row.names = FALSE) 
-
-temp <- models$zz1NEETGender1A17	
-
-modeldf$zz1NEETGender1A17[1, 3]<- getIntercept( pNEET[2], temp, set = z1genderLvl1 == 0)
-
-temp$coefficients[1] <- modeldf$zz1NEETGender1A16[1, 3]
+temp$coefficients[1] <- modeldf$zz1NEETGender1A16_17[1, 3]
 
 z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
 
 
 print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
 
+write.csv(modeldf$zz1NEETGender1A16_17, paste(modelfiledir, "z1NEETGender1A16.csv", sep = ""), row.names = FALSE) 
 
-write.csv(modeldf$zz1NEETGender1A17, paste(modelfiledir, "z1NEETGender1A17.csv", sep = ""), row.names = FALSE) 
+temp <- models$zz1NEETGender1A16_17	
 
+modeldf$zz1NEETGender1A16_17[1, 3]<- getIntercept( pNEET[2], temp, set = z1genderLvl1 == 0)
 
-temp <- models$zz1NEETGender1A18
-
-z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,17]
-
-
-modeldf$zz1NEETGender1A18[1, 3]<- getIntercept( pNEET[3], temp, set = z1genderLvl1 == 0)
-
-temp$coefficients[1] <- modeldf$zz1NEETGender1A18[1, 3]
+temp$coefficients[1] <- modeldf$zz1NEETGender1A16_17[1, 3]
 
 z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
 
 
 print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
 
-write.csv(modeldf$zz1NEETGender1A18, paste(modelfiledir, "z1NEETGender1A18.csv", sep = ""), row.names = FALSE) 
+
+write.csv(modeldf$zz1NEETGender1A16_17, paste(modelfiledir, "z1NEETGender1A17.csv", sep = ""), row.names = FALSE) 
 
 
+temp <- models$zz1NEETGender1A18_21
 
-temp <- models$zz1NEETGender1A19	
-
-z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,17]
-
-
-modeldf$zz1NEETGender1A19[1, 3]<- getIntercept( pNEET[4], temp, set = z1genderLvl1 == 0)
-
-temp$coefficients[1] <- modeldf$zz1NEETGender1A19[1, 3]
-
-z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[1]
 
 
-print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+modeldf$zz1NEETGender1A18_21[1, 3]<- getIntercept( pNEET[3], temp, set = z1genderLvl1 == 0)
 
-write.csv(modeldf$zz1NEETGender1A19, paste(modelfiledir, "z1NEETGender1A19.csv", sep = ""), row.names = FALSE) 
-
-
-
-temp <- models$zz1NEETGender1A20
-
-z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,17]
-
-
-modeldf$zz1NEETGender1A20[1, 3]<- getIntercept( pNEET[5], temp, set = z1genderLvl1 == 0)
-
-temp$coefficients[1] <- modeldf$zz1NEETGender1A20[1, 3]
+temp$coefficients[1] <- modeldf$zz1NEETGender1A18_21[1, 3]
 
 z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
 
 
 print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
 
-write.csv(modeldf$zz1NEETGender1A20, paste(modelfiledir, "z1NEETGender1A20.csv", sep = ""), row.names = FALSE) 
+write.csv(modeldf$zz1NEETGender1A18_21, paste(modelfiledir, "z1NEETGender1A18.csv", sep = ""), row.names = FALSE) 
 
 
 
-temp <- models$zz1NEETGender1A21
+temp <- models$zz1NEETGender1A18_21	
 
-z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,17]
+z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,1]
 
 
-modeldf$zz1NEETGender1A21[1, 3]<- getIntercept( pNEET[6], temp, set = z1genderLvl1 == 0)
+modeldf$zz1NEETGender1A18_21[1, 3]<- getIntercept( pNEET[4], temp, set = z1genderLvl1 == 0)
 
-temp$coefficients[1] <- modeldf$zz1NEETGender1A21[1, 3]
+temp$coefficients[1] <- modeldf$zz1NEETGender1A18_21[1, 3]
 
 z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
 
 
 print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
 
-write.csv(modeldf$zz1NEETGender1A21, paste(modelfiledir, "z1NEETGender1A21.csv", sep = ""), row.names = FALSE) 
+write.csv(modeldf$zz1NEETGender1A18_21, paste(modelfiledir, "z1NEETGender1A19.csv", sep = ""), row.names = FALSE) 
+
+
+
+temp <- models$zz1NEETGender1A18_21
+
+z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,1]
+
+
+modeldf$zz1NEETGender1A18_21[1, 3]<- getIntercept( pNEET[5], temp, set = z1genderLvl1 == 0)
+
+temp$coefficients[1] <- modeldf$zz1NEETGender1A18_21[1, 3]
+
+z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+
+
+print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+
+write.csv(modeldf$zz1NEETGender1A18_21, paste(modelfiledir, "z1NEETGender1A20.csv", sep = ""), row.names = FALSE) 
+
+
+
+temp <- models$zz1NEETGender1A18_21
+
+z1ScoreLvl1 <- env.base$modules$run_results$run1$z1ScoreLvl1[,1]
+
+
+modeldf$zz1NEETGender1A18_21[1, 3]<- getIntercept( pNEET[6], temp, set = z1genderLvl1 == 0)
+
+temp$coefficients[1] <- modeldf$zz1NEETGender1A18_21[1, 3]
+
+z1NEETLvl1 <- predSimBinom(temp, set = z1genderLvl1 == 0)
+
+
+print(table(z1NEETLvl1)[2]/ sum(z1genderLvl1 == 0))
+
+write.csv(modeldf$zz1NEETGender1A18_21, paste(modelfiledir, "z1NEETGender1A21.csv", sep = ""), row.names = FALSE) 
 
 #############################################################################
 

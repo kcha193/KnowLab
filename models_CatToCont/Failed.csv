@@ -1,0 +1,16 @@
+Variable,ClassVal0,Estimate
+Intercept,NA,83.35676353
+z1gender,1,0.048576274
+r1stchildethn,2,-0.222960874
+r1stchildethn,3,0.225954574
+r1stchildethn,4,-0.191887191
+r1ParentEduc,2,0.019621153
+r1ParentEduc,3,0.184531987
+SESBTH,2,-0.146180486
+SESBTH,3,-0.183200717
+z1PrintExp,1,0.693206
+z1ECE,1,-0.549452347
+z1ADHD,1,-0.49237816
+z1ParentInvolve,1,-0.006419276
+IQ,,0.004721444
+_sd,,1.974

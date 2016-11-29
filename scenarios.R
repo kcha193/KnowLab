@@ -59,6 +59,26 @@ Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
 
 #Simenv.scenario <- simulateNP(Simenv.scenario, 4)
 
+##########################################################################################
+
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1") %>% 
+  filter(Year == 17)
+
+Simenv.scenario$cat.adjustments$z1Score[17,] <- c(0 ,1)
+
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
+
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1ScoreLvl1") %>% 
+  filter(Year == 17)
+
+tableBuilderNew(env.base, statistic = "freq", "z1NEETLvl1") %>% 
+  filter(Var == "NEET")
+
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1NEETLvl1") %>% 
+  filter(Var == "NEET")
+
 #################################################################################################
 
 tableBuilderNew(env.base, "freq", "pregalc")

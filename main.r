@@ -39,6 +39,149 @@ saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 
 .rs.restartR()
 
+
+
+
+##########################################################################################
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1") %>% 
+  filter(Var == "Passed" & Year == 17)
+tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1") %>% 
+  filter(Var == "Dropout" & Year == 17)
+tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1") %>% 
+  filter(Var == "Failed" & Year == 17)
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1", grpbyName = "z1genderLvl1") %>% 
+  filter(Var == "Passed" & Year == 17)
+tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1", grpbyName = "z1genderLvl1")%>% 
+  filter(Var == "Dropout" & Year == 17)
+tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1", grpbyName = "z1genderLvl1")%>% 
+  filter(Var == "Failed" & Year == 17)
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1",
+                grpbyName = "z1genderLvl1",
+                logisetexpr = "r1stchildethn == 3")%>% 
+  filter(Var == "Passed" & Year == 17)
+tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1",
+                grpbyName = "z1genderLvl1",
+                logisetexpr = "r1stchildethn == 3")%>% 
+  filter(Var == "Dropout" & Year == 17)
+tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1",
+                grpbyName = "z1genderLvl1",
+                logisetexpr = "r1stchildethn == 3")%>% 
+  filter(Var == "Failed" & Year == 17)
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1",
+                grpbyName = "z1genderLvl1",
+                logisetexpr = "r1stchildethn == 4")%>% 
+  filter(Var == "Passed" & Year == 17)
+tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1",
+                grpbyName = "z1genderLvl1",
+                logisetexpr = "r1stchildethn == 4")%>% 
+  filter(Var == "Dropout" & Year == 17)
+tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1",
+                grpbyName = "z1genderLvl1",
+                logisetexpr = "r1stchildethn == 4")%>% 
+  filter(Var == "Failed" & Year == 17)
+
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1",
+                grpbyName = "z1genderLvl1",
+                logisetexpr = "r1stchildethn == 1")%>% 
+  filter(Var == "Passed" & Year == 17)
+tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1",
+                grpbyName = "z1genderLvl1",
+                logisetexpr = "r1stchildethn == 1")%>% 
+  filter(Var == "Dropout" & Year == 17)
+tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1",
+                grpbyName = "z1genderLvl1",
+                logisetexpr = "r1stchildethn == 1")%>% 
+  filter(Var == "Failed" & Year == 17)
+
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1",
+                grpbyName = "z1genderLvl1",
+                logisetexpr = "r1stchildethn == 2")%>% 
+  filter(Var == "Passed" & Year == 17)
+tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1",
+                grpbyName = "z1genderLvl1",
+                logisetexpr = "r1stchildethn == 2")%>% 
+  filter(Var == "Dropout" & Year == 17)
+tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1",
+                grpbyName = "z1genderLvl1",
+                logisetexpr = "r1stchildethn == 2")%>% 
+  filter(Var == "Failed" & Year == 17)
+
+
+
+library(ggplot2)
+library(plotly)
+
+tableBuilderNew(env.base, statistic = "freq", "z1NEETLvl1") %>% 
+  filter(Var == "NEET") %>% 
+  ggplot(aes(x = Year, y = Mean)) + geom_bar( stat = "identity", pos = "dodge")
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1NEETLvl1", grpbyName = "z1genderLvl1") %>% 
+  filter(Var == "NEET") %>% 
+  ggplot(aes(x = Year, y = Mean, fill = groupByData)) + geom_bar( stat = "identity", pos = "dodge")
+
+tableBuilderNew(env.base, statistic = "freq", "z1NEETLvl1", grpbyName = "z1genderLvl1")%>% 
+  filter(Var == "NEET") %>% 
+  ggplot(aes(x = Year, y = Mean, col = groupByData)) + geom_path() + geom_point()
+
+tableBuilderNew(env.base, statistic = "freq", "z1NEETLvl1", grpbyName = "r1stchildethn")%>% 
+  filter(Var == "NEET") %>% 
+  ggplot(aes(x = Year, y = Mean, fill = groupByData)) + geom_bar( stat = "identity", pos = "dodge")
+
+tableBuilderNew(env.base, statistic = "freq", "z1NEETLvl1", grpbyName = "r1stchildethn")%>% 
+  filter(Var == "NEET") %>% 
+  ggplot(aes(x = Year, y = Mean, col = groupByData)) + geom_path() + geom_point()
+
+p <- 
+  tableBuilderNew(env.base, statistic = "freq", "z1NEETLvl1", grpbyName = "r1Region")%>% 
+  filter(Var == "NEET") %>% 
+  ggplot(aes(x = Year, y = Mean, fill = groupByData)) + geom_bar( stat = "identity", pos = "dodge")
+
+ggplotly(p)
+
+tableBuilderNew(env.base, statistic = "freq", "r1Region")
+
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1", grpbyName = "r1stchildethn")
+
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1", grpbyName = "z1genderLvl1")
+
+##########################################################################################
+
+tableBuilderNew(env.base, statistic = "mean", "IQ")
+
+tableBuilderNew(env.base, statistic = "mean", "IQ", grpbyName = "SESBTH")
+
+
+tableBuilderNew(env.base, statistic = "freq", "SESBTH", grpbyName = "r1Region") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+##########################################################################################
+
+tableBuilderNew(env.base, statistic = "freq", "r1Region")
+
+tableBuilderNew(env.base, statistic = "freq", "r1Region", grpbyName = "SESBTH") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+tableBuilderNew(env.base, statistic = "freq", "SESBTH", grpbyName = "r1Region") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
 ##########################################################################################
 
 
@@ -443,135 +586,6 @@ Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab) %>% fil
 tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1")
 tableBuilderNew(Simenv.scenario, statistic = "freq", "z1DepressLvl1")
 
-##########################################################################################
-
-
-
-
-
-
-tableBuilderNew(env.base, statistic = "mean", "Score")
-
-tableBuilderNew(env.base, statistic = "mean", "Score", grpbyName = "z1genderLvl1")
-tableBuilderNew(env.base, statistic = "mean", "Score", grpbyName = "r1stchildethn")
-
-tableBuilderNew(env.base, statistic = "mean", "Score", grpbyName = "r1stchildethn",
-                logisetexpr = "z1genderLvl1 == 0")
-tableBuilderNew(env.base, statistic = "mean", "Score", grpbyName = "r1stchildethn",
-                logisetexpr = "z1genderLvl1 == 1")
-
-
-tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1") %>% 
-  filter(Var == "Passed" & Year == 17)
-
-tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1") %>% 
-  filter(Var == "Dropout" & Year == 17)
-tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1") %>% 
-  filter(Var == "Failed" & Year == 17)
-
-
-tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1", grpbyName = "z1genderLvl1") %>% 
-  filter(Var == "Passed" & Year == 17)
-tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1", grpbyName = "z1genderLvl1")%>% 
-  filter(Var == "Dropout" & Year == 17)
-tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1", grpbyName = "z1genderLvl1")%>% 
-  filter(Var == "Failed" & Year == 17)
-
-tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1",
-                grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 1")%>% 
-  filter(Var == "Passed" & Year == 17)
-tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1",
-                grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 1")%>% 
-  filter(Var == "Dropout" & Year == 17)
-tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1",
-                grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 1")%>% 
-  filter(Var == "Failed" & Year == 17)
-
-
-tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1",
-                grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 2")%>% 
-  filter(Var == "Passed" & Year == 17)
-tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1",
-                grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 2")%>% 
-  filter(Var == "Dropout" & Year == 17)
-tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1",
-                grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 2")%>% 
-  filter(Var == "Failed" & Year == 17)
-
-
-tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1",
-                grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 3")%>% 
-  filter(Var == "Passed" & Year == 17)
-tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1",
-                grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 3")%>% 
-  filter(Var == "Dropout" & Year == 17)
-tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1",
-                grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 3")%>% 
-  filter(Var == "Failed" & Year == 17)
-
-
-tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1",
-                grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 4")%>% 
-  filter(Var == "Passed" & Year == 17)
-tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1",
-                grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 4")%>% 
-  filter(Var == "Dropout" & Year == 17)
-tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1",
-                grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 4")%>% 
-  filter(Var == "Failed" & Year == 17)
-
-library(ggplot2)
-library(plotly)
-
-tableBuilderNew(env.base, statistic = "freq", "z1NEETLvl1") %>% 
-  filter(Var == "NEET") %>% 
-  ggplot(aes(x = Year, y = Mean)) + geom_bar( stat = "identity", pos = "dodge")
-
-
-tableBuilderNew(env.base, statistic = "freq", "z1NEETLvl1", grpbyName = "z1genderLvl1") %>% 
-  filter(Var == "NEET") %>% 
-  ggplot(aes(x = Year, y = Mean, fill = groupByData)) + geom_bar( stat = "identity", pos = "dodge")
-
-tableBuilderNew(env.base, statistic = "freq", "z1NEETLvl1", grpbyName = "z1genderLvl1")%>% 
-  filter(Var == "NEET") %>% 
-  ggplot(aes(x = Year, y = Mean, col = groupByData)) + geom_path() + geom_point()
-
-tableBuilderNew(env.base, statistic = "freq", "z1NEETLvl1", grpbyName = "r1stchildethn")%>% 
-  filter(Var == "NEET") %>% 
-  ggplot(aes(x = Year, y = Mean, fill = groupByData)) + geom_bar( stat = "identity", pos = "dodge")
-
-tableBuilderNew(env.base, statistic = "freq", "z1NEETLvl1", grpbyName = "r1stchildethn")%>% 
-  filter(Var == "NEET") %>% 
-  ggplot(aes(x = Year, y = Mean, col = groupByData)) + geom_path() + geom_point()
-
-p <- 
-  tableBuilderNew(env.base, statistic = "freq", "z1NEETLvl1", grpbyName = "r1Region")%>% 
-  filter(Var == "NEET") %>% 
-  ggplot(aes(x = Year, y = Mean, fill = groupByData)) + geom_bar( stat = "identity", pos = "dodge")
-
-ggplotly(p)
-
-tableBuilderNew(env.base, statistic = "freq", "r1Region")
-
-
-
-tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1", grpbyName = "r1stchildethn")
-
-
-
-tableBuilderNew(env.base, statistic = "means", "z1ScoreLvl1", grpbyName = "z1genderLvl1")
 
 
 

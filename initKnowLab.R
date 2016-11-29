@@ -84,6 +84,9 @@ initSim <- function(num.iterations){
     binbreaks$fhrswrk <- c(-1, 0, 20, 35, 40, 45, 50, 999)
     names(binbreaks$fhrswrk) <- c(NA, "0", "1-20", "21-35", "36-40", "41-45", "46-50", "51+")
     
+    binbreaks$Score <- c(0, 80, 87, 999)
+    names(binbreaks$Score) <- c(NA, "Dropout", "Failed", "Passed")
+    
     # binbreaks$INTERACT <- c(-1,2,3,4,5,6,7,8,9,10)
     # names(binbreaks$INTERACT) <- c(NA, "<3", 3:10)
     # 
@@ -539,8 +542,16 @@ initSim <- function(num.iterations){
     models$IQA11 <- loadGLMCSV(modelfiledir, "IQA11_16.csv")
 
     
-    models$ScoreA17 <- loadGLMCSV(modelfiledir, "ScoreA17.csv")
-    models$ScoreA17Ethn2 <- loadGLMCSV(modelfiledir, "ScoreA17Ethn2.csv")
+    # models$ScoreA17 <- loadGLMCSV(modelfiledir, "ScoreA17.csv")
+    models$ScoreA17Gender0Ethn2 <- loadGLMCSV(modelfiledir, "ScoreA17Gender0Ethn2.csv")
+    models$ScoreA17Gender1Ethn2 <- loadGLMCSV(modelfiledir, "ScoreA17Gender1Ethn2.csv")
+    models$ScoreA17Gender0Ethn1 <- loadGLMCSV(modelfiledir, "ScoreA17Gender0Ethn1.csv")
+    models$ScoreA17Gender1Ethn1 <- loadGLMCSV(modelfiledir, "ScoreA17Gender1Ethn1.csv")
+    models$ScoreA17Gender0Ethn3 <- loadGLMCSV(modelfiledir, "ScoreA17Gender0Ethn3.csv")
+    models$ScoreA17Gender1Ethn3 <- loadGLMCSV(modelfiledir, "ScoreA17Gender1Ethn3.csv")
+    models$ScoreA17Gender0Ethn4 <- loadGLMCSV(modelfiledir, "ScoreA17Gender0Ethn4.csv")
+    models$ScoreA17Gender1Ethn4 <- loadGLMCSV(modelfiledir, "ScoreA17Gender1Ethn4.csv")
+    
     
     models$z1NEETGender0A16 <- loadGLMCSV(modelfiledir, "z1NEETGender0A16.csv")
     models$z1NEETGender0A18 <- loadGLMCSV(modelfiledir, "z1NEETGender0A18.csv")
@@ -548,7 +559,7 @@ initSim <- function(num.iterations){
     models$z1NEETGender0A17 <- loadGLMCSV(modelfiledir, "z1NEETGender0A17.csv")
     models$z1NEETGender0A19 <- loadGLMCSV(modelfiledir, "z1NEETGender0A19.csv")
     models$z1NEETGender0A21 <- loadGLMCSV(modelfiledir, "z1NEETGender0A21.csv")
-    
+
     models$z1NEETGender1A16 <- loadGLMCSV(modelfiledir, "z1NEETGender1A16.csv")
     models$z1NEETGender1A18 <- loadGLMCSV(modelfiledir, "z1NEETGender1A18.csv")
     models$z1NEETGender1A20 <- loadGLMCSV(modelfiledir, "z1NEETGender1A20.csv")
@@ -635,14 +646,18 @@ initSim <- function(num.iterations){
                                           loadGLMCSV(modelfiledir, "householdsize5.csv"), 
                                           loadGLMCSV(modelfiledir, "householdsize6plus.csv"))
     catToContModels$msmoke <- list(loadGLMCSV(modelfiledir, "msmoke0.csv"), 
-                                   loadGLMCSV(modelfiledir, "msmoke1_10.csv"), loadGLMCSV(modelfiledir, "msmoke11_20.csv"),
+                                   loadGLMCSV(modelfiledir, "msmoke1_10.csv"), 
+                                   loadGLMCSV(modelfiledir, "msmoke11_20.csv"),
                                    loadGLMCSV(modelfiledir, "msmokeGT20.csv"))
     catToContModels$fsmoke <- list(loadGLMCSV(modelfiledir, "fsmoke0.csv"), 
-                                   loadGLMCSV(modelfiledir, "fsmoke1_10.csv"), loadGLMCSV(modelfiledir, "fsmoke11_20.csv"),
+                                   loadGLMCSV(modelfiledir, "fsmoke1_10.csv"), 
+                                   loadGLMCSV(modelfiledir, "fsmoke11_20.csv"),
                                    loadGLMCSV(modelfiledir, "fsmokeGT20.csv"))
     catToContModels$pregsmk <- list(loadGLMCSV(modelfiledir, "pregsmk0.csv"), 
-                                    loadGLMCSV(modelfiledir, "pregsmk1_5.csv"), loadGLMCSV(modelfiledir, "pregsmk6_10.csv"),
-                                    loadGLMCSV(modelfiledir, "pregsmk11_15.csv"), loadGLMCSV(modelfiledir, "pregsmk16_20.csv"),
+                                    loadGLMCSV(modelfiledir, "pregsmk1_5.csv"), 
+                                    loadGLMCSV(modelfiledir, "pregsmk6_10.csv"),
+                                    loadGLMCSV(modelfiledir, "pregsmk11_15.csv"), 
+                                    loadGLMCSV(modelfiledir, "pregsmk16_20.csv"),
                                     loadGLMCSV(modelfiledir, "pregsmk21Plus.csv"))
     catToContModels$pregalc <- list(loadGLMCSV(modelfiledir, "pregalc0.csv"), 
                                     loadGLMCSV(modelfiledir, "pregalc0.csv"), loadGLMCSV(modelfiledir, "pregalc1.csv"),
@@ -671,8 +686,14 @@ initSim <- function(num.iterations){
                                      loadGLMCSV(modelfiledir, "interact7.csv"), loadGLMCSV(modelfiledir, "interact8.csv"),
                                      loadGLMCSV(modelfiledir, "interact9.csv"), loadGLMCSV(modelfiledir, "interact10.csv"))
     catToContModels$NPRESCH <- list(loadGLMCSV(modelfiledir, "NPRESCH0.csv"), 
-                                    loadGLMCSV(modelfiledir, "NPRESCH1.csv"), loadGLMCSV(modelfiledir, "NPRESCH2.csv"),
+                                    loadGLMCSV(modelfiledir, "NPRESCH1.csv"), 
+                                    loadGLMCSV(modelfiledir, "NPRESCH2.csv"),
                                     loadGLMCSV(modelfiledir, "NPRESCH3.csv"))
+    
+    # catToContModels$Score <- list(loadGLMCSV(modelfiledir, "Dropout.csv"), 
+    #                                 loadGLMCSV(modelfiledir, "Failed.csv"), 
+    #                                 loadGLMCSV(modelfiledir, "Passed.csv"))
+    
     
     cat("Loaded CatToCont models\n")
     catToContModels
@@ -711,6 +732,8 @@ initSim <- function(num.iterations){
     PropensityModels$PUNISH <- list()
     PropensityModels$MAGE <- list()
     PropensityModels$pregsmk <- list()
+    
+    PropensityModels$z1Score <- list(loadGLMCSV(modelfiledir, "Passed.csv"))
     
     PropensityModels$msmoke <- list(loadGLMCSV(modelfiledir, "msmokeProb1.csv"),
                                     loadGLMCSV(modelfiledir, "msmokeProb2.csv"), loadGLMCSV(modelfiledir, "msmokeProb3.csv"))
@@ -860,7 +883,7 @@ initSim <- function(num.iterations){
   #lapply(PropensityModels, checkModelVars, simframe=simframe.master)
   
   ###load propensities (calculates them from the propensity models)
-  propensities <- loadMELCPropensities2(propensityfiledir, stochastic=TRUE)
+  #propensities <- loadMELCPropensities2(propensityfiledir, stochastic=TRUE)
   ##propensities <<- loadMELCPropensities("A0", children$A0, propensityfiledir, num.iterations)
   
   #load transition_probabilities
@@ -901,7 +924,6 @@ initSim <- function(num.iterations){
        models = models,
        catToContModels = catToContModels,
        PropensityModels = PropensityModels,
-       propensities = propensities,
        transition_probabilities = transition_probabilities,
        limits = limits)
 }
