@@ -1,0 +1,14 @@
+Variable,ClassVal0,Estimate
+Intercept,,NA
+r1stchildethn,2,0.4574248
+r1stchildethn,3,1.278152
+r1stchildethn,4,-0.4620355
+z1breast,1,-0.2484614
+r1ParentEduc,2,0
+r1ParentEduc,3,0.4824261
+SESBTH,2,0
+SESBTH,3,0.5481214
+z1HighBw,1,0.7129498
+z1LowBw,1,-0.2613648
+r1Sleep,2,-0.6365768
+r1Sleep,3,-0.6365768

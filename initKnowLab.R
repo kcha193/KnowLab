@@ -528,6 +528,26 @@ initSim <- function(num.iterations){
     models$z1OverweightA20 <- loadGLMCSV(modelfiledir, "z1OverweightA20.csv")	
     models$z1OverweightA21 <- loadGLMCSV(modelfiledir, "z1OverweightA21.csv")
     
+    models$z1ObeseA2 <- loadGLMCSV(modelfiledir, "z1ObeseA2.csv")
+    models$z1ObeseA3 <- loadGLMCSV(modelfiledir, "z1ObeseA3.csv")
+    models$z1ObeseA4 <- loadGLMCSV(modelfiledir, "z1ObeseA4.csv")
+    models$z1ObeseA5 <- loadGLMCSV(modelfiledir, "z1ObeseA5.csv")
+    models$z1ObeseA6 <- loadGLMCSV(modelfiledir, "z1ObeseA6.csv")
+    models$z1ObeseA7 <- loadGLMCSV(modelfiledir, "z1ObeseA7.csv")
+    models$z1ObeseA8 <- loadGLMCSV(modelfiledir, "z1ObeseA8.csv")
+    models$z1ObeseA9 <- loadGLMCSV(modelfiledir, "z1ObeseA9.csv")
+    models$z1ObeseA10 <- loadGLMCSV(modelfiledir, "z1ObeseA10.csv")	
+    models$z1ObeseA11 <- loadGLMCSV(modelfiledir, "z1ObeseA11.csv")
+    models$z1ObeseA12 <- loadGLMCSV(modelfiledir, "z1ObeseA12.csv")
+    models$z1ObeseA13 <- loadGLMCSV(modelfiledir, "z1ObeseA13.csv")
+    models$z1ObeseA14 <- loadGLMCSV(modelfiledir, "z1ObeseA14.csv")
+    models$z1ObeseA15 <- loadGLMCSV(modelfiledir, "z1ObeseA15.csv")
+    models$z1ObeseA16 <- loadGLMCSV(modelfiledir, "z1ObeseA16.csv")
+    models$z1ObeseA17 <- loadGLMCSV(modelfiledir, "z1ObeseA17.csv")
+    models$z1ObeseA18 <- loadGLMCSV(modelfiledir, "z1ObeseA18.csv")
+    models$z1ObeseA19 <- loadGLMCSV(modelfiledir, "z1ObeseA19.csv")
+    models$z1ObeseA20 <- loadGLMCSV(modelfiledir, "z1ObeseA20.csv")	
+    models$z1ObeseA21 <- loadGLMCSV(modelfiledir, "z1ObeseA21.csv")
     models$IQA2 <- loadGLMCSV(modelfiledir, "IQA2.csv")
     #models$IQA3_16 <- loadGLMCSV(modelfiledir, "IQA3_16.csv")
     
@@ -853,7 +873,7 @@ initSim <- function(num.iterations){
   dict<- createDict(descriptions_dataframe, codings_dataframe)
   
   #load initial basefile
-  children <- loadBaseFileCSV(basefiledir, "synthBasefile_MhrswrkFixed_5000_New.csv") 
+  children <- loadBaseFileCSV(basefiledir, "synthBasefile_MhrswrkFixed_5000_New1.csv") 
   
   #create simframe
   sfdef <- read_file(basefiledir, "simframedef.csv")

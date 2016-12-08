@@ -1200,12 +1200,21 @@ simulateKnowLab <- function(run, simenv) {
     
     if(iteration>=2 ) {			
       
-      z1OverweightLvl1 <<- 
-        predSimBinom(models[[paste("z1OverweightA", iteration, sep = "")]])	   
+      z1OverweightLvl1 <- 
+        predSimBinom(models[[paste("z1OverweightA", iteration, sep = "")]])
       
+      z1ObeseLvl1<- rep(0, 5000)
+      
+      z1ObeseLvl1[z1OverweightLvl1 == 1] <- 
+        predSimBinom(models[[paste("z1ObeseA", iteration, sep = "")]], set = z1OverweightLvl1 == 1)	   
+      
+      z1OverweightLvl1 <<- z1OverweightLvl1
+      
+      z1ObeseLvl1 <<- z1ObeseLvl1
     } else {		
       z1OverweightLvl1 <<- NAs     
       
+      z1ObeseLvl1 <<- NAs     
     }	
     
     #browser()
@@ -1751,9 +1760,11 @@ simulateKnowLab <- function(run, simenv) {
     #KNOWLAB models		  
     simulate_Sleep()	
     
-    simulate_BMI()
+    simulate_childrenOverweight()	
     
-    simulate_childrenOverweight()		
+    #simulate_BMI()
+    
+	
     
     simulate_IQ()	  
     # simulate_childrenObese()     

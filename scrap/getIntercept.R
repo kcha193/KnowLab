@@ -79,6 +79,44 @@ getIntercept <- function(base.rate, model.glm, envir = parent.frame(), set = NUL
   return(uniroot(f, c(-100,100))$root)
 }
 
+scaleOR <- 
+  function(P_OB, P_OW, P_yes, OR_OB, OR_OW, n){
+    
+    targetFun <- function(b)
+      (P_yes * n -b)*((1-P_OW)*n-b) - OR_OW*((P_OW-P_yes)*n+b)*b
+    
+    b = uniroot(targetFun, lower = 0, upper = n - n*P_OW, tol = 0.000001)$root
+    b
+    
+    c = (1-P_OW)*n - b
+    c
+    
+    targetFun <- function(x)
+      (1-P_OB-P_yes)*n*x  + x^2 - OR_OB * (P_yes * n -x)*(P_OB * n -x)
+    
+    x = uniroot(targetFun, lower = 0, upper = n*P_OB, tol = 0.000001)$root
+    x
+    y = P_OB*n - x
+    y 
+    
+    z = P_yes * n - x -b
+    z
+    a = (P_OW-P_OB)*n-z
+    a
+    
+    (x*a)/(z*y)
+  }
+
+
+
+scaleOR(P_OB = 0.08, 
+        P_OW = 0.29, 
+        P_yes = 0.217, 
+        OR_OB = 1.52,
+        OR_OW = 1.47,
+        n = 5000)
+
+
 #############################################################################
 
 modelfiledir <- paste(getwd(),"/models/",sep="")
@@ -106,11 +144,22 @@ attach(env.base$simframe, name="simframe")
 
 #detach(simframe)
 ########################################################################
+#Overweight and obese
 
 
 pOverweight <- c(NA, 29.02058, 29.27779, 29.60634, 30.00623, 30.47746, 31.02002,
                  31.63393, 32.31917, 33.07576, 33.90369, 34.80295, 35.77356, 36.81550,
                  37.92878, 39.11341, 40.36937, 41.69667, 43.09531, 44.56530, 46.10662)/100		
+
+
+pObese <-
+  c(NA, 8.340484,  8.764238,  9.208993,  9.674749, 10.161506, 10.669264, 11.198024, 11.747785, 
+    12.318547, 12.910310, 13.523074, 14.156840, 14.811607, 15.487375, 16.184144, 16.901914, 
+    17.640686, 18.400458, 19.181232, 19.983007)/100
+
+
+pObeseOW <- pObese/pOverweight
+
 
 
 temp <- models$zz1OverweightA2
@@ -139,6 +188,47 @@ print(table(z1OverweightLvl1)[2]/5000)
 
 write.csv(modeldf$zz1OverweightA2, paste(modelfiledir, "z1OverweightA", 2, ".csv", sep = ""), row.names = FALSE) 
 
+#########################################################################################################
+
+temp <- models$zz1ObeseA2
+
+
+tempOW <- models$zz1OverweightA2
+
+
+OR <- sapply(names(temp$coefficients)[-1], function(x) 
+scaleOR(P_OB = pObese[2], 
+        P_OW = pOverweight[2], 
+        P_yes = prop.table(table(get(x)))[2], 
+        OR_OB = exp(temp$coefficients[x]),
+        OR_OW = exp(tempOW$coefficients[x]),
+        n = 5000))
+
+temp$coefficients[-1] <- log(OR)
+
+
+
+modeldf$zz1ObeseA2[1, 3] <- getIntercept( pObeseOW[2], temp)
+
+
+temp$coefficients[1] <- modeldf$zz1ObeseA2[1, 3]
+
+z1ObeseLvl1 <- rep(0, 5000)
+
+z1ObeseLvl1[z1OverweightLvl1 == 1] <- predSimBinom(temp, set = z1OverweightLvl1 == 1)
+
+print(table(z1ObeseLvl1)[2]/5000)
+
+
+modeldf$zz1ObeseA2$Estimate <- temp$coefficients
+
+write.csv(modeldf$zz1ObeseA2, paste(modelfiledir, "z1obeseA", 2, ".csv", sep = ""), row.names = FALSE) 
+
+
+
+#########################################################################################################
+
+
 temp <- models$zz1OverweightA3
 
 r1SleepLvl1 <- numeric(5000)
@@ -165,6 +255,47 @@ print(table(z1OverweightLvl1)[2]/5000)
 
 
 write.csv(modeldf$zz1OverweightA3, paste(modelfiledir, "z1OverweightA", 3, ".csv", sep = ""), row.names = FALSE) 
+
+#########################################################################################################
+
+temp <- models$zz1ObeseA3
+
+
+tempOW <- models$zz1OverweightA3
+
+
+OR <- sapply(names(temp$coefficients)[-1], function(x) 
+  scaleOR(P_OB = pObese[3], 
+          P_OW = pOverweight[3], 
+          P_yes = prop.table(table(get(x)))[2], 
+          OR_OB = exp(temp$coefficients[x]),
+          OR_OW = exp(tempOW$coefficients[x]),
+          n = 5000))
+
+temp$coefficients[-1] <- log(OR)
+
+
+
+modeldf$zz1ObeseA3[1, 3] <- getIntercept( pObeseOW[3], temp)
+
+
+temp$coefficients[1] <- modeldf$zz1ObeseA3[1, 3]
+
+z1ObeseLvl1 <- rep(0, 5000)
+
+z1ObeseLvl1[z1OverweightLvl1 == 1] <- predSimBinom(temp, set = z1OverweightLvl1 == 1)
+
+print(table(z1ObeseLvl1)[2]/5000)
+
+
+modeldf$zz1ObeseA3$Estimate <- temp$coefficients
+
+write.csv(modeldf$zz1ObeseA3, paste(modelfiledir, "z1obeseA", 3, ".csv", sep = ""), row.names = FALSE) 
+
+
+
+#########################################################################################################
+
 
 
 models$zz1OverweightA4 <- loadGLMCSV(modelfiledir, "zz1OverweightA4.csv")
@@ -197,6 +328,45 @@ print(table(z1OverweightLvl1)[2]/5000)
 
 write.csv(modeldf$zz1OverweightA4, paste(modelfiledir, "z1OverweightA", 4, ".csv", sep = ""), row.names = FALSE) 
 
+#########################################################################################################
+
+temp <- models$zz1ObeseA4
+
+
+tempOW <- models$zz1OverweightA4
+
+
+OR <- sapply(names(temp$coefficients)[-1], function(x) 
+  scaleOR(P_OB = pObese[4], 
+          P_OW = pOverweight[4], 
+          P_yes = prop.table(table(get(x)))[2], 
+          OR_OB = exp(temp$coefficients[x]),
+          OR_OW = exp(tempOW$coefficients[x]),
+          n = 5000))
+
+temp$coefficients[-1] <- log(OR)
+
+
+
+modeldf$zz1ObeseA4[1, 3] <- getIntercept( pObeseOW[4], temp)
+
+
+temp$coefficients[1] <- modeldf$zz1ObeseA4[1, 3]
+
+z1ObeseLvl1 <- rep(0, 5000)
+
+z1ObeseLvl1[z1OverweightLvl1 == 1] <- predSimBinom(temp, set = z1OverweightLvl1 == 1)
+
+print(table(z1ObeseLvl1)[2]/5000)
+
+
+modeldf$zz1ObeseA4$Estimate <- temp$coefficients
+
+write.csv(modeldf$zz1ObeseA4, paste(modelfiledir, "z1obeseA", 4, ".csv", sep = ""), row.names = FALSE) 
+
+
+
+#########################################################################################################
 
 
 
@@ -226,12 +396,53 @@ print(table(z1OverweightLvl1)[2]/5000)
 
 write.csv(modeldf$zz1OverweightA5, paste(modelfiledir, "z1OverweightA", 5, ".csv", sep = ""), row.names = FALSE) 
 
+#########################################################################################################
+
+temp <- models$zz1ObeseA5
+
+
+tempOW <- models$zz1OverweightA5
+
+
+OR <- sapply(names(temp$coefficients)[-1], function(x) 
+  scaleOR(P_OB = pObese[5], 
+          P_OW = pOverweight[5], 
+          P_yes = prop.table(table(get(x)))[2], 
+          OR_OB = exp(temp$coefficients[x]),
+          OR_OW = exp(tempOW$coefficients[x]),
+          n = 5000))
+
+temp$coefficients[-1] <- log(OR)
+
+
+
+modeldf$zz1ObeseA5[1, 3] <- getIntercept( pObeseOW[5], temp)
+
+
+temp$coefficients[1] <- modeldf$zz1ObeseA5[1, 3]
+
+z1ObeseLvl1 <- rep(0, 5000)
+
+z1ObeseLvl1[z1OverweightLvl1 == 1] <- predSimBinom(temp, set = z1OverweightLvl1 == 1)
+
+print(table(z1ObeseLvl1)[2]/5000)
+
+
+modeldf$zz1ObeseA5$Estimate <- temp$coefficients
+
+write.csv(modeldf$zz1ObeseA5, paste(modelfiledir, "z1obeseA", 5, ".csv", sep = ""), row.names = FALSE) 
+
+
+
+#########################################################################################################
 
 
 temp <- models$zz1OverweightA6_7
 
 
 for( i in 6:7){
+  
+  temp <- models$zz1OverweightA6_7	
   
   sleepTime <- env.base$modules$run_results$run1$r1Sleep[,i]
   
@@ -255,14 +466,46 @@ for( i in 6:7){
   
   write.csv(modeldf$zz1OverweightA6_7, paste(modelfiledir, "z1OverweightA", i, ".csv", sep = ""), row.names = FALSE) 
   
-  temp <- models$zz1OverweightA6_7	
+
+  
+  temp <- models$zz1ObeseA6_7
+  
+  
+  tempOW <- models$zz1OverweightA6_7
+  
+  
+  OR <- sapply(names(temp$coefficients)[-1], function(x) 
+    scaleOR(P_OB = pObese[i], 
+            P_OW = pOverweight[i], 
+            P_yes = prop.table(table(get(x)))[2], 
+            OR_OB = exp(temp$coefficients[x]),
+            OR_OW = exp(tempOW$coefficients[x]),
+            n = 5000))
+  
+  temp$coefficients[-1] <- log(OR)
+  
+  
+  
+  modeldf$zz1ObeseA6_7[1, 3] <- getIntercept( pObeseOW[i], temp)
+  
+  
+  temp$coefficients[1] <- modeldf$zz1ObeseA6_7[1, 3]
+  
+  z1ObeseLvl1 <- rep(0, 5000)
+  
+  z1ObeseLvl1[z1OverweightLvl1 == 1] <- predSimBinom(temp, set = z1OverweightLvl1 == 1)
+  
+  print(table(z1ObeseLvl1)[2]/5000)
+  
+  
+  modeldf$zz1ObeseA6_7$Estimate <- temp$coefficients
+  
+  write.csv(modeldf$zz1ObeseA6_7, paste(modelfiledir, "z1obeseA", i, ".csv", sep = ""), row.names = FALSE) 
+  
   
 }
 
-
-pOverweight <- c(NA, 29.02058, 29.27779, 29.60634, 30.00623, 30.47746, 31.02002,
-                 31.63393, 32.31917, 33.07576, 33.90369, 34.80295, 35.77356, 36.81550,
-                 37.92878, 39.11341, 40.36937, 41.69667, 43.09531, 44.56530, 46.10662)/100		
+		
 
 
 temp <- models$zz1OverweightA8
@@ -291,7 +534,43 @@ print(table(z1OverweightLvl1)[2]/5000)
 
 
 write.csv(modeldf$zz1OverweightA8, paste(modelfiledir, "z1OverweightA", 8, ".csv", sep = ""), row.names = FALSE) 
+#########################################################################################################
 
+temp <- models$zz1ObeseA8
+
+
+tempOW <- models$zz1OverweightA8
+
+
+OR <- sapply(names(temp$coefficients)[-1], function(x) 
+  scaleOR(P_OB = pObese[8], 
+          P_OW = pOverweight[8], 
+          P_yes = prop.table(table(get(x)))[2], 
+          OR_OB = exp(temp$coefficients[x]),
+          OR_OW = exp(tempOW$coefficients[x]),
+          n = 5000))
+
+temp$coefficients[-1] <- log(OR)
+
+
+
+modeldf$zz1ObeseA8[1, 3] <- getIntercept( pObeseOW[8], temp)
+
+
+temp$coefficients[1] <- modeldf$zz1ObeseA8[1, 3]
+
+z1ObeseLvl1 <- rep(0, 5000)
+
+z1ObeseLvl1[z1OverweightLvl1 == 1] <- predSimBinom(temp, set = z1OverweightLvl1 == 1)
+
+print(table(z1ObeseLvl1)[2]/5000)
+
+
+modeldf$zz1ObeseA8$Estimate <- temp$coefficients
+
+write.csv(modeldf$zz1ObeseA8, paste(modelfiledir, "z1obeseA", 8, ".csv", sep = ""), row.names = FALSE) 
+
+#########################################################################################################
 
 temp <- models$zz1OverweightA9
 
@@ -320,11 +599,51 @@ print(table(z1OverweightLvl1)[2]/5000)
 
 write.csv(modeldf$zz1OverweightA9, paste(modelfiledir, "z1OverweightA", 9, ".csv", sep = ""), row.names = FALSE) 
 
+#########################################################################################################
+
+temp <- models$zz1ObeseA9
+
+
+tempOW <- models$zz1OverweightA9
+
+
+OR <- sapply(names(temp$coefficients)[-1], function(x) 
+  scaleOR(P_OB = pObese[9], 
+          P_OW = pOverweight[9], 
+          P_yes = prop.table(table(get(x)))[2], 
+          OR_OB = exp(temp$coefficients[x]),
+          OR_OW = exp(tempOW$coefficients[x]),
+          n = 5000))
+
+temp$coefficients[-1] <- log(OR)
+
+
+
+modeldf$zz1ObeseA9[1, 3] <- getIntercept( pObeseOW[9], temp)
+
+
+temp$coefficients[1] <- modeldf$zz1ObeseA9[1, 3]
+
+z1ObeseLvl1 <- rep(0, 5000)
+
+z1ObeseLvl1[z1OverweightLvl1 == 1] <- predSimBinom(temp, set = z1OverweightLvl1 == 1)
+
+print(table(z1ObeseLvl1)[2]/5000)
+
+
+modeldf$zz1ObeseA9$Estimate <- temp$coefficients
+
+write.csv(modeldf$zz1ObeseA9, paste(modelfiledir, "z1obeseA", 9, ".csv", sep = ""), row.names = FALSE) 
+
+#########################################################################################################
 
 
 temp <- models$zz1OverweightA10_12
 
 for( i in 10:12){
+  
+  temp <- models$zz1OverweightA10_12	
+  
   
   sleepTime <- env.base$modules$run_results$run1$r1Sleep[,i]
   
@@ -348,7 +667,43 @@ for( i in 10:12){
   
   write.csv(modeldf$zz1OverweightA10_12, paste(modelfiledir, "z1OverweightA", i, ".csv", sep = ""), row.names = FALSE) 
   
-  temp <- models$zz1OverweightA10_12	
+
+  
+  
+  temp <- models$zz1ObeseA10_12
+  
+  
+  tempOW <- models$zz1OverweightA10_12
+  
+  
+  OR <- sapply(names(temp$coefficients)[-1], function(x) 
+    scaleOR(P_OB = pObese[i], 
+            P_OW = pOverweight[i], 
+            P_yes = prop.table(table(get(x)))[2], 
+            OR_OB = exp(temp$coefficients[x]),
+            OR_OW = exp(tempOW$coefficients[x]),
+            n = 5000))
+  
+  temp$coefficients[-1] <- log(OR)
+  
+  
+  
+  modeldf$zz1ObeseA10_12[1, 3] <- getIntercept( pObeseOW[i], temp)
+  
+  
+  temp$coefficients[1] <- modeldf$zz1ObeseA10_12[1, 3]
+  
+  z1ObeseLvl1 <- rep(0, 5000)
+  
+  z1ObeseLvl1[z1OverweightLvl1 == 1] <- predSimBinom(temp, set = z1OverweightLvl1 == 1)
+  
+  print(table(z1ObeseLvl1)[2]/5000)
+  
+  
+  modeldf$zz1ObeseA10_12$Estimate <- temp$coefficients
+  
+  write.csv(modeldf$zz1ObeseA10_12, paste(modelfiledir, "z1obeseA", i, ".csv", sep = ""), row.names = FALSE) 
+  
   
 }
 
@@ -357,6 +712,7 @@ for( i in 10:12){
 temp <- models$zz1OverweightA13_14
 
 for( i in 13:14){
+  temp <- models$zz1OverweightA13_14
   
   sleepTime <- env.base$modules$run_results$run1$r1Sleep[,i]
   
@@ -379,7 +735,41 @@ for( i in 13:14){
   
   write.csv(modeldf$zz1OverweightA13_14, paste(modelfiledir, "z1OverweightA", i, ".csv", sep = ""), row.names = FALSE) 
   
-  temp <- models$zz1OverweightA13_14
+  
+  
+  temp <- models$zz1ObeseA13_14
+  
+  
+  tempOW <- models$zz1OverweightA13_14
+  
+  
+  OR <- sapply(names(temp$coefficients)[-1], function(x) 
+    scaleOR(P_OB = pObese[i], 
+            P_OW = pOverweight[i], 
+            P_yes = prop.table(table(get(x)))[2], 
+            OR_OB = exp(temp$coefficients[x]),
+            OR_OW = exp(tempOW$coefficients[x]),
+            n = 5000))
+  
+  temp$coefficients[-1] <- log(OR)
+  
+  
+  
+  modeldf$zz1ObeseA13_14[1, 3] <- getIntercept( pObeseOW[i], temp)
+  
+  
+  temp$coefficients[1] <- modeldf$zz1ObeseA13_14[1, 3]
+  
+  z1ObeseLvl1 <- rep(0, 5000)
+  
+  z1ObeseLvl1[z1OverweightLvl1 == 1] <- predSimBinom(temp, set = z1OverweightLvl1 == 1)
+  
+  print(table(z1ObeseLvl1)[2]/5000)
+  
+  
+  modeldf$zz1ObeseA13_14$Estimate <- temp$coefficients
+  
+  write.csv(modeldf$zz1ObeseA13_14, paste(modelfiledir, "z1obeseA", i, ".csv", sep = ""), row.names = FALSE) 
   
 }
 
@@ -388,6 +778,7 @@ for( i in 13:14){
 temp <- models$zz1OverweightA15_18
 
 for( i in 15:18){
+  temp <- models$zz1OverweightA15_18	
   
   sleepTime <- env.base$modules$run_results$run1$r1Sleep[,i]
   
@@ -411,8 +802,40 @@ for( i in 15:18){
   
   write.csv(modeldf$zz1OverweightA15_18, paste(modelfiledir, "z1OverweightA", i, ".csv", sep = ""), row.names = FALSE) 
   
-  temp <- models$zz1OverweightA15_18	
+   
+  temp <- models$zz1ObeseA15_18
   
+  
+  tempOW <- models$zz1OverweightA15_18
+  
+  
+  OR <- sapply(names(temp$coefficients)[-1], function(x) 
+    scaleOR(P_OB = pObese[i], 
+            P_OW = pOverweight[i], 
+            P_yes = prop.table(table(get(x)))[2], 
+            OR_OB = exp(temp$coefficients[x]),
+            OR_OW = exp(tempOW$coefficients[x]),
+            n = 5000))
+  
+  temp$coefficients[-1] <- log(OR)
+  
+  
+  
+  modeldf$zz1ObeseA15_18[1, 3] <- getIntercept( pObeseOW[i], temp)
+  
+  
+  temp$coefficients[1] <- modeldf$zz1ObeseA15_18[1, 3]
+  
+  z1ObeseLvl1 <- rep(0, 5000)
+  
+  z1ObeseLvl1[z1OverweightLvl1 == 1] <- predSimBinom(temp, set = z1OverweightLvl1 == 1)
+  
+  print(table(z1ObeseLvl1)[2]/5000)
+  
+  
+  modeldf$zz1ObeseA15_18$Estimate <- temp$coefficients
+  
+  write.csv(modeldf$zz1ObeseA15_18, paste(modelfiledir, "z1obeseA", i, ".csv", sep = ""), row.names = FALSE) 
   
 }
 
@@ -420,6 +843,7 @@ temp <- models$zz1OverweightA19_21
 
 
 for( i in 19:21){
+  temp <- models$zz1OverweightA19_21
   
   
   modeldf$zz1OverweightA19_21[1, 3]<- getIntercept( pOverweight[i], temp)
@@ -433,7 +857,39 @@ for( i in 19:21){
   
   write.csv(modeldf$zz1OverweightA19_21, paste(modelfiledir, "z1OverweightA", i, ".csv", sep = ""), row.names = FALSE) 
   
-  temp <- models$zz1OverweightA19_21
+  temp <- models$zz1ObeseA19_21
+  
+  
+  tempOW <- models$zz1OverweightA19_21
+  
+  
+  OR <- sapply(names(temp$coefficients)[-1], function(x) 
+    scaleOR(P_OB = pObese[i], 
+            P_OW = pOverweight[i], 
+            P_yes = prop.table(table(get(x)))[2], 
+            OR_OB = exp(temp$coefficients[x]),
+            OR_OW = exp(tempOW$coefficients[x]),
+            n = 5000))
+  
+  temp$coefficients[-1] <- log(OR)
+  
+  
+  
+  modeldf$zz1ObeseA19_21[1, 3] <- getIntercept( pObeseOW[i], temp)
+  
+  
+  temp$coefficients[1] <- modeldf$zz1ObeseA19_21[1, 3]
+  
+  z1ObeseLvl1 <- rep(0, 5000)
+  
+  z1ObeseLvl1[z1OverweightLvl1 == 1] <- predSimBinom(temp, set = z1OverweightLvl1 == 1)
+  
+  print(table(z1ObeseLvl1)[2]/5000)
+  
+  
+  modeldf$zz1ObeseA19_21$Estimate <- temp$coefficients
+  
+  write.csv(modeldf$zz1ObeseA19_21, paste(modelfiledir, "z1obeseA", i, ".csv", sep = ""), row.names = FALSE) 
   
 }
 

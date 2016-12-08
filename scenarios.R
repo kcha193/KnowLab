@@ -60,6 +60,32 @@ Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
 #Simenv.scenario <- simulateNP(Simenv.scenario, 4)
 
 ##########################################################################################
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+tableBuilderNew(env.base, statistic = "freq", "SESBTH") 
+
+Simenv.scenario$cat.adjustments$SESBTH[1,] <- c(0.90, 0.05,0.05)	
+
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1")%>% 
+  filter(Var == "Overweight") 
+
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1OverweightLvl1")%>% 
+  filter(Var == "Overweight") 
+
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1") %>% 
+  filter(Var == "Obese")
+
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1ObeseLvl1")%>% 
+  filter(Var == "Obese") 
+
+
+##########################################################################################
+
 
 Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 

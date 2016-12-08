@@ -358,6 +358,8 @@ write.csv(children, file = "base//synthBasefile_MhrswrkFixed_5000_New1.csv")
 
 
 
+pnorm(20,  17.929171, 0.20, lower.tail = FALSE)
+
 
 fun <- 
   function(x)

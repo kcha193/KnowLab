@@ -41,6 +41,61 @@ saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 
 
 
+##########################################################################################
+
+tableBuilderNew(env.base, statistic = "mean", "BMI")
+
+
+tableBuilderNew(env.base, statistic = "mean", "BMI", grpbyName = "r1stchildethn") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1")%>% 
+  filter(Var == "Overweight") 
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1") %>% 
+  filter(Var == "Obese")
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "r1stchildethn") %>% 
+  filter(Var == "Overweight") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1", grpbyName = "r1stchildethn") %>% 
+  filter(Var == "Obese") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "z1genderLvl1") %>% 
+  filter(Var == "Overweight") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1", grpbyName = "z1genderLvl1") %>% 
+  filter(Var == "Obese") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "r1stchildethn",
+                logisetexpr = "z1genderLvl1 == 1") %>% 
+  filter(Var == "Overweight") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1", grpbyName = "z1genderLvl1") %>% 
+  filter(Var == "Overweight") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1", grpbyName = "r1stchildethn",
+                logisetexpr = "z1genderLvl1 == 0") %>% 
+  filter(Var == "Overweight") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
 
 ##########################################################################################
 
@@ -195,58 +250,6 @@ tableBuilderNew(env.base, statistic = "mean", "BMI")
 
 tableBuilderNew(env.base, statistic = "mean", "BMI", grpbyName = "z1genderLvl1")
 
-
-
-
-
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1")%>% 
-  filter(Var == "Overweight") 
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1")%>% 
-  filter(Var == "Overweight") 
-
-tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1") %>% 
-  filter(Var == "Obese")
-
-
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "r1stchildethn") %>% 
-  filter(Var == "Overweight") %>% 
-  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
-
-
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1", grpbyName = "r1stchildethn") %>% 
-  filter(Var == "Overweight") %>% 
-  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
-
-
-
-tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1", grpbyName = "r1stchildethn") %>% 
-  filter(Var == "Obese") %>% 
-  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
-
-
-tableBuilderNew(env.base, statistic = "mean", "BMI")
-
-
-
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "z1genderLvl1") %>% 
-  filter(Var == "Overweight") %>% 
-  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
-
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "r1stchildethn",
-                logisetexpr = "z1genderLvl1 == 1") %>% 
-  filter(Var == "Overweight") %>% 
-  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
-
-
-
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1", grpbyName = "z1genderLvl1") %>% 
-  filter(Var == "Overweight") %>% 
-  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
-
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1", grpbyName = "r1stchildethn",
-                logisetexpr = "z1genderLvl1 == 0") %>% 
-  filter(Var == "Overweight") %>% 
-  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
 
 
 
