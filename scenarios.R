@@ -62,6 +62,19 @@ Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
 ##########################################################################################
 Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
+tableBuilderNew(env.base, statistic = "freq", "z1WatchTVLvl1") 
+
+Simenv.scenario$cat.adjustments$z1WatchTV[3,] <- c(0.8, 0.2)	
+
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
+
+tableBuilderNew(env.base, statistic = "mean", "BMI")
+
+tableBuilderNew(Simenv.scenario, statistic = "mean", "BMI")
+
+##########################################################################################
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
 tableBuilderNew(env.base, statistic = "freq", "SESBTH") 
 
 Simenv.scenario$cat.adjustments$SESBTH[1,] <- c(0.90, 0.05,0.05)	

@@ -84,8 +84,12 @@ initSim <- function(num.iterations){
     binbreaks$fhrswrk <- c(-1, 0, 20, 35, 40, 45, 50, 999)
     names(binbreaks$fhrswrk) <- c(NA, "0", "1-20", "21-35", "36-40", "41-45", "46-50", "51+")
     
-    binbreaks$Score <- c(0, 80, 87, 999)
-    names(binbreaks$Score) <- c(NA, "Dropout", "Failed", "Passed")
+    binbreaks$IQ <- c(0, 79, 90, 109, 119, 999)
+    names(binbreaks$IQ) <- c(NA, "Borderline", "Low Average", "Average", "High Average", "Superior")
+    
+    
+    # binbreaks$Score <- c(0, 80, 87, 999)
+    # names(binbreaks$Score) <- c(NA, "Dropout", "Failed", "Passed")
     
     # binbreaks$INTERACT <- c(-1,2,3,4,5,6,7,8,9,10)
     # names(binbreaks$INTERACT) <- c(NA, "<3", 3:10)
@@ -548,9 +552,9 @@ initSim <- function(num.iterations){
     models$z1ObeseA19 <- loadGLMCSV(modelfiledir, "z1ObeseA19.csv")
     models$z1ObeseA20 <- loadGLMCSV(modelfiledir, "z1ObeseA20.csv")	
     models$z1ObeseA21 <- loadGLMCSV(modelfiledir, "z1ObeseA21.csv")
-    models$IQA2 <- loadGLMCSV(modelfiledir, "IQA2.csv")
-    #models$IQA3_16 <- loadGLMCSV(modelfiledir, "IQA3_16.csv")
     
+    
+    models$IQA2 <- loadGLMCSV(modelfiledir, "IQA2.csv")
     models$IQA3 <- loadGLMCSV(modelfiledir, "IQA3.csv")
     models$IQA4 <- loadGLMCSV(modelfiledir, "IQA4.csv")
     models$IQA5 <- loadGLMCSV(modelfiledir, "IQA5.csv")
@@ -561,8 +565,6 @@ initSim <- function(num.iterations){
     models$IQA10 <- loadGLMCSV(modelfiledir, "IQA10.csv")
     models$IQA11 <- loadGLMCSV(modelfiledir, "IQA11_16.csv")
 
-    
-    # models$ScoreA17 <- loadGLMCSV(modelfiledir, "ScoreA17.csv")
     models$ScoreA17Gender0Ethn2 <- loadGLMCSV(modelfiledir, "ScoreA17Gender0Ethn2.csv")
     models$ScoreA17Gender1Ethn2 <- loadGLMCSV(modelfiledir, "ScoreA17Gender1Ethn2.csv")
     models$ScoreA17Gender0Ethn1 <- loadGLMCSV(modelfiledir, "ScoreA17Gender0Ethn1.csv")

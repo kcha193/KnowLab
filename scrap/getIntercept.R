@@ -40,6 +40,9 @@ ORtoRR(0.1558,0.08032883,  3.06)
 
 
 
+ORtoRR(prop.table(table(env.base$simframe$r1stchildethnLvl2))[2], 0.33,  1.41)
+
+
 
 
 setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
@@ -48,6 +51,14 @@ setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
 env.base  <- readRDS("base/FullBaseRun.rds")
 
 ################################################################################
+
+ORtoRR <-function(px, py, OR, n = 5000){
+  
+  #ZOCCHETTI et al (1997),  International Journal of Epidemiology; 26(1):220-3
+  
+  return(OR *(1-px + OR * px - py)/( 1 - px + OR*px -OR*py))		
+  
+}
 
 getIntercept <- function(base.rate, model.glm, envir = parent.frame(), set = NULL){
   
@@ -107,16 +118,6 @@ scaleOR <-
     (x*a)/(z*y)
   }
 
-
-
-scaleOR(P_OB = 0.08, 
-        P_OW = 0.29, 
-        P_yes = 0.217, 
-        OR_OB = 1.52,
-        OR_OW = 1.47,
-        n = 5000)
-
-
 #############################################################################
 
 modelfiledir <- paste(getwd(),"/models/",sep="")
@@ -149,20 +150,21 @@ attach(env.base$simframe, name="simframe")
 
 pOverweight <- c(NA, 29.02058, 29.27779, 29.60634, 30.00623, 30.47746, 31.02002,
                  31.63393, 32.31917, 33.07576, 33.90369, 34.80295, 35.77356, 36.81550,
-                 37.92878, 39.11341, 40.36937, 41.69667, 43.09531, 44.56530, 46.10662)/100		
+                 37.92878, 39.11341, 40.36937, 41.69667, 43.09531, 44.56530, 46.10662)/100
 
 
 pObese <-
   c(NA, 8.340484,  8.764238,  9.208993,  9.674749, 10.161506, 10.669264, 11.198024, 11.747785, 
     12.318547, 12.910310, 13.523074, 14.156840, 14.811607, 15.487375, 16.184144, 16.901914, 
-    17.640686, 18.400458, 19.181232, 19.983007)/100
+    17.640686, 18.400458, 19.181232, 19.983007)/100 - 0.01
 
 
 pObeseOW <- pObese/pOverweight
 
-
+z1WatchTVLvl1 <- env.base$modules$run_results$run1$z1WatchTVLvl1[,1]
 
 temp <- models$zz1OverweightA2
+
 
 r1SleepLvl1 <- numeric(5000)
 r1SleepLvl2 <- numeric(5000)
@@ -892,6 +894,8 @@ for( i in 19:21){
   write.csv(modeldf$zz1ObeseA19_21, paste(modelfiledir, "z1obeseA", i, ".csv", sep = ""), row.names = FALSE) 
   
 }
+
+
 
 #########################################################################	
 
@@ -1623,8 +1627,7 @@ modelfiledir <- paste(getwd(),"/models/",sep="")
 ########################################################################
 #Female
 
-pNEET <- c(3.3,  5.5625 , 8.7875, 12.0125 ,15.2375, 18.4625)/100		
-
+pNEET <- c(2.3375, 5.5625, 8.7875,12.0125,15.2375,18.4625)/100		
 
 temp <- models$zz1NEETGender0A16_17	
 
@@ -1728,7 +1731,7 @@ write.csv(modeldf$zz1NEETGender0A18_21, paste(modelfiledir, "z1NEETGender0A21.cs
 
 #Male
 
-pNEET <- c( 2.88 , 5.1375,  7.3125 , 9.4875, 11.6625, 13.8375)/100		
+pNEET <- c(2.9625, 5.1375, 7.3125, 9.4875, 11.6625, 13.8375)/100		
 
 
 temp <- models$zz1NEETGender1A16_17	
@@ -2177,7 +2180,7 @@ total = c(8.1, 14.1, 17.3, 17.6, 18.0, 15.0, 10.9)
 age = c(19.5, 29.5, 39.5, 49.5, 59.5, 69.5, 79.5)
 
 pDepress <- predict(lm(total ~ I(age) + I(age^2)),  data.frame(age = 15:21 ))/100
-pDepress <- pDepress/ 1.185185 #<- have to check it again
+#pDepress <- pDepress/ 1.185185 #<- have to check it again
 
 
 # 1          2          3          4          5          6          7 
@@ -2197,12 +2200,12 @@ for(i in 1:10) {
   z1PUNISHLvl1<- env.base$modules$run_results[[paste0("run", i)]]$z1PUNISHLvl1[,1]
   
   z1BullyLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1BullyLvl1[,"15"]
-  z1OverweightLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1OverweightLvl1[,"15"]
+  z1ObeseLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1ObeseLvl1[,"15"]
   
   tempInter[i]<- getIntercept(pDepress[1], temp)
 }
 
-modeldf$zz1DepressA15[1, 3] <-min(tempInter)
+modeldf$zz1DepressA15[1, 3] <-mean(tempInter)
 
 
 temp$coefficients[1] <- modeldf$zz1DepressA15[1, 3]
@@ -2230,12 +2233,12 @@ for(i in 1:10) {
   z1PUNISHLvl1<- env.base$modules$run_results[[paste0("run", i)]]$z1PUNISHLvl1[,1]
   
   z1BullyLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1BullyLvl1[,"16"]
-  z1OverweightLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1OverweightLvl1[,"16"]
+  z1ObeseLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1ObeseLvl1[,"16"]
   
   tempInter[i]<- getIntercept(pDepress[2], temp)
 }
 
-modeldf$zz1DepressA15[1, 3] <- min(tempInter)
+modeldf$zz1DepressA15[1, 3] <- mean(tempInter)
 
 
 temp$coefficients[1] <- modeldf$zz1DepressA15[1, 3]
@@ -2260,12 +2263,12 @@ for(i in 1:10) {
   z1PUNISHLvl1<- env.base$modules$run_results[[paste0("run", i)]]$z1PUNISHLvl1[,1]
   
   z1BullyLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1BullyLvl1[,"17"]
-  z1OverweightLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1OverweightLvl1[,"17"]
+  z1ObeseLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1ObeseLvl1[,"17"]
   
   tempInter[i]<- getIntercept(pDepress[3], temp)
 }
 
-modeldf$zz1DepressA15[1, 3] <- min(tempInter)
+modeldf$zz1DepressA15[1, 3] <- mean(tempInter)
 
 
 temp$coefficients[1] <- modeldf$zz1DepressA15[1, 3]
@@ -2293,12 +2296,12 @@ for(i in 1:10) {
   z1PUNISHLvl1<- env.base$modules$run_results[[paste0("run", i)]]$z1PUNISHLvl1[,1]
   
   z1BullyLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1BullyLvl1[,"18"]
-  z1OverweightLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1OverweightLvl1[,"18"]
+  z1ObeseLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1ObeseLvl1[,"18"]
   
   tempInter[i]<- getIntercept(pDepress[4], temp)
 }
 
-modeldf$zz1DepressA15[1, 3] <- min(tempInter)
+modeldf$zz1DepressA15[1, 3] <- mean(tempInter)
 
 
 temp$coefficients[1] <- modeldf$zz1DepressA15[1, 3]
@@ -2326,12 +2329,12 @@ for(i in 1:10) {
   z1PUNISHLvl1<- env.base$modules$run_results[[paste0("run", i)]]$z1PUNISHLvl1[,1]
   
   z1BullyLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1BullyLvl1[,"19"]
-  z1OverweightLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1OverweightLvl1[,"19"]
+  z1ObeseLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1ObeseLvl1[,"19"]
   
   tempInter[i]<- getIntercept(pDepress[5], temp)
 }
 
-modeldf$zz1DepressA15[1, 3] <- min(tempInter)
+modeldf$zz1DepressA15[1, 3] <- mean(tempInter)
 
 
 temp$coefficients[1] <- modeldf$zz1DepressA15[1, 3]
@@ -2359,17 +2362,17 @@ for(i in 1:10) {
   z1PUNISHLvl1<- env.base$modules$run_results[[paste0("run", i)]]$z1PUNISHLvl1[,1]
   
   z1BullyLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1BullyLvl1[,"20"]
-  z1OverweightLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1OverweightLvl1[,"20"]
+  z1ObeseLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1ObeseLvl1[,"20"]
   
   tempInter[i]<- getIntercept(pDepress[6], temp)
 }
 
-modeldf$zz1DepressA15[1, 3] <- min(tempInter)
+modeldf$zz1DepressA15[1, 3] <- mean(tempInter)
 
 
 temp$coefficients[1] <- modeldf$zz1DepressA15[1, 3]
 
-z1ParentDepressLvl1 <- predSimBinom(temp)
+z1DepressLvl1 <- predSimBinom(temp)
 
 
 print(table(z1DepressLvl1)[2]/ 5000)
@@ -2393,12 +2396,14 @@ for(i in 1:10) {
   z1PUNISHLvl1<- env.base$modules$run_results[[paste0("run", i)]]$z1PUNISHLvl1[,1]
   
   z1BullyLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1BullyLvl1[,"21"]
-  z1OverweightLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1OverweightLvl1[,"21"]
+  z1ObeseLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1ObeseLvl1[,"21"]
   
+  z1DepressLvl1 <- env.base$modules$run_results[[paste0("run", i)]]$z1DepressLvl1[,"21"]
+
   tempInter[i]<- getIntercept(pDepress[7], temp)
 }
 
-modeldf$zz1DepressA15[1, 3] <- min(tempInter)
+modeldf$zz1DepressA15[1, 3] <- mean(tempInter)
 
 
 temp$coefficients[1] <- modeldf$zz1DepressA15[1, 3]
@@ -2418,12 +2423,4 @@ write.csv(modeldf$zz1DepressA15, paste(modelfiledir, "z1DepressA21.csv", sep = "
 detach("simframe")
 
 
-
-
-
-
-children[,c( names(children)[grep("^BMI", names(children))])]
-
-apply(children[,c( names(children)[grep("^BMI", names(children))])], 2, function(x) 
-  tapply(x, children$z1gender, sd)) * 0.81 *0.4456
 

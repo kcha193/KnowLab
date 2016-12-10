@@ -1,5 +1,5 @@
 Variable,ClassVal0,Estimate
-Intercept,NA,19.13571
+Intercept,NA,21.90571
 r1ParentEduc,2,0
 r1ParentEduc,3,-4.852799
 SESBTH,2,0
@@ -8,5 +8,5 @@ z1PrintExp,1,10.22593
 z1ECE,1,2.124778
 z1ADHD,1,-11.05835
 z1ParentInvolve,1,5.428266
-IQ,,0.6
-_sd,,15.517741
+IQ,,0.57
+_sd,,15.017741

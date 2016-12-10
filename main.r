@@ -39,15 +39,20 @@ saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 
 .rs.restartR()
 
+#####################################################################################
+tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1", grpbyName = "z1genderLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1", grpbyName = "r1stchildethn")
 
+tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1", grpbyName = "z1genderLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1", grpbyName = "r1stchildethn")
+
+tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1", grpbyName = "z1genderLvl1")
+tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1", grpbyName = "r1stchildethn")
 
 ##########################################################################################
-
-tableBuilderNew(env.base, statistic = "mean", "BMI")
-
-
-tableBuilderNew(env.base, statistic = "mean", "BMI", grpbyName = "r1stchildethn") %>% 
-  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
 
 tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1")%>% 
   filter(Var == "Overweight") 
@@ -84,18 +89,27 @@ tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "r
   filter(Var == "Overweight") %>% 
   select(-Lower, -Upper) %>%  spread(groupByData, Mean)
 
+tableBuilderNew(env.base, statistic = "mean", "BMI")
 
-
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1", grpbyName = "z1genderLvl1") %>% 
-  filter(Var == "Overweight") %>% 
+tableBuilderNew(env.base, statistic = "mean", "BMI", grpbyName = "z1genderLvl1") %>% 
   select(-Lower, -Upper) %>%  spread(groupByData, Mean)
 
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightBMILvl1", grpbyName = "r1stchildethn",
-                logisetexpr = "z1genderLvl1 == 0") %>% 
-  filter(Var == "Overweight") %>% 
+tableBuilderNew(env.base, statistic = "mean", "BMI", grpbyName = "r1stchildethn") %>% 
   select(-Lower, -Upper) %>%  spread(groupByData, Mean)
 
 
+##########################################################################################
+
+tableBuilderNew(env.base, statistic = "mean", "IQ")
+
+tableBuilderNew(env.base, statistic = "freq", "IQ")
+
+
+tableBuilderNew(env.base, statistic = "mean", "IQ", grpbyName = "SESBTH")
+
+
+tableBuilderNew(env.base, statistic = "freq", "SESBTH", grpbyName = "r1Region") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
 
 ##########################################################################################
 
@@ -116,17 +130,32 @@ tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1", grpbyName = "z1gende
   filter(Var == "Failed" & Year == 17)
 
 
+
 tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1",
                 grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 3")%>% 
+                logisetexpr = "r1stchildethn == 1")%>% 
   filter(Var == "Passed" & Year == 17)
 tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1",
                 grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 3")%>% 
+                logisetexpr = "r1stchildethn == 1")%>% 
   filter(Var == "Dropout" & Year == 17)
 tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1",
                 grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 3")%>% 
+                logisetexpr = "r1stchildethn == 1")%>% 
+  filter(Var == "Failed" & Year == 17)
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1",
+                grpbyName = "z1genderLvl1",
+                logisetexpr = "r1stchildethn == 2")%>% 
+  filter(Var == "Passed" & Year == 17)
+tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1",
+                grpbyName = "z1genderLvl1",
+                logisetexpr = "r1stchildethn == 2")%>% 
+  filter(Var == "Dropout" & Year == 17)
+tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1",
+                grpbyName = "z1genderLvl1",
+                logisetexpr = "r1stchildethn == 2")%>% 
   filter(Var == "Failed" & Year == 17)
 
 
@@ -144,34 +173,22 @@ tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1",
   filter(Var == "Failed" & Year == 17)
 
 
-
 tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1",
                 grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 1")%>% 
+                logisetexpr = "r1stchildethn == 3")%>% 
   filter(Var == "Passed" & Year == 17)
 tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1",
                 grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 1")%>% 
+                logisetexpr = "r1stchildethn == 3")%>% 
   filter(Var == "Dropout" & Year == 17)
 tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1",
                 grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 1")%>% 
+                logisetexpr = "r1stchildethn == 3")%>% 
   filter(Var == "Failed" & Year == 17)
 
 
 
-tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1",
-                grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 2")%>% 
-  filter(Var == "Passed" & Year == 17)
-tableBuilderNew(env.base, statistic = "freq", "z1DropLvl1",
-                grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 2")%>% 
-  filter(Var == "Dropout" & Year == 17)
-tableBuilderNew(env.base, statistic = "freq", "z1FailLvl1",
-                grpbyName = "z1genderLvl1",
-                logisetexpr = "r1stchildethn == 2")%>% 
-  filter(Var == "Failed" & Year == 17)
+
 
 
 
@@ -399,18 +416,6 @@ tableBuilderNew(env.base, "mean", "bwkg")
 tableBuilderNew(Simenv.scenario, "mean", "bwkg")
 
 
-#####################################################################################
-tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1")
-tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1", grpbyName = "z1genderLvl1")
-tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1", grpbyName = "r1stchildethn")
-
-tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1")
-tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1", grpbyName = "z1genderLvl1")
-tableBuilderNew(env.base, statistic = "freq", "z1AlcAbuseLvl1", grpbyName = "r1stchildethn")
-
-tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1")
-tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1", grpbyName = "z1genderLvl1")
-tableBuilderNew(env.base, statistic = "freq", "z1DepressLvl1", grpbyName = "r1stchildethn")
 
 #################################################################################################
 #SES

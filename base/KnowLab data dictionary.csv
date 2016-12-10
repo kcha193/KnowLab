@@ -17,7 +17,6 @@ bwkg * bwkg,Birth weight (squared),,,,
 BREAST,Breastfeeding (months),,(range 0-12),Less than/Greater than/Less than or equal to/Greater than or equal to/Equals,</>/<=/>=/==
 z1breastLvl1,Breastfeeding,"c(""None""=0, ""Breastfed""=1)",,,
 z1OverweightLvl1,Overweight,"c(""No""=0, ""Overweight""=1)",,,
-z1OverweightBMILvl1,Overweight in childhood by BMI,"c(""No""=0, ""Overweight""=1)",,,
 burt,Burt reading score,,,,
 burt_previous * burt_previous,Burt reading score (previous squared),,,,
 burt_previous,Burt reading score (previous),,,,
