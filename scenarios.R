@@ -62,6 +62,48 @@ Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
 ##########################################################################################
 Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
+tableBuilderNew(env.base, statistic = "freq", "z1accomLvl1") 
+
+Simenv.scenario$cat.adjustments$z1accom[,1] <- 1
+Simenv.scenario$cat.adjustments$z1accom[,2] <- 1
+
+
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10, 
+                                   simulateKnowLab)
+
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1accomLvl1")
+
+
+
+##########################################################################################
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+tableBuilderNew(env.base, statistic = "freq", "pregalc") 
+
+Simenv.scenario$cat.adjustments$pregalc[1,] <- 
+  c(1, 0, 0, 0.00, 0.00, 0, 0, 0, 0)
+
+
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10, 
+                                   simulateKnowLab)
+
+tableBuilderNew(Simenv.scenario, statistic = "freq", "pregalc")
+
+
+tableBuilderNew(env.base, statistic = "mean", "IQ")
+
+
+
+tableBuilderNew(Simenv.scenario, statistic = "mean", "IQ")
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ScoreLvl1")
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1ScoreLvl1")
+
+
+##########################################################################################
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
 tableBuilderNew(env.base, statistic = "freq", "z1WatchTVLvl1") 
 
 Simenv.scenario$cat.adjustments$z1WatchTV[3,] <- c(0.8, 0.2)	

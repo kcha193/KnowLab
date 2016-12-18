@@ -40,6 +40,24 @@ saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 .rs.restartR()
 
 #####################################################################################
+
+table(env.base$simframe$BREAST)
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1", 
+                logisetexpr = "BREAST == 1")
+
+tableBuilderNew(env.base, statistic = "freq", "BREAST", 
+                logisetexpr = "BREAST == 1")
+
+tableBuilderNew(env.base, statistic = "freq", "BREAST", 
+                logisetexpr = "BREAST == 2")
+
+tableBuilderNew(env.base, statistic = "freq", "BREAST", 
+                logisetexpr = "BREAST == 1")
+
+
+#####################################################################################
 tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1")
 tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1", grpbyName = "z1genderLvl1")
 tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1", grpbyName = "r1stchildethn")

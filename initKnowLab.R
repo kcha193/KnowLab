@@ -27,7 +27,7 @@ initSim <- function(num.iterations){
     names(binbreaks$pregsmk) <- c(NA, "0", "1-5", "6-10", "11-15", "16-20", "21+")
     
     binbreaks$bwkg <- c(0,2.499,2.999,3.499,3.999,max(children$bwgrams, na.rm=TRUE))
-    names(binbreaks$bwkg) <- c(NA, "<2500", "2500-2999", "3000-3499", "3500-3999", "4000+") 
+    names(binbreaks$bwkg) <- c(NA, "<2.50", "2.50-2.99", "3.00-3.49", "3.5-3.99", "4.00+") 
     
     #binbreaks$ga <- c(0,34,35,36,37,max(children$ga, na.rm=TRUE))
     #names(binbreaks$ga) <- c(NA, "< 35", "35", "36", "37", "38+")
@@ -871,8 +871,7 @@ initSim <- function(num.iterations){
   cat("Initialising KnowLab\n")
   
   descriptions_dataframe <- read_file(basefiledir, "KnowLab data dictionary.csv")
-  codings_dataframe <- descriptions_dataframe
-  dict<- createDict(descriptions_dataframe, codings_dataframe)
+  dict<- createDict(descriptions_dataframe)
   
   #load initial basefile
   children <- loadBaseFileCSV(basefiledir, "synthBasefile_MhrswrkFixed_5000_New1.csv") 
