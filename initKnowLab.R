@@ -31,8 +31,7 @@ initSim <- function(num.iterations){
     
     #binbreaks$ga <- c(0,34,35,36,37,max(children$ga, na.rm=TRUE))
     #names(binbreaks$ga) <- c(NA, "< 35", "35", "36", "37", "38+")
-    # binbreaks$ga <- c(0,34,35,36,42,max(children$ga, na.rm=TRUE))
-    # names(binbreaks$ga) <- c(NA, "<35", "35", "36", "37-42", "43+")
+
     
     binbreaks$BREAST <- c(-1:11, max(children$BREAST, na.rm=TRUE))
     names(binbreaks$BREAST) <- c(NA, 0:11, "12+")
@@ -87,10 +86,7 @@ initSim <- function(num.iterations){
     binbreaks$IQ <- c(0, 79, 90, 109, 119, 999)
     names(binbreaks$IQ) <- c(NA, "Borderline", "Low Average", "Average", "High Average", "Superior")
     
-    
-    # binbreaks$Score <- c(0, 80, 87, 999)
-    # names(binbreaks$Score) <- c(NA, "Dropout", "Failed", "Passed")
-    
+
     # binbreaks$INTERACT <- c(-1,2,3,4,5,6,7,8,9,10)
     # names(binbreaks$INTERACT) <- c(NA, "<3", 3:10)
     # 
@@ -99,7 +95,7 @@ initSim <- function(num.iterations){
     # 
     # binbreaks$NPRESCH <- c(-1,0,1,2,3)
     # names(binbreaks$NPRESCH) <- c(NA, 0:3)
-    # 
+     
     binbreaks
   }
   
@@ -373,139 +369,80 @@ initSim <- function(num.iterations){
     
     models$z1singlePrev0A2_5 <- loadGLMCSV(modelfiledir, "z1singlePrev0A2_5.csv")
     models$z1singlePrev1A2_5 <- loadGLMCSV(modelfiledir, "z1singlePrev1A2_5.csv")
-    models$z1singlePrev0A6_13 <- loadGLMCSV(modelfiledir, "z1singlePrev0A6_13.csv")
-    models$z1singlePrev1A6_13 <- loadGLMCSV(modelfiledir, "z1singlePrev1A6_13.csv")
-    
+
     models$fage_years <- loadGLMCSV(modelfiledir, "fage_years.csv")
     models$chkids2_5 <- loadGLMCSV(modelfiledir, "increaseChild2_5.csv")
-    models$chkids6_13 <- loadGLMCSV(modelfiledir, "increaseChild6_13.csv")
-    #models$propAddHS <- loadGLMCSV(modelfiledir, "paddhsbetas.csv")
     
     models$z1chparPrev0A2_5 <- loadGLMCSV(modelfiledir, "z1chparPrev0A2_5.csv")
     models$z1chparPrev1A2_5 <- loadGLMCSV(modelfiledir, "z1chparPrev1A2_5.csv")
-    models$z1chparPrev0A6_13 <- loadGLMCSV(modelfiledir, "z1chparPrev0A6_13.csv")
-    models$z1chparPrev1A6_13 <- loadGLMCSV(modelfiledir, "z1chparPrev1A6_13.csv")
     
     models$chres.a2_5 <- loadGLMCSV(modelfiledir, "ChresA2_5.csv")
-    models$chres.a6_13 <- loadGLMCSV(modelfiledir, "ChresA6_13.csv")
     models$z1chresPrev0.a2_5 <- loadGLMCSV(modelfiledir, "z1chresPrev0A2_5.csv")
-    models$z1chresPrev0.a6_13 <- loadGLMCSV(modelfiledir, "z1chresPrev0A6_13.csv")
     models$z1chresPrev1.a2_5 <- loadGLMCSV(modelfiledir, "z1chresPrev1A2_5.csv")
-    models$z1chresPrev1.a6_13 <- loadGLMCSV(modelfiledir, "z1chresPrev1A6_13.csv")
-    
+  
     models$welfarePrev0.a2_5 <- loadGLMCSV(modelfiledir, "WelfarePrev0A2_5.csv")
-    models$welfarePrev0.a6_13 <- loadGLMCSV(modelfiledir, "WelfarePrev0A6_13.csv")
     models$welfarePrev1.a2_5 <- loadGLMCSV(modelfiledir, "WelfarePrev1A2_5.csv")
-    models$welfarePrev1.a6_13 <- loadGLMCSV(modelfiledir, "WelfarePrev1A6_13.csv")
     
     models$mhrswrk.a2_5.mg1 <- loadGLMCSV(modelfiledir, "MhrswrkA2_5Mg1.csv")
     models$mhrswrk.a2_5.mg2 <- loadGLMCSV(modelfiledir, "MhrswrkA2_5Mg2.csv")
     models$mhrswrk.a2_5.mg3 <- loadGLMCSV(modelfiledir, "MhrswrkA2_5Mg3.csv")
-    models$mhrswrk.a6_13.mg1 <- loadGLMCSV(modelfiledir, "MhrswrkA6_13Mg1.csv")
-    models$mhrswrk.a6_13.mg2 <- loadGLMCSV(modelfiledir, "MhrswrkA6_13Mg2.csv")
-    models$mhrswrk.a6_13.mg3 <- loadGLMCSV(modelfiledir, "MhrswrkA6_13Mg3.csv")
     models$z1mhrswrk.prev0.a2_5.mg1 <- loadGLMCSV(modelfiledir, "z1mhrswrkPrev0A2_5Mg1.csv")
     models$z1mhrswrk.prev0.a2_5.mg2 <- loadGLMCSV(modelfiledir, "z1mhrswrkPrev0A2_5Mg2.csv")
     models$z1mhrswrk.prev0.a2_5.mg3 <- loadGLMCSV(modelfiledir, "z1mhrswrkPrev0A2_5Mg3.csv")
-    models$z1mhrswrk.prev0.a6_13.mg1 <- loadGLMCSV(modelfiledir, "z1mhrswrkPrev0A6_13Mg1.csv")
-    models$z1mhrswrk.prev0.a6_13.mg2 <- loadGLMCSV(modelfiledir, "z1mhrswrkPrev0A6_13Mg2.csv")
-    models$z1mhrswrk.prev0.a6_13.mg3 <- loadGLMCSV(modelfiledir, "z1mhrswrkPrev0A6_13Mg3.csv")
     models$z1mhrswrk.prev1.a2_5 <- loadGLMCSV(modelfiledir, "z1mhrswrkPrev1A2_5.csv")
-    models$z1mhrswrk.prev1.a6_13 <- loadGLMCSV(modelfiledir, "z1mhrswrkPrev1A6_13.csv")
-    
-    
+
     models$z1fhrswrk.prev0.a2_5.dg1 <- loadGLMCSV(modelfiledir, "z1fhrswrkPrev0A2_5Dg1.csv")
     models$z1fhrswrk.prev0.a2_5.dg2 <- loadGLMCSV(modelfiledir, "z1fhrswrkPrev0A2_5Dg2.csv")
     models$z1fhrswrk.prev0.a2_5.dg3 <- loadGLMCSV(modelfiledir, "z1fhrswrkPrev0A2_5Dg3.csv")
-    models$z1fhrswrk.prev0.a6_13.dg1 <- loadGLMCSV(modelfiledir, "z1fhrswrkPrev0A6_13Dg1.csv")
-    models$z1fhrswrk.prev0.a6_13.dg2 <- loadGLMCSV(modelfiledir, "z1fhrswrkPrev0A6_13Dg2.csv")
-    models$z1fhrswrk.prev0.a6_13.dg3 <- loadGLMCSV(modelfiledir, "z1fhrswrkPrev0A6_13Dg3.csv")
     models$z1fhrswrk.prev1.a2_5.dg1 <- loadGLMCSV(modelfiledir, "z1fhrswrkPrev1A2_5Dg1.csv")
     models$z1fhrswrk.prev1.a2_5.dg2 <- loadGLMCSV(modelfiledir, "z1fhrswrkPrev1A2_5Dg2.csv")
     models$z1fhrswrk.prev1.a2_5.dg3 <- loadGLMCSV(modelfiledir, "z1fhrswrkPrev1A2_5Dg3.csv")
-    models$z1fhrswrk.prev1.a6_13.dg1 <- loadGLMCSV(modelfiledir, "z1fhrswrkPrev1A6_13Dg1.csv")
-    models$z1fhrswrk.prev1.a6_13.dg2 <- loadGLMCSV(modelfiledir, "z1fhrswrkPrev1A6_13Dg2.csv")
-    models$z1fhrswrk.prev1.a6_13.dg3 <- loadGLMCSV(modelfiledir, "z1fhrswrkPrev1A6_13Dg3.csv")
     models$fhrswrk.a2_5 <- loadGLMCSV(modelfiledir, "FhrswrkA2_5.csv")
-    models$fhrswrk.a6_13.dg1 <- loadGLMCSV(modelfiledir, "FhrswrkA6_13Dg1.csv")
-    models$fhrswrk.a6_13.dg2 <- loadGLMCSV(modelfiledir, "FhrswrkA6_13Dg2.csv")
-    models$fhrswrk.a6_13.dg3 <- loadGLMCSV(modelfiledir, "FhrswrkA6_13Dg3.csv")
-    
+
     
     models$z1accomPrev0.a2_5 <- loadGLMCSV(modelfiledir, "z1accomPrev0A2_5.csv")
-    models$z1accomPrev0.a6_13 <- loadGLMCSV(modelfiledir, "z1accomPrev0A6_13.csv")
     models$z1accomPrev1.a2_5 <- loadGLMCSV(modelfiledir, "z1accomPrev1A2_5.csv")
-    models$z1accomPrev1.a6_13 <- loadGLMCSV(modelfiledir, "z1accomPrev1A6_13.csv")
-    
+
     models$z1homeownPrev0.a2_5 <- loadGLMCSV(modelfiledir, "z1homeownPrev0A2_5.csv")
-    models$z1homeownPrev0.a6_13 <- loadGLMCSV(modelfiledir, "z1homeownPrev0A6_13.csv")
     models$z1homeownPrev1.a2_5 <- loadGLMCSV(modelfiledir, "z1homeownPrev1A2_5.csv")
-    models$z1homeownPrev1.a6_13 <- loadGLMCSV(modelfiledir, "z1homeownPrev1A6_13.csv")
-    
+
     models$z1overcrowdPrev0.a2_5 <- loadGLMCSV(modelfiledir, "z1overcrowdPrev0A2_5.csv")
-    models$z1overcrowdPrev0.a6_13 <- loadGLMCSV(modelfiledir, "z1overcrowdPrev0A6_13.csv")
     models$z1overcrowdPrev1.a2_5 <- loadGLMCSV(modelfiledir, "z1overcrowdPrev1A2_5.csv")
-    models$z1overcrowdPrev1.a6_13 <- loadGLMCSV(modelfiledir, "z1overcrowdPrev1A6_13.csv")
-    
+
     
     models$msmoke.a2_5 <- loadGLMCSV(modelfiledir, "MsmokeA2_5.csv")
-    models$msmoke.a6_13.mg1 <- loadGLMCSV(modelfiledir, "MsmokeA6_13Mg1.csv")
-    models$msmoke.a6_13.mg2 <- loadGLMCSV(modelfiledir, "MsmokeA6_13Mg2.csv")
-    models$msmoke.a6_13.mg3 <- loadGLMCSV(modelfiledir, "MsmokeA6_13Mg3.csv")
     models$z1msmoke.prev0.a2_5.mg1 <- loadGLMCSV(modelfiledir, "z1msmokePrev0A2_5Mg1.csv")
     models$z1msmoke.prev0.a2_5.mg2 <- loadGLMCSV(modelfiledir, "z1msmokePrev0A2_5Mg2.csv")
     models$z1msmoke.prev0.a2_5.mg3 <- loadGLMCSV(modelfiledir, "z1msmokePrev0A2_5Mg3.csv")
-    models$z1msmoke.prev0.a6_13 <- loadGLMCSV(modelfiledir, "z1msmokePrev0A6_13.csv")
     models$z1msmoke.prev1.a2_5 <- loadGLMCSV(modelfiledir, "z1msmokePrev1A2_5.csv")
-    models$z1msmoke.prev1.a6_13.mg1 <- loadGLMCSV(modelfiledir, "z1msmokePrev1A6_13Mg1.csv")
-    models$z1msmoke.prev1.a6_13.mg2 <- loadGLMCSV(modelfiledir, "z1msmokePrev1A6_13Mg2.csv")
-    models$z1msmoke.prev1.a6_13.mg3 <- loadGLMCSV(modelfiledir, "z1msmokePrev1A6_13Mg3.csv")
-    
+
     models$fsmoke.a2_5.dg1 <- loadGLMCSV(modelfiledir, "FsmokeA2_5Dg1.csv")
     models$fsmoke.a2_5.dg2 <- loadGLMCSV(modelfiledir, "fsmokeA2_5Dg2.csv")
     models$fsmoke.a2_5.dg3 <- loadGLMCSV(modelfiledir, "FsmokeA2_5Dg3.csv")
-    models$fsmoke.a6_13.dg1 <- loadGLMCSV(modelfiledir, "FsmokeA6_13Dg1.csv")
-    models$fsmoke.a6_13.dg2 <- loadGLMCSV(modelfiledir, "fsmokeA6_13Dg2.csv")
-    models$fsmoke.a6_13.dg3 <- loadGLMCSV(modelfiledir, "FsmokeA6_13Dg3.csv")
     models$z1fsmoke.prev0.a2_5.dg1 <- loadGLMCSV(modelfiledir, "z1fsmokePrev0A2_5Dg1.csv")
     models$z1fsmoke.prev0.a2_5.dg2 <- loadGLMCSV(modelfiledir, "z1fsmokePrev0A2_5Dg2.csv")
     models$z1fsmoke.prev0.a2_5.dg3 <- loadGLMCSV(modelfiledir, "z1fsmokePrev0A2_5Dg3.csv")
-    models$z1fsmoke.prev0.a6_13.dg1 <- loadGLMCSV(modelfiledir, "z1fsmokePrev0A6_13Dg1.csv")
-    models$z1fsmoke.prev0.a6_13.dg2 <- loadGLMCSV(modelfiledir, "z1fsmokePrev0A6_13Dg2.csv")
-    models$z1fsmoke.prev0.a6_13.dg3 <- loadGLMCSV(modelfiledir, "z1fsmokePrev0A6_13Dg3.csv")
     models$z1fsmoke.prev1.a2_5.dg1 <- loadGLMCSV(modelfiledir, "z1fsmokePrev1A2_5Dg1.csv")
     models$z1fsmoke.prev1.a2_5.dg2 <- loadGLMCSV(modelfiledir, "z1fsmokePrev1A2_5Dg2.csv")
     models$z1fsmoke.prev1.a2_5.dg3 <- loadGLMCSV(modelfiledir, "z1fsmokePrev1A2_5Dg3.csv")
-    models$z1fsmoke.prev1.a6_13 <- loadGLMCSV(modelfiledir, "z1fsmokePrev1A6_13.csv")
-    
+
     models$hadmtot2_5 <- loadGLMCSV(modelfiledir, "HadmtotA2_5.csv")
-    models$hadmtot6_10 <- loadGLMCSV(modelfiledir, "HadmtotA6_10.csv")
     models$houtptot2_5 <- loadGLMCSV(modelfiledir, "HoutptotA2_5.csv")
-    models$houtptot6_10 <- loadGLMCSV(modelfiledir, "HoutptotA6_10.csv")
     models$gptotvis2 <- loadGLMCSV(modelfiledir, "GptotvisA2.csv")
     models$gptotvis3_5 <- loadGLMCSV(modelfiledir, "GptotvisA3_5.csv")
-    models$gptotvis6 <- loadGLMCSV(modelfiledir, "GptotvisA6.csv")
-    models$gptotvis7_10 <- loadGLMCSV(modelfiledir, "GptotvisA7_10.csv")
-    
+ 
     models$gpresp2_5 <- loadGLMCSV(modelfiledir, "GprespA2_5.csv")
-    models$gpresp6_10 <- loadGLMCSV(modelfiledir, "GprespA6_10.csv")
     models$gpmorb2 <- loadGLMCSV(modelfiledir, "GpmorbA2.csv")
     models$gpmorb3_4 <- loadGLMCSV(modelfiledir, "GpmorbA3_4.csv")
     models$gpmorb5 <- loadGLMCSV(modelfiledir, "GpmorbA5.csv")
-    models$gpmorb6_7 <- loadGLMCSV(modelfiledir, "gpmorbA6_7.csv")
     models$gpprev2 <- loadGLMCSV(modelfiledir, "GpprevA2.csv")
     models$gpprev3_4 <- loadGLMCSV(modelfiledir, "GpprevA3_4.csv")
     models$gpprev5 <- loadGLMCSV(modelfiledir, "GpprevA5.csv")
-    models$gpprev6_7 <- loadGLMCSV(modelfiledir, "GpprevA6_7.csv")
-    
+
     models$cond4 <- loadGLMCSV(modelfiledir, "Z1condA4.csv")
     models$cond.prev0.5 <- loadGLMCSV(modelfiledir, "Z1condA5Prev0.csv")
     models$cond.prev1.5 <- loadGLMCSV(modelfiledir, "Z1condA5Prev1.csv")
-    models$cond.prev0.6_13 <- loadGLMCSV(modelfiledir, "Z1condPrev0A6_13.csv")
-    models$cond.prev1.6_13 <- loadGLMCSV(modelfiledir, "Z1condPrev1A6_13.csv")
-    models$burt8 <- loadGLMCSV(modelfiledir, "BurtA8.csv")
-    models$burt9_13 <- loadGLMCSV(modelfiledir, "BurtA9_13.csv")
-    
+
     models$NPRESCH <- loadGLMCSV(modelfiledir, "Npresch.csv")
     models$INTERACT <- loadGLMCSV(modelfiledir, "Interact.csv")
     models$PUNISH <- loadGLMCSV(modelfiledir, "Punish.csv")	
@@ -712,8 +649,8 @@ initSim <- function(num.iterations){
                                     loadGLMCSV(modelfiledir, "NPRESCH2.csv"),
                                     loadGLMCSV(modelfiledir, "NPRESCH3.csv"))
     
-    # catToContModels$Score <- list(loadGLMCSV(modelfiledir, "Dropout.csv"), 
-    #                                 loadGLMCSV(modelfiledir, "Failed.csv"), 
+    # catToContModels$Score <- list(loadGLMCSV(modelfiledir, "Dropout.csv"),
+    #                                 loadGLMCSV(modelfiledir, "Failed.csv"),
     #                                 loadGLMCSV(modelfiledir, "Passed.csv"))
     
     
@@ -855,11 +792,10 @@ initSim <- function(num.iterations){
   loadTransitionProbabilities <- function(dir) {
     transition_probabilities <- list()
     
-    transition_probabilities$r1School <- read_csv(dir, "r1School_transition_probabilities.csv")
+    transition_probabilities$r1School <- simarioV2::read_csv(dir, "r1School_transition_probabilities.csv")
    
     transition_probabilities
   }
-  
   
   basefiledir <- paste(getwd() ,"/base/",sep="")
   modelfiledir <- paste(getwd(),"/models/",sep="")
@@ -870,14 +806,14 @@ initSim <- function(num.iterations){
   
   cat("Initialising KnowLab\n")
   
-  descriptions_dataframe <- read_file(basefiledir, "KnowLab data dictionary.csv")
+  descriptions_dataframe <- simarioV2::read_file(basefiledir, "KnowLab data dictionary.csv")
   dict<- createDict(descriptions_dataframe)
   
   #load initial basefile
   children <- loadBaseFileCSV(basefiledir, "synthBasefile_MhrswrkFixed_5000_New1.csv") 
   
   #create simframe
-  sfdef <- read_file(basefiledir, "simframedef.csv")
+  sfdef <- simarioV2::read_file(basefiledir, "simframedef.csv")
   simframe.master <- loadSimFrame(sfdef, children)
   
   #get indices of observations (ie: rows) basefile that have NAs

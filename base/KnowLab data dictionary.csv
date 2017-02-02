@@ -9,7 +9,7 @@ BMI,BMI,,,,,
 BREAST,Breastfeeding (months),,(range 0-12),Less than/Greater than/Less than or equal to/Greater than or equal to/Equals,</>/<=/>=/==,At birth
 bthorder,Birth order,"c(""1st""=1, ""2nd""=2, ""3rd""=3, ""4th""=4, ""5th""=5)",,,,
 bthorder * bthorder,Birth order (squared),,,,,
-burt,Burt reading score,,,,,8--13
+burt,Burt reading score,,,,,
 burt_previous,Burt reading score (previous),,,,,
 burt_previous * burt_previous,Burt reading score (previous squared),,,,,
 burt11_13,Burt reading score (year 11 - 13),,,,,
@@ -22,7 +22,7 @@ catpregsmk2,Cigarettes smoked per day during pregnancy,"c(""0""=0, ""1-5""=3, ""
 catsumchpar,Change of parents (years 1 - 5),,,,,
 catsumchpar * catsumchpar,Change of parents (years 1 - 5 squared),,,,,
 chkids,Kids ,,,,,
-chres,Changes in residence,,,,,1--21
+chres,Changes in residence,,,,,
 chres_previous,Changes of residence previous,,,NZ Euro/Maori/Pacific/Asian,Lvl1==1/Lvl2==1/Lvl3==1/Lvl4==1,
 cond,Conduct,,,,,
 cond * cond,Conduct (squared),,,,,
@@ -58,9 +58,9 @@ eth_typeofchangeLvl9,Ethnicity-Type of Change Interaction,"c(""Not""=0, ""Maori,
 fage,Father's age group at child's birth,"c(""<20""=1, ""20-24""=2, ""25-29""=3, ""30-34""=4, ""35-39""=5, ""40+""=6)",,,,
 fage_imputed,Imputed fathers age at birth (in years),,(ages 1-13 range 1-10),Less than/Greater than/Less than or equal to/Greater than or equal to/Equals,</>/<=/>=/==,
 fage_years,Father's age in years,,(ages 1-13: range 0-70),Less than/Greater than/Less than or equal to/Greater than or equal to/Equals,</>/<=/>=/==,
-fhrswrk,Father's hours worked per week,,,,,1--21
+fhrswrk,Father's hours worked per week,,,,,
 fhrswrk_previous,Father hours worked previous,,,,,
-fsmoke,Father's cigarettes smoked per day,,,Tertiary/Secondary/No formal qualification,Lvl1==1/Lvl2==1/Lvl3==1,1--21
+fsmoke,Father's cigarettes smoked per day,,,Tertiary/Secondary/No formal qualification,Lvl1==1/Lvl2==1/Lvl3==1,
 fsmoke_previous,Father cigarettes smoked previous,,,,,
 ga,Gestational age (weeks),,,,,
 gpmorb,GP visits for any morbidity,,,,,
@@ -82,7 +82,7 @@ hadmtot,Hospital admissions,,,,,
 hadmtot_previous,Hospital admissions in previous year,,,,,
 hadmtot2_5,Hospital admissions (years 2 - 5),,,,,
 hadmtot6_10,Hospital admissions (years 6 - 10),,,,,
-householdsize,Household size ,,,,,1--21
+householdsize,Household size ,,,,,
 householdsize_previous,Household size (prev year),,,,,
 houtptot,Hospital outpatient visits,,,,,
 houtptot_previous,Hospital outpatient visits in previous year,,,,,
@@ -101,7 +101,7 @@ IQ_previous5,IQ_previous5,,,,,
 IQ_previous6,IQ_previous6,,,,,
 IQ_previous7,IQ_previous7,,,,,
 IQ_previous8,IQ_previous8,,,,,
-kids,Kids,,,,,1--21
+kids,Kids,,,,,
 kids_previous,Kids (prev year),,,,,
 logit_gp0totvis,GP visits (initial logit),,,,,
 MAGE,Mother's age at child's birth,,,,,At birth
@@ -270,9 +270,7 @@ z1cond_previousLvl1,Conduct Disorder in previous year,"c(""No conduct disorder i
 z1condLvl1,Conduct Disorder,"c(""No conduct disorder""=0, ""Conduct disorder""=1)",,,,4--13
 z1DepressLvl1,Depression,"c(""None""=0, ""Depression""=1)",,,,15--21
 z1DrinkLvl1,Drinks more than 4 times per weeks,"c(""No""=0, ""Yes""=1)",,,,
-z1DropLvl1,NCEA Dropout,"c(""Not Dropout""=0, ""Dropout""=1)",,,,17
 z1ECELvl1,Early Childhood Education,"c(""No""=0, ""Yes""=1)",,,,Childhood
-z1FailLvl1,NCEA Fail,"c(""Not Failed""=0, ""Failed""=1)",,,,17
 z1FatherAlcLvl1,Father Alcohol Abuse,"c(""No""=0, ""Yes""=1)",,,,
 z1FatherDepressLvl1,Father Depression,"c(""No""=0, ""Yes""=1)",,,,
 z1fhrswrk,Father employed,,,,,
@@ -314,7 +312,7 @@ z1MotherAlcLvl1,Mother Alcohol Abuse,"c(""No""=0, ""Yes""=1)",,,,
 z1MotherDepressLvl1,Mother Depression,"c(""No""=0, ""Yes""=1)",,,,
 z1msmoke_previous,Mother smokes (prev year),,,,,
 z1msmokeLvl1,Mother smokes,"c(""Non-smoker""=0, ""Smoker""=1)",,,,
-z1NEETLvl1,"Not in employment, education, or training","c(""Not NEET""=0, ""NEET""=1)",,,,16--21
+z1NEETLvl1,"Not in employment, education, or training (NEET)","c(""Not NEET""=0, ""NEET""=1)",,,,16--21
 z1nicu,NICU at birth,,(range 0-3),Less than/Greater than/Less than or equal to/Greater than or equal to/Equals,</>/<=/>=/==,
 z1ObeseLvl1,Obesity,"c(""No""=0, ""Obese""=1)",,,,2--21
 z1overcrowd,Overcrowding ,,,,,
@@ -335,7 +333,7 @@ z1ParentInvolveLvl1,Reading Books to Baby,"c(""No""=0, ""Yes""=1)",,,,Childhood
 z1pregsmkLvl1,Cigarettes smoked per day during pregnancy,"c(""No smoking in pregnancy""=0, ""Smoking in pregnancy""=1)",,,,
 z1PrintExpLvl1,Print Exposure,"c(""No""=0, ""Yes""=1)",,,,Childhood
 z1PUNISHLvl1,Maternal punitiveness,"c(""No""=0, ""Yes""=1)",,,,5
-z1ScoreLvl1,NCEA Attain,"c(""Not Passed""=0, ""Passed""=1)",,,,17
+r1Score,NCEA,"c(""Passed""=1, ""Failed""=2, ""Dropout""=3)",,,,17
 z1single,Single parent family,,,False/True,==0/==1,
 z1single_ethLvl2,Single-Ethnicity Interaction,"c(""Not""=0, ""Single, Maori""=1)",,,,
 z1single_ethLvl3,Single-Ethnicity Interaction,"c(""Not""=0, ""Single, Pacific""=1)",,,,
@@ -356,3 +354,4 @@ z1twin_ethLvl2,Ethnicity-Twin Interaction,"c(""Not""=0, ""Maori, Twin""=1)",,,,
 z1twin_ethLvl3,Ethnicity-Twin Interaction,"c(""Not""=0, ""Pacific, Twin""=1)",,,,
 z1twinLvl1,Twin birth,"c(""Singleton""=0, ""Twin""=1)",,,,
 z1WatchTVLvl1,TV hours,"c(""No""=0, ""Yes""=1)",,,,Childhood
+z1ScoreLvl1,NCEA Pass,"c(""No""=0, ""Yes""=1)",,,,17

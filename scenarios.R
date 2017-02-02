@@ -31,6 +31,7 @@ tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "r
 
 
 source("SimmoduleMELC1_21.R")
+source("simulateKnowLab.R")
 
 Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 #Simenv.scenario$cat.adjustments$z1ECELvl1[1,] <- c(0,1)	
@@ -57,7 +58,21 @@ Simenv.scenario$cat.adjustments$z1Breakfast[1,] <- c(0, 1)
 
 Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
 
+tableBuilderNew(env.base, "freq", "r1mBMI")
+tableBuilderNew(Simenv.scenario, "freq", "r1mBMI")
+
+
 #Simenv.scenario <- simulateNP(Simenv.scenario, 4)
+
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+Simenv.scenario$cat.adjustments$SESBTH[1,] <- c(1, 0, 0)	
+
+Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
+
+tableBuilderNew(env.base, "freq", "SESBTH")
+
+
 
 ##########################################################################################
 Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
