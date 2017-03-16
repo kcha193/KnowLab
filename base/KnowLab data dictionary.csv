@@ -16,7 +16,7 @@ burt11_13,Burt reading score (year 11 - 13),,,,,
 burt8,Burt reading score (year 8),,,,,
 burt9_13,Burt reading score (years 9 - 13),,,,,
 bwgrams,Birth weight (g),,,,,
-bwkg,Birth weight,,(range 1.5-5.0),Less than/Greater than/Less than or equal to/Greater than or equal to,</>/<=/>=,At birth
+bwkg,Birth weight (kg),,(range 1.5-5.0),Less than/Greater than/Less than or equal to/Greater than or equal to,</>/<=/>=,At birth
 bwkg * bwkg,Birth weight (squared),,,,,
 catpregsmk2,Cigarettes smoked per day during pregnancy,"c(""0""=0, ""1-5""=3, ""6-10""=8, ""11-20""=16, "">20""=27)",,,,
 catsumchpar,Change of parents (years 1 - 5),,,,,
@@ -148,7 +148,7 @@ no99mage_years,Mother's age in years (parents present),,,,,
 no99mage_years * no99mage_years,Mother's age in years (parents present) (squared),,(ages 1-13: range 0-70),Less than/Greater than/Less than or equal to/Greater than or equal to/Equals,</>/<=/>=/==,
 NPRESCH,Number of years of pre-school (ages 3 - 5),"c(""No Pre-school Education""=0, ""1 year""=1, ""2 years""=2, ""3 years""=3) ",,False/True,==0/==1,
 pregalc,Drinks per week during pregnancy,,,,,At birth
-pregsmk,Cigarettes smoked per day during pregnancy,,(range 0-13),,,At birth
+pregsmk,Smoking during pregnancy (cigarettes per day),,(range 0-13),,,At birth
 pregsmk * pregsmk,Smoking during pregnancy (squared),,,,,
 propAddHS,Household size,,,,,
 PUNISH,Maternal punitiveness  - old,,,,,
@@ -157,7 +157,7 @@ r1mBMI,Mother's BMI,"c(""Normal"" = 0, ""Underweight""=1, ""Overweight""=2, ""Ob
 r1mBMILvl1,Mother's BMI Underweight,"c(""No""=0, ""Underweight""=1)",,,,
 r1mBMILvl2,Mother's BMI Overweight,"c(""No""=0, ""Overweight""=1)",,,,
 r1mBMILvl3,Mother's BMI Obese,"c(""No""=0, ""Obese""=1)",,,,
-r1ParentEduc,Highest eduction level between parents,"c(""Tertiary""=1, ""Secondary""=2, ""No formal qualifications""=3)",,,,Childhood
+r1ParentEduc,Parental Education,"c(""Tertiary""=1, ""Secondary""=2, ""No formal qualifications""=3)",,,,Childhood
 r1ParentEducLvl1,Highest eduction level between parents Tertiary,"c(""No""=0, ""Tertiary""=1)",,,,
 r1ParentEducLvl2,Highest eduction level between parents Secondary,"c(""No""=0, ""Secondary""=1)",,,,
 r1ParentEducLvl3,Highest eduction level between parents No formal qualifications,"c(""No""=0, ""No formal qualifications""=1)",,,,
@@ -353,5 +353,5 @@ z1twin_ethLvl1,Ethnicity-Twin Interaction,"c(""Not""=0, ""NZ Euro, Twin""=1)",,,
 z1twin_ethLvl2,Ethnicity-Twin Interaction,"c(""Not""=0, ""Maori, Twin""=1)",,,,
 z1twin_ethLvl3,Ethnicity-Twin Interaction,"c(""Not""=0, ""Pacific, Twin""=1)",,,,
 z1twinLvl1,Twin birth,"c(""Singleton""=0, ""Twin""=1)",,,,
-z1WatchTVLvl1,TV hours,"c(""No""=0, ""Yes""=1)",,,,Childhood
+z1WatchTVLvl1,TV hours (2 hours or more),"c(""No""=0, ""Yes""=1)",,,,Childhood
 z1ScoreLvl1,NCEA Pass,"c(""No""=0, ""Yes""=1)",,,,17

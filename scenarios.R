@@ -12,7 +12,6 @@ setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
 initialSim <<- readRDS("base/initialSim.rds")
 env.base  <<- readRDS("base/FullBaseRun.rds")
 
-
 NUM_ITERATIONS <<- 21
 dict <<- initialSim$dict
 limits <<- initialSim$limits
@@ -23,8 +22,23 @@ PropensityModels <<- initialSim$PropensityModels
 children <<- initialSim$children
 transition_probabilities <<- initialSim$transition_probabilities
 
+tableBuilderNew(env.base, "mean", "IQ", logisetexpr = "pregalc == 0")
+
+tableBuilderNew(env.base, "frequencies", "IQ", logisetexpr = "pregalc == 0")
+
+tableBuilderNew(env.base, "frequencies", "z1ADHDLvl1")
+
+tableBuilderNew(env.base, "frequencies", "z1ADHDLvl1", grpbyName = "bwkg")
+tableBuilderNew(env.base, "frequencies", "z1ADHDLvl1", logisetexpr = "bwkg > 2.5")
+
+
+tableBuilderNew(env.base, "frequencies", "z1ADHDLvl1", grpbyName = "z1BullyLvl1")
+
+
+
 tableBuilderNew(env.base, "freq", "z1ScoreLvl1")
 tableBuilderNew(env.base, "freq", "z1OverweightLvl1")
+tableBuilderNew(env.base, "freq", "z1ObeseLvl1")
 
 tableBuilderNew(env.base, "freq", "z1ScoreLvl1", logisetexpr = "z1ECELvl1 == 0")
 tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "r1stchildethn")
@@ -121,13 +135,22 @@ Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict
 
 tableBuilderNew(env.base, statistic = "freq", "z1WatchTVLvl1") 
 
-Simenv.scenario$cat.adjustments$z1WatchTV[3,] <- c(0.8, 0.2)	
+Simenv.scenario$cat.adjustments$z1WatchTV[1,] <- c(0.8, 0.2)	
 
 Simenv.scenario <- simulateSimario(Simenv.scenario, 10, simulateKnowLab)
 
-tableBuilderNew(env.base, statistic = "mean", "BMI")
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1")%>% 
+  filter(Var == "Overweight") 
 
-tableBuilderNew(Simenv.scenario, statistic = "mean", "BMI")
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1OverweightLvl1")%>% 
+  filter(Var == "Overweight") 
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1") %>% 
+  filter(Var == "Obese")
+
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1ObeseLvl1") %>% 
+  filter(Var == "Obese")
 
 ##########################################################################################
 Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")

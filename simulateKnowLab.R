@@ -1007,7 +1007,7 @@ simulateKnowLab <- function(run, simenv) {
     # if(iteration<19)	  
     #   r1Sleep <<- get(paste("r1SleepA", iteration, sep =""))
     
-    z1WatchTVLvl1 <- adjustCatVar(z1WatchTVLvl1, "z1WatchTVLvl1", simenv = simenv, iteration = iteration)
+    #z1WatchTVLvl1 <- adjustCatVar(z1WatchTVLvl1, "z1WatchTVLvl1", simenv = simenv, iteration = iteration)
     
     r1Sleep <- adjustCatVar(r1Sleep, "r1Sleep", simenv = simenv, iteration = iteration)
     
@@ -1463,10 +1463,6 @@ simulateKnowLab <- function(run, simenv) {
     
     
     r1School <<- school
-    
-
-    z1WatchTVLvl1 <<- ifelse(rpois(5000, 1.52) >= 2, 1,0)
-  
     
   }
   

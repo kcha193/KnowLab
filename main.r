@@ -23,7 +23,8 @@ initialSim <- initSim(NUM_ITERATIONS)
 saveRDS(initialSim, "base/initialSim.rds")
 saveRDS(initialSim, "../KnowLabShiny/base/initialSim.rds")
 
-Simenv <- createSimenv("Base", initialSim$simframe, initialSim$dict, "years1_21")
+Simenv <- createSimenv("Base", initialSim$simframe, 
+                       initialSim$dict, "years1_21")
 
 #source("SimmoduleMELC1_21.R")
 source("simulateKnowLab.R")
