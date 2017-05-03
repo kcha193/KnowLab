@@ -161,7 +161,7 @@ pObese <-
 
 pObeseOW <- pObese/pOverweight
 
-z1WatchTVLvl1 <- env.base$modules$run_results$run1$z1WatchTVLvl1[,1]
+z1WatchTVLvl1 <- ifelse(rpois(5000, 1.52) >= 2, 1,0)
 
 temp <- models$zz1OverweightA2
 

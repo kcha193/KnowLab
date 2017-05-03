@@ -1,5 +1,5 @@
 "Variable","ClassVal0","Estimate"
-"Intercept",NA,-1.31418988868722
+"Intercept",NA,-1.00385126246342
 "r1stchildethn",2,0.3464226
 "r1stchildethn",3,0.7797835
 "r1stchildethn",4,-0.2604561
@@ -17,4 +17,4 @@
 "z1Caesarean",1,0.2776317
 "r1Sleep",2,-0.8415672
 "r1Sleep",3,-0.3784364
-"z1WatchTV",1,1.35
+"z1WatchTV",1,0.792031337

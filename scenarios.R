@@ -47,6 +47,30 @@ tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", grpbyName = "r
 source("SimmoduleMELC1_21.R")
 source("simulateKnowLab.R")
 
+###########################################################################################
+Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+Simenv.scenario$cat.adjustments$bwkg[1,] <- c(0, 0, 0, 0, 1)
+
+Simenv.scenario <- simulateSimario(Simenv.scenario, 2, simulateKnowLab)
+
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1HighBwLvl1")
+tableBuilderNew(Simenv.scenario, statistic = "freq", "bwkg")
+
+tableBuilderNew(env.base, statistic = "mean", "bwkg")
+
+tableBuilderNew(Simenv.scenario, statistic = "mean", "bwkg")
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1")%>% 
+  filter(Var == "Overweight") 
+
+tableBuilderNew(Simenv.scenario, statistic = "freq", "z1OverweightLvl1")%>% 
+  filter(Var == "Overweight") 
+
+###########################################################################################
+
+
+
 Simenv.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 #Simenv.scenario$cat.adjustments$z1ECELvl1[1,] <- c(0,1)	
 
@@ -288,18 +312,16 @@ tableBuilderNew(Simenv.scenario, "freq", "z1OverweightLvl1", logisetexpr = "SESB
   write.xlsx("z1BreakfastScenario.xlsx", sheetName = "ScenarioLowSES", row.names = FALSE, append = TRUE)
 
 
-
-
-
-compare = 
-  function(env.base, env.scenario){
+compareFreq = 
+  function(env.base, env.scenario, varName){
     
     Base <-	
-      sapply(env.base$modules[[1]]$run_results, function(x) apply(x$outcome$z1OverweightLvl1[-1],  2, table))
-                                                                  
+      sapply(env.base$modules$run_results, function(x) 
+        apply(x[[varName]],  2, table)[-1,])/5000
     
     Scenario <-
-      sapply(env.scenario$modules[[1]]$run_results, function(x) apply(x$freqs$z1OverweightLvl1[-1], function(y) y[2]/5000))	
+      sapply(env.scenario$modules$run_results, function(x) 
+        apply(x[[varName]],  2, table)[-1,])/5000
     
     results <- numeric(3)
     
@@ -309,16 +331,15 @@ compare =
       results <- 
         rbind(results,c(summary(lm.fit )$coef[2,1],confint(	lm.fit )[2,]))
     }
+
+    results <- round(apply(results, 2, mean, na.rm = TRUE)*100, 4)	
     
-    results <- cbind((1:21)/100, results)
+    names(results) <- c("Mean Diff", "Lower CI", "Upper CI")
     
-    colnames(results) <- c("Age", "Mean Diff", "Lower CI", "Upper CI")
-    results <- results[-1,]
-    
-    round(results*100, 4)	
+    results
   }
 
-compare(env.base, Simenv.scenario)
+compareFreq(env.base, env.base, "z1OverweightLvl1")
 
 
 

@@ -43,8 +43,11 @@ saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 
 #####################################################################################
 
-table(env.base$simframe$BREAST)
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1")%>% 
+  filter(Var == "Overweight") 
 
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1")%>% 
+  filter(Var == "Overweight") 
 
 tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1", 
                 logisetexpr = "BREAST == 1")
