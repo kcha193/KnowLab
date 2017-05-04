@@ -4,6 +4,7 @@ rm(list = ls())
 
 #devtools::install_github("kcha193/simarioV2")
 
+library(tidyverse)
 library(simarioV2)
 
 

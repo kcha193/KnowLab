@@ -105,302 +105,283 @@ Smoking in pregnancy       21.66 20.51822 22.80178
 ######################################################################################
 
 
-setwd("C:/Users/kcha193/workspace/MELC/data")
-
-#source("MELC.R")
-
-source("MELCBase.R")
-
-env.base$modules$years1_21$run_results_collated$freqs$z1OverweightLvl1
-	
-load("base/FullBaseRun.rData") # loads env.base object 
-	
-Base <-	
-	sapply(env.base$modules$years1_21$run_results, function(x) sapply(x$freqs$z1OverweightLvl1[-1], function(y) y[2]/5000))	
-	
-
-x <- t(apply(Base, 1, function(x) cumsum(x)/(1:10)))	
-
-plot(1:10, x[1,], type = "l", ylim = c(0.25, 0.5))
-for(i in 2:20) lines(1:10, 	x[i,])
+rm(list = ls())
+.rs.restartR()
 
 
- round(t(apply(Base, 1, function(x) diff(cumsum(x)/(1:10)))	), 5)
+library(tidyverse)
+library(simarioV2)
 
- 
+setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
 
-compare = 
-function(env.base, env.scenario){
-	
-	Base <-	
-	sapply(env.base$modules$years1_21$run_results, function(x) sapply(x$freqs$z1OverweightLvl1[-1], function(y) y[2]/5000))	
+initialSim <<- readRDS("base/initialSim.rds")
+env.base  <<- readRDS("base/FullBaseRun.rds")
 
-	Scenario <-
-	sapply(env.scenario$modules$years1_21$run_results, function(x) sapply(x$freqs$z1OverweightLvl1[-1], function(y) y[2]/5000))	
+NUM_ITERATIONS <<- 21
+dict <<- initialSim$dict
+limits <<- initialSim$limits
+binbreaks <<- initialSim$binbreaks
+catToContModels <<- initialSim$catToContModels
+models <<- initialSim$models
+PropensityModels <<- initialSim$PropensityModels
+children <<- initialSim$children
+transition_probabilities <<- initialSim$transition_probabilities
 
-	results <- numeric(3)
+source("simulateKnowLab.R")
 
-	for(i in 1:20){
-		lm.fit <- lm(c(Base[i,], Scenario[i,]) ~ factor(rep(c("B", "S"), each = 10)))
 
-		results <- 
-		rbind(results,c(summary(lm.fit )$coef[2,1],confint(	lm.fit )[2,]))
-	}
+compareFreq = 
+  function(env.base, env.scenario, varName){
+    
+    Base <-	
+      sapply(env.base$modules$run_results, function(x) 
+        apply(x[[varName]],  2, table)[-1,])/5000
+    
+    Scenario <-
+      sapply(env.scenario$modules$run_results, function(x) 
+        apply(x[[varName]],  2, table)[-1,])/5000
+    
+    results <- numeric(3)
+    
+    for(i in 1:20){
+      lm.fit <- lm(c(Base[i,], Scenario[i,]) ~ factor(rep(c("B", "S"), each = 10)))
+      
+      results <- 
+        rbind(results,c(summary(lm.fit )$coef[2,1],confint(	lm.fit )[2,]))
+    }
+    
+    #results <- round(apply(results, 2, mean, na.rm = TRUE)*100, 4)	
+    results <- cbind(1:21/100, results)
+    
+    colnames(results) <- c("Age", "Mean Diff", "Lower CI", "Upper CI")
+    
+    results[-1,]*100
+  }
 
-	results <- cbind((1:21)/100, results)
-	
-	colnames(results) <- c("Age", "Mean Diff", "Lower CI", "Upper CI")
-	results <- results[-1,]
-			
-	round(results*100, 4)	
-}
+compareFreq(env.base, env.base, "z1OverweightLvl1")
 
 
 #######################################################################
 # Breakfast from 81 to 95%
-env.scenario <- SimenvMELC$new()
-	
-env.scenario$cat.adjustments$z1Breakfast[1,] = c(0.05, 0.95)
+Breakfast.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
-sfInit(parallel=TRUE, cpus = 4, slaveOutfile="test.txt" )
-	
-sfExport('binbreaks', 'models', 'PropensityModels', 
-		'catToContModels','predSimBinomsSelect_notChangeScores', 
-		'predSimBinomsSelect','predSimNormsSelect3Models',
-		'children', 'NUM_ITERATIONS', 'dict.MELC', 
-		'check.subgroup.expr', 'env.base', 'prepend.paths')
-			
-sfExport(list=ls(simarioFun$env), namespace= "simario")
-	
-sfLibrary(Hmisc)
-sfLibrary(snowfall)
-sfLibrary(stringi)
-sfLibrary(stringr)
+Breakfast.scenario$cat.adjustments$z1Breakfast[1,] = c(0.05, 0.95)
 
-set.seed(1125)
-env.scenario$simulateP(10)
+Breakfast.scenario <- simulateSimario(Breakfast.scenario, 10, simulateKnowLab)
 
-sfStop()
+results <- compareFreq(env.base, Breakfast.scenario, "z1OverweightLvl1")
 	
-compare(env.base, env.scenario)
-	
-	
-write.csv(compare(env.base, env.scenario), "compareBreakfastA5_21.csv")	
+apply(results[4:20,],2, mean)
+
+write.csv(compareFreq(env.base, Breakfast.scenario, "z1OverweightLvl1"), "compareBreakfastA5_21.csv")	
 	
 	
 ############################################################################
-# Maternal Overweight + obesity – halving to 21%
+# Maternal Overweight + obesity ? halving to 21%
 
-env.scenario3 <- SimenvMELC$new()
+tableBuilderNew(env.base, "freq", "r1mBMI")
 
-env.scenario3$cat.adjustments$r1mBMI[1,] = 	c(0.77, 0.02, 0.135, 0.075)
+Maternal.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
-sfInit(parallel=TRUE, cpus = 4, slaveOutfile="test.txt" )
-	
-sfExport('binbreaks', 'models', 'PropensityModels', 
-		'catToContModels','predSimBinomsSelect_notChangeScores', 
-		'predSimBinomsSelect','predSimNormsSelect3Models',
-		'children', 'NUM_ITERATIONS', 'dict.MELC', 
-		'check.subgroup.expr', 'env.base', 'prepend.paths')
-			
-sfExport(list=ls(simarioFun$env), namespace= "simario")
-	
-sfLibrary(Hmisc)
-sfLibrary(snowfall)
-sfLibrary(stringi)
-sfLibrary(stringr)
+Maternal.scenario$cat.adjustments$r1mBMI[1,] = 	c(0.77, 0.02, 0.135, 0.075)
 
-set.seed(1136)
-env.scenario3$simulateP(10)
+Maternal.scenario <- simulateSimario(Maternal.scenario, 10, simulateKnowLab)
 
-sfStop()
+compareFreq(env.base, Maternal.scenario, "z1OverweightLvl1")
 
-
-compare(env.base, env.scenario3)
-	
-write.csv(compare(env.base, env.scenario3), "compareMaternalBMIA2_A12.csv")	
-	
-
+write.csv(compareFreq(env.base, Maternal.scenario, "z1OverweightLvl1"), "compareMaternalBMIA2_A9.csv")	
 
 ############################################################################
-# Birthweight – halving % with high birth weight
+# Birthweight ? halving % with high birth weight
 
-env.scenario4 <- SimenvMELC$new()
+tableBuilderNew(env.base, "freq", "bwkg")
 
-env.scenario4$cat.adjustments$z1HighBw[1,] = 	c(0.92, 0.08)
+Birthweight.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
-sfInit(parallel=TRUE, cpus = 4, slaveOutfile="test.txt" )
-	
-sfExport('binbreaks', 'models', 'PropensityModels', 
-		'catToContModels','predSimBinomsSelect_notChangeScores', 
-		'predSimBinomsSelect','predSimNormsSelect3Models',
-		'children', 'NUM_ITERATIONS', 'dict.MELC', 
-		'check.subgroup.expr', 'env.base', 'prepend.paths')
-			
-sfExport(list=ls(simarioFun$env), namespace= "simario")
-	
-sfLibrary(Hmisc)
-sfLibrary(snowfall)
-sfLibrary(stringi)
-sfLibrary(stringr)
+Birthweight.scenario$cat.adjustments$bwkg[1,] = c(0.041, 0.161, 0.336, 0.412, 0.05)
 
-set.seed(1226)
-env.scenario4$simulateP(10)
+Birthweight.scenario <- simulateSimario(Birthweight.scenario, 10, simulateKnowLab)
 
-sfStop()
+compareFreq(env.base, Birthweight.scenario, "z1OverweightLvl1")
 
-
-compare(env.base, env.scenario4)
-	
-write.csv(compare(env.base, env.scenario4), "compareBirthweightA2_A18.csv")	
+write.csv(compareFreq(env.base, Birthweight.scenario, "z1OverweightLvl1"), "compareBirthweightA2_A18.csv")	
 
 # 2 to 18
 
 ############################################################################
-# Mother smoked – halving % that smoke
-env.scenario5 <- SimenvMELC$new()
+# Mother smoked ? halving % that smoke
+tableBuilderNew(env.base, "freq", "pregsmk")
 
-#subgroupExpression <- "r1stchildethnLvl1==1"
-#setGlobalSubgroupFilterExpression(subgroupExpression)
-	
-#env.scenario1$cat.adjustments$BREAST[1,]=c(0.01,rep( 0.0825,12))
-env.scenario5$cat.adjustments$pregsmk[1,] = c(0.90,0.02,0.02,0.02,0.02,0.02)
+pregsmk.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
+pregsmk.scenario$cat.adjustments$pregsmk[1,] = c(0.90,0.02,0.02,0.02,0.02,0.02)
 
-sfInit(parallel=TRUE, cpus = 4, slaveOutfile="test.txt" )
+pregsmk.scenario <- simulateSimario(pregsmk.scenario, 10, simulateKnowLab)
 
-	
-sfExport('binbreaks', 'models', 'PropensityModels', 
-		'catToContModels','predSimBinomsSelect_notChangeScores', 
-		'predSimBinomsSelect','predSimNormsSelect3Models',
-		'children', 'NUM_ITERATIONS', 'dict.MELC', 
-		'check.subgroup.expr', 'env.base', 'prepend.paths')
-			
-sfExport(list=ls(simarioFun$env), namespace= "simario")
-	
-sfLibrary(Hmisc)
-sfLibrary(snowfall)
-sfLibrary(stringi)
-sfLibrary(stringr)
+compareFreq(env.base, pregsmk.scenario, "z1OverweightLvl1")
 
-set.seed(1242)
-env.scenario5$simulateP(10)
+write.csv(compareFreq(env.base, pregsmk.scenario, "z1OverweightLvl1"), "comparePregsmkA3_A14.csv")	
 
-sfStop()
+############################################################################
+# Breastfeeding ? halving % non breastfeeders
+tableBuilderNew(env.base, "freq", "BREAST")
 
+BREAST.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
-compare(env.base, env.scenario5)
-	
-write.csv(compare(env.base, env.scenario5), "comparePregsmkA3_A14.csv")	
+BREAST.scenario$cat.adjustments$BREAST[1,]= c(0.18,rep(0.82/12, 12))
+
+BREAST.scenario <- simulateSimario(BREAST.scenario, 10, simulateKnowLab)
+
+compareFreq(env.base, BREAST.scenario, "z1OverweightLvl1")
+
+write.csv(compareFreq(env.base, BREAST.scenario, "z1OverweightLvl1"), "compareBREASTA3_A14 halving non-breastfreeders.csv")	
 
 
 ############################################################################
-# Breastfeeding – halving % non breastfeeders
-env.scenario6 <- SimenvMELC$new()
+# Parental education ? change from High 34% 58% 8%? ?to???high 50% 45% 5%
 
-env.scenario6$cat.adjustments$BREAST[1,]=c(0.18,rep(0.82/12, 12))
+tableBuilderNew(env.base, "freq", "r1ParentEduc")
 
+ParentEduc.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
-sfInit(parallel=TRUE, cpus = 4, slaveOutfile="test.txt" )
+ParentEduc.scenario$cat.adjustments$r1ParentEduc[1,]=c(0.5, 0.45, 0.05)
 
-	
-sfExport('binbreaks', 'models', 'PropensityModels', 
-		'catToContModels','predSimBinomsSelect_notChangeScores', 
-		'predSimBinomsSelect','predSimNormsSelect3Models',
-		'children', 'NUM_ITERATIONS', 'dict.MELC', 
-		'check.subgroup.expr', 'env.base', 'prepend.paths')
-			
-sfExport(list=ls(simarioFun$env), namespace= "simario")
-	
-sfLibrary(Hmisc)
-sfLibrary(snowfall)
-sfLibrary(stringi)
-sfLibrary(stringr)
+ParentEduc.scenario <- simulateSimario(ParentEduc.scenario, 10, simulateKnowLab)
 
-set.seed(220)
-env.scenario6$simulateP(10)
+compareFreq(env.base, ParentEduc.scenario, "z1OverweightLvl1")
 
-sfStop()
-
-
-compare(env.base, env.scenario6)
-	
-
-write.csv(compare(env.base, env.scenario6), "compareBREASTA3_A14 halving non-breastfreeders.csv")	
-
-
-env.scenario6 <- SimenvMELC$new()
-
-env.scenario6$cat.adjustments$BREAST[1,]=c(0.01,rep(0.9/12, 12))
-
-
-sfInit(parallel=TRUE, cpus = 4, slaveOutfile="test.txt" )
-
-	
-sfExport('binbreaks', 'models', 'PropensityModels', 
-		'catToContModels','predSimBinomsSelect_notChangeScores', 
-		'predSimBinomsSelect','predSimNormsSelect3Models',
-		'children', 'NUM_ITERATIONS', 'dict.MELC', 
-		'check.subgroup.expr', 'env.base', 'prepend.paths')
-			
-sfExport(list=ls(simarioFun$env), namespace= "simario")
-	
-sfLibrary(Hmisc)
-sfLibrary(snowfall)
-sfLibrary(stringi)
-sfLibrary(stringr)
-
-set.seed(220)
-env.scenario6$simulateP(10)
-
-sfStop()
-
-
-compare(env.base, env.scenario6)
-	
-
-write.csv(compare(env.base, env.scenario6), "compareBREASTA3_A14 non-breastfeeder to 1 percent.csv")	
-
+write.csv(compareFreq(env.base, ParentEduc.scenario, "z1OverweightLvl1"), "comparer1ParentEduc2_A15.csv")	
 
 ############################################################################
-# Parental education – change from High 34% 58% 8%   to   high 50% 45% 5%
+# Sleep 
 
+tableBuilderNew(env.base, "freq", "r1Sleep")
 
-env.scenario6 <- SimenvMELC$new()
+oldLong <-
+tableBuilderNew(env.base, "freq", "r1Sleep") %>% 
+  filter(Var == "Long") %>% select(Mean)
 
-env.scenario6$cat.adjustments$r1ParentEduc[1,]=c(0.5, 0.45, 0.05)
+Sleep.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
+Sleep.scenario$cat.adjustments$r1Sleep[,1] = c(NA, rep(0.01, 18), NA, NA)
+Sleep.scenario$cat.adjustments$r1Sleep[,3] = c(NA, oldLong$Mean/100, NA, NA)
+Sleep.scenario$cat.adjustments$r1Sleep[,2] =
+  apply(Sleep.scenario$cat.adjustments$r1Sleep, 1, function(x) 1 - x[1] - x[3])
 
-sfInit(parallel=TRUE, cpus = 4, slaveOutfile="test.txt" )
+Sleep.scenario <- simulateSimario(Sleep.scenario, 10, simulateKnowLab)
 
-	
-sfExport('binbreaks', 'models', 'PropensityModels', 
-		'catToContModels','predSimBinomsSelect_notChangeScores', 
-		'predSimBinomsSelect','predSimNormsSelect3Models',
-		'children', 'NUM_ITERATIONS', 'dict.MELC', 
-		'check.subgroup.expr', 'env.base', 'prepend.paths')
-			
-sfExport(list=ls(simarioFun$env), namespace= "simario")
-	
-sfLibrary(Hmisc)
-sfLibrary(snowfall)
-sfLibrary(stringi)
-sfLibrary(stringr)
+results <- compareFreq(env.base, Sleep.scenario, "z1OverweightLvl1")
 
-set.seed(524)
-env.scenario6$simulateP(10)
+apply(results[2:19,],2, mean)
 
-sfStop()
-
-
-compare(env.base, env.scenario6)
-	
-
-write.csv(compare(env.base, env.scenario6), "comparer1ParentEduc2_A15.csv")	
-
+write.csv(compareFreq(env.base, Sleep.scenario, "z1OverweightLvl1"), "comparer1SleepA2_A19.csv")	
 
 ############################################################################
-# Sleep – add 30 minutes to everyone in the bottom 25% of distribution
+# Watch tv 45 to 20
+
+tableBuilderNew(env.base, "freq", "z1WatchTVLvl1")
+
+WatchTV.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+WatchTV.scenario$cat.adjustments$z1WatchTVLvl1[1,]=c(0.8, 0.2)
+
+WatchTV.scenario <- simulateSimario(WatchTV.scenario, 10, simulateKnowLab)
+
+compareFreq(env.base, WatchTV.scenario, "z1OverweightLvl1")
+
+write.csv(compareFreq(env.base, WatchTV.scenario, "z1OverweightLvl1"), "comparer1WatchTVA3_A12.csv")	
+
+############################################################################
+# Mother smoked ? halving % that smoke + Breastfeeding ? halving % non breastfeeders
+pregsmkBreast.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+pregsmkBreast.scenario$cat.adjustments$pregsmk[1,] = c(0.90,0.02,0.02,0.02,0.02,0.02)
+pregsmkBreast.scenario$cat.adjustments$BREAST[1,]= c(0.18,rep(0.82/12, 12))
+
+pregsmkBreast.scenario <- simulateSimario(pregsmkBreast.scenario, 10, simulateKnowLab)
+
+compareFreq(env.base, pregsmkBreast.scenario, "z1OverweightLvl1")
+
+write.csv(compareFreq(env.base, pregsmkBreast.scenario, "z1OverweightLvl1"), 
+          "comparepregsmkBreastA3_A14.csv")	
+
+#######################################################################
+# Breakfast from 81 to 95%
+BreakfastSleepWatchTV.scenario <-
+  createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+oldLong <-
+  tableBuilderNew(env.base, "freq", "r1Sleep") %>% 
+  filter(Var == "Long") %>% select(Mean)
+
+BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[,1] = c(NA, rep(0.01, 18), NA, NA)
+BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[,3] = c(NA, oldLong$Mean/100, NA, NA)
+BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[,2] =
+  apply(BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep, 1, function(x) 1 - x[1] - x[3])
+
+BreakfastSleepWatchTV.scenario$cat.adjustments$z1Breakfast[1,] = c(0.05, 0.95)
+
+BreakfastSleepWatchTV.scenario$cat.adjustments$z1WatchTVLvl1[1,]=c(0.8, 0.2)
+
+BreakfastSleepWatchTV.scenario <- simulateSimario(BreakfastSleepWatchTV.scenario, 10, simulateKnowLab)
+
+compareFreq(env.base, BreakfastSleepWatchTV.scenario, "z1OverweightLvl1")
+
+write.csv(compareFreq(env.base, BreakfastSleepWatchTV.scenario, "z1OverweightLvl1"),
+          "compareBreakfastSleepWatchTVfastA5_12.csv")	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 env.scenario8 <- SimenvMELC$new()

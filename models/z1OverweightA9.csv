@@ -1,5 +1,5 @@
 "Variable","ClassVal0","Estimate"
-"Intercept",NA,-0.741962050357322
+"Intercept",NA,-0.781192269328025
 "r1stchildethn",2,0.3464226
 "r1stchildethn",3,0.7797835
 "r1stchildethn",4,-0.2604561
@@ -10,7 +10,7 @@
 "SESBTH",3,0.4574248
 "z1pregsmk",1,0.3852624
 "r1mBMI",1,-0.7765288
-"r1mBMI",2,0.6678294
+"r1mBMI",2,0.7466879
 "r1mBMI",3,1.068153
 "z1HighBw",1,0.5653138
 "z1LowBw",1,-0.5108256

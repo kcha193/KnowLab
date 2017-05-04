@@ -1464,7 +1464,6 @@ simulateKnowLab <- function(run, simenv) {
  
     r1SchoolGender <<-  r1SchoolGender 
     
-    
     r1School <<- school
     
   }
