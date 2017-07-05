@@ -1011,10 +1011,13 @@ simulateKnowLab <- function(run, simenv) {
     
     r1Sleep <- adjustCatVar(r1Sleep, "r1Sleep", simenv = simenv, iteration = iteration)
     
+    z1RuralLvl1 <- adjustCatVar(z1RuralLvl1, "z1RuralLvl1", simenv = simenv, iteration = iteration)
+    
+    r1stchildethnLvl2z1RuralLvl1 <- ifelse(z1RuralLvl1 == 1 & r1stchildethn == 2, 1, 0)
+    
     r1SleepLvl1 <- ifelse(r1Sleep == 1, 1, 0)
     r1SleepLvl2 <- ifelse(r1Sleep == 2, 1, 0)		
     r1SleepLvl3 <- ifelse(r1Sleep == 3, 1, 0)
-    
     
     z1breastLvl1 <- ifelse(BREAST == 0, 0, 1)
     z1pregsmkLvl1 <- ifelse(pregsmk == 0, 0, 1)		
@@ -1434,7 +1437,6 @@ simulateKnowLab <- function(run, simenv) {
     #when look at collated means - can see the effect from y2 onwards but doesn't show effect for y1
     
    
-    
     school <- apply(transition_probabilities$r1School, 1, function(x) sample(1:100, 1, prob = x))
     
     
@@ -1465,6 +1467,17 @@ simulateKnowLab <- function(run, simenv) {
     r1SchoolGender <<-  r1SchoolGender 
     
     r1School <<- school
+    
+    z1RuralLvl1 <<-
+    apply(cbind(r1Region, r1stchildethn), 1, 
+          function(x) 
+            sample(0:1,1,
+            prob = c(1 - transition_probabilities$z1Rural$r1Rural[
+              transition_probabilities$z1Rural$r1Region==x[1] & 
+                transition_probabilities$z1Rural$r1stchildethn==x[2]]/100, 
+              transition_probabilities$z1Rural$r1Rural[
+                transition_probabilities$z1Rural$r1Region==x[1] & 
+                  transition_probabilities$z1Rural$r1stchildethn==x[2]]/100)))
     
   }
   

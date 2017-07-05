@@ -43,11 +43,82 @@ saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 
 #####################################################################################
 
-tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1")%>% 
+tableBuilderNew(env.base, statistic = "freq", "z1RuralLvl1")
+
+tableBuilderNew(env.base, statistic = "freq", "z1RuralLvl1", 
+                grpbyName = "r1Region") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+tableBuilderNew(env.base, statistic = "freq", "z1RuralLvl1", 
+                grpbyName = "r1stchildethn")%>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+tableBuilderNew(env.base, statistic = "freq", "z1RuralLvl1",
+                grpbyName = "r1Region",
+                logisetexpr = "r1stchildethn == 1") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+tableBuilderNew(env.base, statistic = "freq", "z1RuralLvl1",
+                grpbyName = "r1Region",
+                logisetexpr = "r1stchildethn == 2") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+tableBuilderNew(env.base, statistic = "freq", "z1RuralLvl1",
+                grpbyName = "r1Region",
+                logisetexpr = "r1stchildethn == 3") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+tableBuilderNew(env.base, statistic = "freq", "z1RuralLvl1",
+                grpbyName = "r1Region",
+                logisetexpr = "r1stchildethn == 4") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+data.frame(Eth = children$r1stchildethn,
+         Region =   env.base$simframe$r1Region,      
+      Rural = env.base$modules$run_results$run1$z1RuralLvl1[,1]) %>% 
+  filter(Eth == 4, Region == 4)
+
+
+data.frame(Eth = children$r1stchildethn,
+           Region =   env.base$simframe$r1Region,      
+           Rural = env.base$modules$run_results$run9$z1RuralLvl1[,1]) %>% 
+  filter(Eth == 4, Region == 4)
+
+
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", 
+                grpbyName = "r1stchildethn") %>% 
+  filter(Var == "Overweight")  %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1", 
+                grpbyName = "r1stchildethn") %>% 
+  filter(Var == "Obese")  %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+
+########################################################################
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1") %>% 
   filter(Var == "Overweight") 
 
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", 
+                grpbyName = "z1RuralLvl1",
+                logisetexpr = "r1stchildethn == 2") %>% 
+  filter(Var == "Overweight") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1", 
+                grpbyName = "z1RuralLvl1") %>% 
+  filter(Var == "Overweight") %>% 
+  select(-Lower, -Upper) %>%  spread(groupByData, Mean)
+
+
+
 tableBuilderNew(env.base, statistic = "freq", "z1ObeseLvl1")%>% 
-  filter(Var == "Overweight") 
+  filter(Var == "Obese") 
 
 tableBuilderNew(env.base, statistic = "freq", "z1BullyLvl1", 
                 logisetexpr = "BREAST == 1")

@@ -165,6 +165,9 @@ compareFreq(env.base, env.base, "z1OverweightLvl1")
 # Breakfast from 81 to 95%
 Breakfast.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
+tableBuilderNew(env.base, "freq", "z1BreakfastLvl1")
+
+
 Breakfast.scenario$cat.adjustments$z1Breakfast[1,] = c(0.05, 0.95)
 
 Breakfast.scenario <- simulateSimario(Breakfast.scenario, 10, simulateKnowLab)
@@ -255,7 +258,7 @@ write.csv(compareFreq(env.base, ParentEduc.scenario, "z1OverweightLvl1"), "compa
 ############################################################################
 # Sleep 
 
-tableBuilderNew(env.base, "freq", "r1Sleep")
+tableBuilderNew(env.base, "freq", "r1Sleep")[,1:3] %>% spread(Var, Mean)
 
 oldLong <-
 tableBuilderNew(env.base, "freq", "r1Sleep") %>% 

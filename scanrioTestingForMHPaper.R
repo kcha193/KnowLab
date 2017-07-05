@@ -53,7 +53,45 @@ compareFreq =
     results[-1,]*100
   }
 
-compareFreq(env.base, env.base, "z1OverweightLvl1")
+compareFreq(env.base, env.base, "z1DepressLvl1")
+
+source("simulateKnowLab.R")
+
+############################################################################
+# Parental education ? change from High 34% 58% 8%? ?to???high 50% 45% 5%
+
+tableBuilderNew(env.base, "freq", "z1ParentDepressLvl1")
+
+ParentDepress.scenario <- createSimenv("scenario", 
+                                    initialSim$simframe, initialSim$dict, "years1_21")
+
+ParentDepress.scenario$cat.adjustments$z1ParentDepress[16,] = c(1, 0)
+
+ParentDepress.scenario <- simulateSimario(ParentDepress.scenario, 2, 
+                                          simulateKnowLab, parallel = FALSE)
+
+
+tableBuilderNew(ParentDepress.scenario, "freq", "z1ParentDepressLvl1")
+
+cor(ParentDepress.scenario$modules$run_results$run1$z1ParentDepressLvl1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -793,7 +793,7 @@ initSim <- function(num.iterations){
     transition_probabilities <- list()
     
     transition_probabilities$r1School <- simarioV2::read_csv(dir, "r1School_transition_probabilities.csv")
-   
+    transition_probabilities$z1Rural <- simarioV2::read_csv(dir, "z1Rural_transition_probailities.csv")
     transition_probabilities
   }
   

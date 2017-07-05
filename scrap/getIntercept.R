@@ -158,29 +158,40 @@ pObese <-
     12.318547, 12.910310, 13.523074, 14.156840, 14.811607, 15.487375, 16.184144, 16.901914, 
     17.640686, 18.400458, 19.181232, 19.983007)/100 - 0.01
 
-
 pObeseOW <- pObese/pOverweight
 
-z1WatchTVLvl1 <- ifelse(rpois(5000, 1.52) >= 2, 1,0)
+z1WatchTVLvl1 <- env.base$simframe$z1WatchTVLvl1
 
 temp <- models$zz1OverweightA2
 
 
-r1SleepLvl1 <- numeric(5000)
-r1SleepLvl2 <- numeric(5000)
-r1SleepLvl3 <- numeric(5000)
+z1RuralLvl1.list <- sapply(env.base$modules$run_results, function(x) x$z1RuralLvl1[,1])
 
 
-sleepTime <- env.base$modules$run_results$run1$r1Sleep[,2]
+sleepTime <- sapply(env.base$modules$run_results, function(x) x$r1Sleep[,"2"])
 
+temp.inter <- numeric(10)
 
-r1SleepLvl3[sleepTime==3] <- 1
-r1SleepLvl2[sleepTime==2] <- 1
-r1SleepLvl1[sleepTime==1] <- 1
+for(i in 1:10) {
+  r1SleepLvl1 <- numeric(5000)
+  r1SleepLvl2 <- numeric(5000)
+  r1SleepLvl3 <- numeric(5000)
+  
+  r1SleepLvl3[sleepTime[,i] == 3] <- 1
+  r1SleepLvl2[sleepTime[,i] == 2] <- 1
+  r1SleepLvl1[sleepTime[,i] == 1] <- 1
+  
+  
+  z1RuralLvl1 <- z1RuralLvl1.list[,i]
+  
+  r1stchildethnLvl2z1RuralLvl1 <- ifelse(r1stchildethn == 2 &
+                                           z1RuralLvl1 == 1, 1, 0)
+  
+  temp.inter[i] <- getIntercept(pOverweight[2], temp)
+}
 
-
-modeldf$zz1OverweightA2[1, 3] <- getIntercept( pOverweight[2], temp)
-
+modeldf$zz1OverweightA2[1, 3] <- mean(temp.inter)
+  
 
 temp$coefficients[1] <- modeldf$zz1OverweightA2[1, 3]
 
@@ -233,20 +244,30 @@ write.csv(modeldf$zz1ObeseA2, paste(modelfiledir, "z1obeseA", 2, ".csv", sep = "
 
 temp <- models$zz1OverweightA3
 
-r1SleepLvl1 <- numeric(5000)
-r1SleepLvl2 <- numeric(5000)
-r1SleepLvl3 <- numeric(5000)
+sleepTime <- sapply(env.base$modules$run_results, function(x) x$r1Sleep[,"3"])
 
+temp.inter <- numeric(10)
 
-sleepTime <- env.base$modules$run_results$run1$r1Sleep[,3]
+for(i in 1:10) {
+  r1SleepLvl1 <- numeric(5000)
+  r1SleepLvl2 <- numeric(5000)
+  r1SleepLvl3 <- numeric(5000)
+  
+  r1SleepLvl3[sleepTime[,i] == 3] <- 1
+  r1SleepLvl2[sleepTime[,i] == 2] <- 1
+  r1SleepLvl1[sleepTime[,i] == 1] <- 1
+  
+  
+  z1RuralLvl1 <- z1RuralLvl1.list[,i]
+  
+  r1stchildethnLvl2z1RuralLvl1 <- ifelse(r1stchildethn == 2 &
+                                           z1RuralLvl1 == 1, 1, 0)
+  
+  temp.inter[i] <- getIntercept(pOverweight[3], temp)
+}
 
+modeldf$zz1OverweightA3[1, 3] <- mean(temp.inter)
 
-r1SleepLvl3[sleepTime==3] <- 1
-r1SleepLvl2[sleepTime==2] <- 1
-r1SleepLvl1[sleepTime==1] <- 1
-
-
-modeldf$zz1OverweightA3[1, 3] <- getIntercept( pOverweight[3], temp)
 
 
 temp$coefficients[1] <- modeldf$zz1OverweightA3[1, 3]
@@ -299,27 +320,31 @@ write.csv(modeldf$zz1ObeseA3, paste(modelfiledir, "z1obeseA", 3, ".csv", sep = "
 #########################################################################################################
 
 
-
-models$zz1OverweightA4 <- loadGLMCSV(modelfiledir, "zz1OverweightA4.csv")
-
-
 temp <- models$zz1OverweightA4
 
-r1SleepLvl1 <- numeric(5000)
-r1SleepLvl2 <- numeric(5000)
-r1SleepLvl3 <- numeric(5000)
+sleepTime <- sapply(env.base$modules$run_results, function(x) x$r1Sleep[,"4"])
 
+temp.inter <- numeric(10)
 
-sleepTime <- env.base$modules$run_results$run1$r1Sleep[,4]
+for(i in 1:10) {
+  r1SleepLvl1 <- numeric(5000)
+  r1SleepLvl2 <- numeric(5000)
+  r1SleepLvl3 <- numeric(5000)
+  
+  r1SleepLvl3[sleepTime[,i] == 3] <- 1
+  r1SleepLvl2[sleepTime[,i] == 2] <- 1
+  r1SleepLvl1[sleepTime[,i] == 1] <- 1
+  
+  
+  z1RuralLvl1 <- z1RuralLvl1.list[,i]
+  
+  r1stchildethnLvl2z1RuralLvl1 <- ifelse(r1stchildethn == 2 &
+                                           z1RuralLvl1 == 1, 1, 0)
+  
+  temp.inter[i] <- getIntercept(pOverweight[4], temp)
+}
 
-
-r1SleepLvl3[sleepTime==3] <- 1
-r1SleepLvl2[sleepTime==2] <- 1
-r1SleepLvl1[sleepTime==1] <- 1
-
-
-modeldf$zz1OverweightA4[1, 3] <- getIntercept( pOverweight[4], temp)
-
+modeldf$zz1OverweightA4[1, 3] <- mean(temp.inter)
 
 temp$coefficients[1] <- modeldf$zz1OverweightA4[1, 3]
 
@@ -370,23 +395,32 @@ write.csv(modeldf$zz1ObeseA4, paste(modelfiledir, "z1obeseA", 4, ".csv", sep = "
 
 #########################################################################################################
 
-
-
 temp <- models$zz1OverweightA5
 
-r1SleepLvl1 <- numeric(5000)
-r1SleepLvl2 <- numeric(5000)
-r1SleepLvl3 <- numeric(5000)
+sleepTime <- sapply(env.base$modules$run_results, function(x) x$r1Sleep[,"5"])
 
+temp.inter <- numeric(10)
 
-sleepTime <- env.base$modules$run_results$run1$r1Sleep[,4]
+for(i in 1:10) {
+  r1SleepLvl1 <- numeric(5000)
+  r1SleepLvl2 <- numeric(5000)
+  r1SleepLvl3 <- numeric(5000)
+  
+  r1SleepLvl3[sleepTime[,i] == 3] <- 1
+  r1SleepLvl2[sleepTime[,i] == 2] <- 1
+  r1SleepLvl1[sleepTime[,i] == 1] <- 1
+  
+  
+  z1RuralLvl1 <- z1RuralLvl1.list[,i]
+  
+  r1stchildethnLvl2z1RuralLvl1 <- ifelse(r1stchildethn == 2 &
+                                           z1RuralLvl1 == 1, 1, 0)
+  
+  temp.inter[i] <- getIntercept(pOverweight[5], temp)
+}
 
-r1SleepLvl3[sleepTime==3] <- 1
-r1SleepLvl2[sleepTime==2] <- 1
-r1SleepLvl1[sleepTime==1] <- 1
+modeldf$zz1OverweightA5[1, 3] <- mean(temp.inter)
 
-
-modeldf$zz1OverweightA5[1, 3] <- getIntercept( pOverweight[5], temp)
 
 
 temp$coefficients[1] <- modeldf$zz1OverweightA5[1, 3]
@@ -446,18 +480,29 @@ for( i in 6:7){
   
   temp <- models$zz1OverweightA6_7	
   
-  sleepTime <- env.base$modules$run_results$run1$r1Sleep[,i]
+  sleepTime <- sapply(env.base$modules$run_results, function(x) x$r1Sleep[,as.character(i)])
   
+  temp.inter <- numeric(10)
   
-  r1SleepLvl1 <- numeric(5000)
-  r1SleepLvl2 <- numeric(5000)
-  r1SleepLvl3 <- numeric(5000)
+  for(j in 1:10) {
+    r1SleepLvl1 <- numeric(5000)
+    r1SleepLvl2 <- numeric(5000)
+    r1SleepLvl3 <- numeric(5000)
+    
+    r1SleepLvl3[sleepTime[,j] == 3] <- 1
+    r1SleepLvl2[sleepTime[,j] == 2] <- 1
+    r1SleepLvl1[sleepTime[,j] == 1] <- 1
+    
+    
+    z1RuralLvl1 <- z1RuralLvl1.list[,j]
+    
+    r1stchildethnLvl2z1RuralLvl1 <- ifelse(r1stchildethn == 2 &
+                                             z1RuralLvl1 == 1, 1, 0)
+    
+    temp.inter[j] <- getIntercept(pOverweight[i], temp)
+  }
   
-  r1SleepLvl3[sleepTime==3] <- 1
-  r1SleepLvl2[sleepTime==2] <- 1
-  r1SleepLvl1[sleepTime==1] <- 1
-  
-  modeldf$zz1OverweightA6_7[1, 3]<- getIntercept( pOverweight[i], temp)
+  modeldf$zz1OverweightA6_7[1, 3] <- mean(temp.inter)
   
   
   temp$coefficients[1] <- modeldf$zz1OverweightA6_7[1, 3]
@@ -512,21 +557,29 @@ for( i in 6:7){
 
 temp <- models$zz1OverweightA8
 
-r1SleepLvl1 <- numeric(5000)
-r1SleepLvl2 <- numeric(5000)
-r1SleepLvl3 <- numeric(5000)
+sleepTime <- sapply(env.base$modules$run_results, function(x) x$r1Sleep[,"8"])
 
+temp.inter <- numeric(10)
 
-sleepTime <- env.base$modules$run_results$run1$r1Sleep[,8]
+for(j in 1:10) {
+  r1SleepLvl1 <- numeric(5000)
+  r1SleepLvl2 <- numeric(5000)
+  r1SleepLvl3 <- numeric(5000)
+  
+  r1SleepLvl3[sleepTime[,j] == 3] <- 1
+  r1SleepLvl2[sleepTime[,j] == 2] <- 1
+  r1SleepLvl1[sleepTime[,j] == 1] <- 1
+  
+  
+  z1RuralLvl1 <- z1RuralLvl1.list[,j]
+  
+  r1stchildethnLvl2z1RuralLvl1 <- ifelse(r1stchildethn == 2 &
+                                           z1RuralLvl1 == 1, 1, 0)
+  
+  temp.inter[j] <- getIntercept(pOverweight[8], temp)
+}
 
-
-r1SleepLvl3[sleepTime==3] <- 1
-r1SleepLvl2[sleepTime==2] <- 1
-r1SleepLvl1[sleepTime==1] <- 1
-
-
-modeldf$zz1OverweightA8[1, 3] <- getIntercept( pOverweight[8], temp)
-
+modeldf$zz1OverweightA8[1, 3] <- mean(temp.inter)
 
 temp$coefficients[1] <- modeldf$zz1OverweightA8[1, 3]
 
@@ -576,20 +629,29 @@ write.csv(modeldf$zz1ObeseA8, paste(modelfiledir, "z1obeseA", 8, ".csv", sep = "
 
 temp <- models$zz1OverweightA9
 
-r1SleepLvl1 <- numeric(5000)
-r1SleepLvl2 <- numeric(5000)
-r1SleepLvl3 <- numeric(5000)
+sleepTime <- sapply(env.base$modules$run_results, function(x) x$r1Sleep[,"9"])
 
+temp.inter <- numeric(10)
 
-sleepTime <- env.base$modules$run_results$run1$r1Sleep[,9]
+for(j in 1:10) {
+  r1SleepLvl1 <- numeric(5000)
+  r1SleepLvl2 <- numeric(5000)
+  r1SleepLvl3 <- numeric(5000)
+  
+  r1SleepLvl3[sleepTime[,j] == 3] <- 1
+  r1SleepLvl2[sleepTime[,j] == 2] <- 1
+  r1SleepLvl1[sleepTime[,j] == 1] <- 1
+  
+  
+  z1RuralLvl1 <- z1RuralLvl1.list[,j]
+  
+  r1stchildethnLvl2z1RuralLvl1 <- ifelse(r1stchildethn == 2 &
+                                           z1RuralLvl1 == 1, 1, 0)
+  
+  temp.inter[j] <- getIntercept(pOverweight[9], temp)
+}
 
-
-r1SleepLvl3[sleepTime==3] <- 1
-r1SleepLvl2[sleepTime==2] <- 1
-r1SleepLvl1[sleepTime==1] <- 1
-
-
-modeldf$zz1OverweightA9[1, 3] <- getIntercept( pOverweight[9], temp)
+modeldf$zz1OverweightA9[1, 3] <- mean(temp.inter)
 
 
 temp$coefficients[1] <- modeldf$zz1OverweightA9[1, 3]
@@ -646,19 +708,29 @@ for( i in 10:12){
   
   temp <- models$zz1OverweightA10_12	
   
+  sleepTime <- sapply(env.base$modules$run_results, function(x) x$r1Sleep[,as.character(i)])
   
-  sleepTime <- env.base$modules$run_results$run1$r1Sleep[,i]
+  temp.inter <- numeric(10)
   
+  for(j in 1:10) {
+    r1SleepLvl1 <- numeric(5000)
+    r1SleepLvl2 <- numeric(5000)
+    r1SleepLvl3 <- numeric(5000)
+    
+    r1SleepLvl3[sleepTime[,j] == 3] <- 1
+    r1SleepLvl2[sleepTime[,j] == 2] <- 1
+    r1SleepLvl1[sleepTime[,j] == 1] <- 1
+    
+    
+    z1RuralLvl1 <- z1RuralLvl1.list[,j]
+    
+    r1stchildethnLvl2z1RuralLvl1 <- ifelse(r1stchildethn == 2 &
+                                             z1RuralLvl1 == 1, 1, 0)
+    
+    temp.inter[j] <- getIntercept(pOverweight[i], temp)
+  }
   
-  r1SleepLvl1 <- numeric(5000)
-  r1SleepLvl2 <- numeric(5000)
-  r1SleepLvl3 <- numeric(5000)
-  
-  r1SleepLvl3[sleepTime==3] <- 1
-  r1SleepLvl2[sleepTime==2] <- 1
-  r1SleepLvl1[sleepTime==1] <- 1
-  
-  modeldf$zz1OverweightA10_12[1, 3]<- getIntercept( pOverweight[i], temp)
+  modeldf$zz1OverweightA10_12[1, 3] <- mean(temp.inter)
   
   
   temp$coefficients[1] <- modeldf$zz1OverweightA10_12[1, 3]
@@ -716,17 +788,30 @@ temp <- models$zz1OverweightA13_14
 for( i in 13:14){
   temp <- models$zz1OverweightA13_14
   
-  sleepTime <- env.base$modules$run_results$run1$r1Sleep[,i]
+  sleepTime <- sapply(env.base$modules$run_results, function(x) x$r1Sleep[,as.character(i)])
   
-  r1SleepLvl1 <- numeric(5000)
-  r1SleepLvl2 <- numeric(5000)
-  r1SleepLvl3 <- numeric(5000)
+  temp.inter <- numeric(10)
   
-  r1SleepLvl3[sleepTime==3] <- 1
-  r1SleepLvl2[sleepTime==2] <- 1
-  r1SleepLvl1[sleepTime==1] <- 1
+  for(j in 1:10) {
+    r1SleepLvl1 <- numeric(5000)
+    r1SleepLvl2 <- numeric(5000)
+    r1SleepLvl3 <- numeric(5000)
+    
+    r1SleepLvl3[sleepTime[,j] == 3] <- 1
+    r1SleepLvl2[sleepTime[,j] == 2] <- 1
+    r1SleepLvl1[sleepTime[,j] == 1] <- 1
+    
+    
+    z1RuralLvl1 <- z1RuralLvl1.list[,j]
+    
+    r1stchildethnLvl2z1RuralLvl1 <- ifelse(r1stchildethn == 2 &
+                                             z1RuralLvl1 == 1, 1, 0)
+    
+    temp.inter[j] <- getIntercept(pOverweight[i], temp)
+  }
   
-  modeldf$zz1OverweightA13_14[1, 3]<- getIntercept( pOverweight[i], temp)
+  modeldf$zz1OverweightA13_14[1, 3] <- mean(temp.inter)
+  
   
   
   temp$coefficients[1] <- modeldf$zz1OverweightA13_14[1, 3]
@@ -782,18 +867,29 @@ temp <- models$zz1OverweightA15_18
 for( i in 15:18){
   temp <- models$zz1OverweightA15_18	
   
-  sleepTime <- env.base$modules$run_results$run1$r1Sleep[,i]
+  sleepTime <- sapply(env.base$modules$run_results, function(x) x$r1Sleep[,as.character(i)])
   
-  r1SleepLvl1 <- numeric(5000)
-  r1SleepLvl2 <- numeric(5000)
-  r1SleepLvl3 <- numeric(5000)
+  temp.inter <- numeric(10)
   
-  r1SleepLvl3[sleepTime==3] <- 1
-  r1SleepLvl2[sleepTime==2] <- 1
-  r1SleepLvl1[sleepTime==1] <- 1
+  for(j in 1:10) {
+    r1SleepLvl1 <- numeric(5000)
+    r1SleepLvl2 <- numeric(5000)
+    r1SleepLvl3 <- numeric(5000)
+    
+    r1SleepLvl3[sleepTime[,j] == 3] <- 1
+    r1SleepLvl2[sleepTime[,j] == 2] <- 1
+    r1SleepLvl1[sleepTime[,j] == 1] <- 1
+    
+    
+    z1RuralLvl1 <- z1RuralLvl1.list[,j]
+    
+    r1stchildethnLvl2z1RuralLvl1 <- ifelse(r1stchildethn == 2 &
+                                             z1RuralLvl1 == 1, 1, 0)
+    
+    temp.inter[j] <- getIntercept(pOverweight[i], temp)
+  }
   
-  
-  modeldf$zz1OverweightA15_18[1, 3]<- getIntercept( pOverweight[i], temp)
+  modeldf$zz1OverweightA15_18[1, 3] <- mean(temp.inter)
   
   
   temp$coefficients[1] <- modeldf$zz1OverweightA15_18[1, 3]
@@ -847,8 +943,19 @@ temp <- models$zz1OverweightA19_21
 for( i in 19:21){
   temp <- models$zz1OverweightA19_21
   
+  temp.inter <- numeric(10)
   
-  modeldf$zz1OverweightA19_21[1, 3]<- getIntercept( pOverweight[i], temp)
+  for(j in 1:10) {
+
+    z1RuralLvl1 <- z1RuralLvl1.list[,j]
+    
+    r1stchildethnLvl2z1RuralLvl1 <- ifelse(r1stchildethn == 2 &
+                                             z1RuralLvl1 == 1, 1, 0)
+    
+    temp.inter[j] <- getIntercept(pOverweight[i], temp)
+  }
+  
+  modeldf$zz1OverweightA19_21[1, 3] <- mean(temp.inter)
   
   
   temp$coefficients[1] <- modeldf$zz1OverweightA19_21[1, 3]

@@ -1,7 +1,8 @@
 "Variable","ClassVal0","Estimate"
-"Intercept",NA,0.0243228202103965
+"Intercept",NA,0.0408397482103188
 "r1stchildethn",2,0.5
 "r1stchildethn",3,0.9
 "r1stchildethn",4,-0.3498412
 "z1Caesarean",1,0.4054651
 "z1Breakfast",1,-0.65752
+"r1stchildethnLvl2z1Rural",1,-0.4532467

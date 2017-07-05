@@ -346,3 +346,5 @@ z1FatherAlcLvl1,,as.integer(NA),categorical,,
 z1FatherDepressLvl1,,as.integer(NA),categorical,,
 z1WatchTVLvl1,,"as.integer(ifelse(rpois(5000, 1.52) >= 2, 1,0))",categorical,,years1_21
 z1ScoreLvl1,,as.integer(NA),categorical,,
+z1RuralLvl1,,as.integer(NA),categorical,years1_21,
+r1stchildethnLvl2z1RuralLvl1,,as.integer(NA),categorical,,
