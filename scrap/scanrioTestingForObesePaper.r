@@ -266,14 +266,19 @@ tableBuilderNew(env.base, "freq", "r1Sleep") %>%
 
 Sleep.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
-Sleep.scenario$cat.adjustments$r1Sleep[,1] = c(NA, rep(0.01, 18), NA, NA)
-Sleep.scenario$cat.adjustments$r1Sleep[,3] = c(NA, oldLong$Mean/100, NA, NA)
-Sleep.scenario$cat.adjustments$r1Sleep[,2] =
-  apply(Sleep.scenario$cat.adjustments$r1Sleep, 1, function(x) 1 - x[1] - x[3])
+Sleep.scenario$cat.adjustments$r1Sleep[2,] <- c(0.0149578, 0.9791484, 0.0058938)
+Sleep.scenario$cat.adjustments$r1Sleep[3,] <- c(0.0149578, 0.9791484, 0.0058938)
+Sleep.scenario$cat.adjustments$r1Sleep[4,] <- c(0.0034246, 0.9708970, 0.0256784)
+Sleep.scenario$cat.adjustments$r1Sleep[5,] <- c(0.0034246, 0.9708970, 0.0256784)
+Sleep.scenario$cat.adjustments$r1Sleep[6,] <- c(0.0054100, 0.9716806, 0.0229094)
+Sleep.scenario$cat.adjustments$r1Sleep[7,] <- c(0.0054100, 0.9716806, 0.0229094)
+Sleep.scenario$cat.adjustments$r1Sleep[8,] <- c(0.0014504, 0.9611316, 0.0374180)
+Sleep.scenario$cat.adjustments$r1Sleep[9,] <- c(0.0014504, 0.9611316, 0.0374180)
+Sleep.scenario$cat.adjustments$r1Sleep[10:19,] <- rep(c(0.0036550, 0.9775864, 0.0187586 ), each = 10) 
 
 Sleep.scenario <- simulateSimario(Sleep.scenario, 10, simulateKnowLab)
 
-results <- compareFreq(env.base, Sleep.scenario, "z1OverweightLvl1")
+(results <- compareFreq(env.base, Sleep.scenario, "z1OverweightLvl1"))
 
 apply(results[2:19,],2, mean)
 
@@ -313,14 +318,15 @@ write.csv(compareFreq(env.base, pregsmkBreast.scenario, "z1OverweightLvl1"),
 BreakfastSleepWatchTV.scenario <-
   createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
-oldLong <-
-  tableBuilderNew(env.base, "freq", "r1Sleep") %>% 
-  filter(Var == "Long") %>% select(Mean)
-
-BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[,1] = c(NA, rep(0.01, 18), NA, NA)
-BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[,3] = c(NA, oldLong$Mean/100, NA, NA)
-BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[,2] =
-  apply(BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep, 1, function(x) 1 - x[1] - x[3])
+BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[2,] <- c(0.0149578, 0.9791484, 0.0058938)
+BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[3,] <- c(0.0149578, 0.9791484, 0.0058938)
+BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[4,] <- c(0.0034246, 0.9708970, 0.0256784)
+BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[5,] <- c(0.0034246, 0.9708970, 0.0256784)
+BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[6,] <- c(0.0054100, 0.9716806, 0.0229094)
+BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[7,] <- c(0.0054100, 0.9716806, 0.0229094)
+BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[8,] <- c(0.0014504, 0.9611316, 0.0374180)
+BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[9,] <- c(0.0014504, 0.9611316, 0.0374180)
+BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[10:19,] <- rep(c(0.0036550, 0.9775864, 0.0187586 ), each = 10) 
 
 BreakfastSleepWatchTV.scenario$cat.adjustments$z1Breakfast[1,] = c(0.05, 0.95)
 
@@ -335,6 +341,76 @@ write.csv(compareFreq(env.base, BreakfastSleepWatchTV.scenario, "z1OverweightLvl
 
 
 
+#########################################
+
+sleepTime <- numeric(5000000)
+r1Sleep <- numeric(5000000)
+
+
+increaseMin <- 0.42*0.6
+
+
+z1genderLvl1 <- env.base$simframe$z1genderLvl1
+
+#Age 2 and 3  ########		
+
+sleepTime[z1genderLvl1 == 0] <- rnorm(sum(z1genderLvl1 == 0)*1000, 10.5, 0.42)
+sleepTime[z1genderLvl1 == 1] <- rnorm(sum(z1genderLvl1 == 1)*1000, 10.5 - 9/60, 0.42)
+
+r1Sleep[sleepTime>11.5] <- 3
+r1Sleep[sleepTime<=11.5 & sleepTime>=9.5] <- 2
+r1Sleep[sleepTime<9.5] <- 1
+prop.table(table(r1Sleep))
+
+#Age 4 and 5 ########		
+  
+  
+  sleepTime[z1genderLvl1 == 0] <- rnorm(sum(z1genderLvl1 == 0)*1000, 12 + increaseMin, 0.42)
+  sleepTime[z1genderLvl1 == 1] <- rnorm(sum(z1genderLvl1 == 1)*1000, 12 - 11/60 + increaseMin, 0.42)
+  
+  
+  r1Sleep[sleepTime>13] <- 3
+  r1Sleep[sleepTime<=13 & sleepTime>=11] <- 2
+  r1Sleep[sleepTime<11] <- 1	
+  
+  prop.table(table(r1Sleep))
+  
+#Age 6 and 7 ########		
+  		
+  
+  sleepTime[z1genderLvl1 == 0] <- rnorm(sum(z1genderLvl1 == 0)*1000, 10 + increaseMin, 0.42)
+  sleepTime[z1genderLvl1 == 1] <- rnorm(sum(z1genderLvl1 == 1)*1000, 10 - 16 /60 + increaseMin, 0.42)
+  
+  
+  r1Sleep[sleepTime>11] <- 3
+  r1Sleep[sleepTime<=11& sleepTime>=9] <- 2
+  r1Sleep[sleepTime<9] <- 1
+  
+  prop.table(table(r1Sleep))
+  
+#Age 8 and 9 ########				
+
+sleepTime<- rnorm(5000*1000, 10 + increaseMin, 0.42)	
+
+
+r1Sleep[sleepTime>11] <- 3
+r1Sleep[sleepTime<=11 & sleepTime>=9] <- 2
+r1Sleep[sleepTime<9] <- 1
+  
+  
+prop.table(table(r1Sleep))
+
+
+#Age 10 and 19 ########			
+  
+sleepTime <- rnorm(5000*1000, 8.875+ increaseMin, 0.42)
+
+r1Sleep[sleepTime>10] <- 3
+r1Sleep[sleepTime<=10 & sleepTime>=8] <- 2
+r1Sleep[sleepTime<8] <- 1	
+
+
+prop.table(table(r1Sleep))
 
 
 
@@ -352,15 +428,7 @@ write.csv(compareFreq(env.base, BreakfastSleepWatchTV.scenario, "z1OverweightLvl
 
 
 
-
-
-
-
-
-
-
-
-
+#########################
 
 
 
