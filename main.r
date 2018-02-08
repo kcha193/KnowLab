@@ -31,6 +31,8 @@ source("simulateKnowLab.R")
 
 env.base <- simulateSimario(Simenv, 10, simulateKnowLab)
 
+
+
 # p <-
 #   profvis({
 #    env.base <- simulateSimario(Simenv, 2, simulateKnowLab, parallel = FALSE)
@@ -42,6 +44,105 @@ saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 .rs.restartR()
 
 #####################################################################################
+
+
+prop.table(table(env.base$modules$run_results$run1$z1OverweightLvl1))[1]
+
+
+env.base100 <- simulateSimario(Simenv, 100, simulateKnowLab)
+
+pop <- NULL
+
+propStore <- NULL
+
+for(i in 1:100){
+  print(i)
+  pop <- c(pop, 
+           env.base100$modules$run_results[[i]]$z1overcrowdLvl1)
+  
+  propStore <- c(propStore, prop.table(table(pop))[2])
+}
+
+data.frame(Run = 1:100, 
+           Percentage = propStore*100) %>% 
+  ggplot(aes(x = Run, y = Percentage)) + 
+  geom_path() + geom_point() + 
+  theme_bw() + geom_vline(xintercept = 10) + 
+  ylim(19.0, 20.0) + ylab("Proportion")
+
+
+ggsave("compare10runsto100runs.png")
+
+
+91/60
+
+808.69/60
+
+
+temp <- 
+  sapply(env.base100$modules$run_results, 
+         function(x) prop.table(table(x$z1OverweightLvl1))[1])
+
+
+
+sd(temp[1:2])
+
+seq(1,seq(2,100))
+
+
+
+
+temp <- 
+  sapply(env.base100$modules$run_results, 
+         function(x) prop.table(table(x$z1OverweightLvl1))[1])
+
+
+
+
+write.csv(cbind(temp,
+c(0, sapply(lapply(2:100, function(x) 1:x), function(x) sd(temp[x])))), file = "compareOverweightSD.csv")
+
+library(ggplot2)
+
+tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1") %>% 
+  filter(Var == "Overweight") %>% 
+  ggplot(aes(x = Year, y = Mean)) + 
+  geom_path() + 
+  geom_point() + 
+  theme_bw()
+
+
+env.base100 <- simulateSimario(Simenv, 100, simulateKnowLab)
+
+
+old <- tableBuilderNew(env.base, statistic = "freq", "z1OverweightLvl1") %>% 
+  filter(Var == "Overweight")
+
+new100 <- tableBuilderNew(env.base100, statistic = "freq", "z1OverweightLvl1") %>% 
+  filter(Var == "Overweight") 
+
+old$Run = 10
+new100$Run = 100
+
+dodge <- position_dodge(width=0.9)
+
+
+
+compare <- rbind(old, new100)
+
+compare$Run <- factor(compare$Run)
+
+ggplot(compare, aes(x = Year, y = Mean, col = Run)) + 
+         geom_path(position = dodge) + 
+         geom_point(position = dodge) + 
+  geom_errorbar(aes(ymin = Lower, ymax = Upper), position = dodge, width = 0.25) +
+  ylab("Percentage") + 
+  ggtitle("Base simulation comparing bewteen using 10 runs and 100 runs") + 
+         theme_bw() 
+
+ggsave("compare10runsto100runs.png")
+
+
 
 tableBuilderNew(env.base, statistic = "freq", "z1RuralLvl1")
 

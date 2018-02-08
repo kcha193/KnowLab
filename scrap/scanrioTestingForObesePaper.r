@@ -160,25 +160,34 @@ compareFreq =
 
 compareFreq(env.base, env.base, "z1OverweightLvl1")
 
-
-#######################################################################
-# Breakfast from 81 to 95%
+########################################################################
 Breakfast.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
 tableBuilderNew(env.base, "freq", "z1BreakfastLvl1")
 
 
-Breakfast.scenario$cat.adjustments$z1Breakfast[1,] = c(0.05, 0.95)
+#######################################################################
+# Breakfast from 81 to 95%
+Caesarean.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
-Breakfast.scenario <- simulateSimario(Breakfast.scenario, 10, simulateKnowLab)
+tableBuilderNew(env.base, "freq", "z1CaesareanLvl1")
 
-results <- compareFreq(env.base, Breakfast.scenario, "z1OverweightLvl1")
+#                 Var      Year Mean Lower Upper
+# 1   Vaginal delivery Childhood 87.4  86.5  88.3
+# 2 Caesarean delivery Childhood 12.6  11.7  13.5
+
+
+Caesarean.scenario$cat.adjustments$z1CaesareanLvl1[1,] = c(0.908, 0.092)
+
+Caesarean.scenario <- simulateSimario(Caesarean.scenario, 10, simulateKnowLab)
+
+results <- compareFreq(env.base, Caesarean.scenario, "z1OverweightLvl1")
 
 results
 
-apply(results[4:20,],2, mean)
+apply(results[2:20,],2, mean)
 
-write.csv(compareFreq(env.base, Breakfast.scenario, "z1OverweightLvl1"), "compareBreakfastA5_21.csv")	
+write.csv(compareFreq(env.base, Breakfast.scenario, "z1OverweightLvl1"), "compareCaesareanA1_21.csv")	
 	
 	
 ############################################################################
@@ -295,15 +304,36 @@ tableBuilderNew(env.base, "freq", "r1Sleep") %>%
 
 Sleep.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
-Sleep.scenario$cat.adjustments$r1Sleep[2,] <- c(0.0256824, 0.8871718, 0.0871458 )
-Sleep.scenario$cat.adjustments$r1Sleep[3,] <- c(0.0256824, 0.8871718, 0.0871458 )
-Sleep.scenario$cat.adjustments$r1Sleep[4,] <- c(0.0276766, 0.8887486, 0.0835748 )
-Sleep.scenario$cat.adjustments$r1Sleep[5,] <- c(0.0276766, 0.8887486, 0.0835748 )
-Sleep.scenario$cat.adjustments$r1Sleep[6,] <- c(0.0339050, 0.8894452, 0.0766498 )
-Sleep.scenario$cat.adjustments$r1Sleep[7,] <- c(0.0339050, 0.8894452, 0.0766498 )
-Sleep.scenario$cat.adjustments$r1Sleep[8,] <- c(0.0183554, 0.8754684, 0.1061762 )
-Sleep.scenario$cat.adjustments$r1Sleep[9,] <- c(0.0183554, 0.8754684, 0.1061762 )
-Sleep.scenario$cat.adjustments$r1Sleep[10:19,] <- rep(c(0.0301278, 0.8969764, 0.0728958), each = 10) 
+Sleep.scenario$cat.adjustments$r1Sleep[2,] <- c(0.0256824, 1 - (0.0256824 + 0.037), 0.037 )
+Sleep.scenario$cat.adjustments$r1Sleep[3,] <- c(0.0256824, 1 - (0.0256824 + 0.037), 0.037 )
+Sleep.scenario$cat.adjustments$r1Sleep[4,] <- c(0.0276766, 1 - (0.0276766 + 0.036), 0.036 )
+Sleep.scenario$cat.adjustments$r1Sleep[5,] <- c(0.0276766, 1 - (0.0276766 + 0.036), 0.036 )
+Sleep.scenario$cat.adjustments$r1Sleep[6,] <- c(0.0339050, 1 - (0.0339050 + 0.032), 0.032 )
+Sleep.scenario$cat.adjustments$r1Sleep[7,] <- c(0.0339050, 1 - (0.0339050 + 0.032), 0.032 )
+Sleep.scenario$cat.adjustments$r1Sleep[8,] <- c(0.0183554, 1 - (0.0183554 + 0.049), 0.049 )
+Sleep.scenario$cat.adjustments$r1Sleep[9,] <- c(0.0183554, 1 - (0.0183554 + 0.047), 0.047 )
+Sleep.scenario$cat.adjustments$r1Sleep[10,] <- c(0.0301278, 1 - (0.0301278 + 0.03), 0.03 )
+Sleep.scenario$cat.adjustments$r1Sleep[11,] <- c(0.0301278, 1 - (0.0301278 + 0.031), 0.031 )
+Sleep.scenario$cat.adjustments$r1Sleep[12,] <- c(0.0301278, 1 - (0.0301278 + 0.032), 0.032 )
+Sleep.scenario$cat.adjustments$r1Sleep[13,] <- c(0.0301278, 1 - (0.0301278 + 0.029), 0.029 )
+Sleep.scenario$cat.adjustments$r1Sleep[14,] <- c(0.0301278, 1 - (0.0301278 + 0.03), 0.03 )
+Sleep.scenario$cat.adjustments$r1Sleep[15,] <- c(0.0301278, 1 - (0.0301278 + 0.029), 0.029 )
+Sleep.scenario$cat.adjustments$r1Sleep[16,] <- c(0.0301278, 1 - (0.0301278 + 0.031), 0.031 )
+Sleep.scenario$cat.adjustments$r1Sleep[17,] <- c(0.0301278, 1 - (0.0301278 + 0.031), 0.031 )
+Sleep.scenario$cat.adjustments$r1Sleep[18,] <- c(0.0301278, 1 - (0.0301278 + 0.031), 0.031 )
+Sleep.scenario$cat.adjustments$r1Sleep[19,] <- c(0.0301278, 1 - (0.0301278 + 0.031), 0.031 )
+
+# Sleep.scenario$cat.adjustments$r1Sleep[2,] <- c(0.0256824, 0.8871718, 0.0871458 )
+# Sleep.scenario$cat.adjustments$r1Sleep[3,] <- c(0.0256824, 0.8871718, 0.0871458 )
+# Sleep.scenario$cat.adjustments$r1Sleep[4,] <- c(0.0276766, 0.8887486, 0.0835748 )
+# Sleep.scenario$cat.adjustments$r1Sleep[5,] <- c(0.0276766, 0.8887486, 0.0835748 )
+# Sleep.scenario$cat.adjustments$r1Sleep[6,] <- c(0.0339050, 0.8894452, 0.0766498 )
+# Sleep.scenario$cat.adjustments$r1Sleep[7,] <- c(0.0339050, 0.8894452, 0.0766498 )
+# Sleep.scenario$cat.adjustments$r1Sleep[8,] <- c(0.0183554, 0.8754684, 0.1061762 )
+# Sleep.scenario$cat.adjustments$r1Sleep[9,] <- c(0.0183554, 0.8754684, 0.1061762 )
+# Sleep.scenario$cat.adjustments$r1Sleep[10:19,] <- rep(c(0.0301278, 0.8969764, 0.0728958), each = 10) 
+
+
 
 Sleep.scenario <- simulateSimario(Sleep.scenario, 10, simulateKnowLab)
 
@@ -350,15 +380,34 @@ BreakfastSleepWatchTV.scenario <-
   createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
 
-BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[2,] <- c(0.0256824, 0.8871718, 0.0871458 )
-BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[3,] <- c(0.0256824, 0.8871718, 0.0871458 )
-BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[4,] <- c(0.0276766, 0.8887486, 0.0835748 )
-BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[5,] <- c(0.0276766, 0.8887486, 0.0835748 )
-BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[6,] <- c(0.0339050, 0.8894452, 0.0766498 )
-BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[7,] <- c(0.0339050, 0.8894452, 0.0766498 )
-BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[8,] <- c(0.0183554, 0.8754684, 0.1061762 )
-BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[9,] <- c(0.0183554, 0.8754684, 0.1061762 )
-BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[10:19,] <- rep(c(0.0301278, 0.8969764, 0.0728958), each = 10) 
+# BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[2,] <- c(0.0256824, 0.8871718, 0.0871458 )
+# BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[3,] <- c(0.0256824, 0.8871718, 0.0871458 )
+# BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[4,] <- c(0.0276766, 0.8887486, 0.0835748 )
+# BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[5,] <- c(0.0276766, 0.8887486, 0.0835748 )
+# BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[6,] <- c(0.0339050, 0.8894452, 0.0766498 )
+# BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[7,] <- c(0.0339050, 0.8894452, 0.0766498 )
+# BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[8,] <- c(0.0183554, 0.8754684, 0.1061762 )
+# BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[9,] <- c(0.0183554, 0.8754684, 0.1061762 )
+# BreakfastSleepWatchTV.scenario$cat.adjustments$r1Sleep[10:19,] <- rep(c(0.0301278, 0.8969764, 0.0728958), each = 10) 
+
+Sleep.scenario$cat.adjustments$r1Sleep[2,] <- c(0.0256824, 1 - (0.0256824 + 0.037), 0.037 )
+Sleep.scenario$cat.adjustments$r1Sleep[3,] <- c(0.0256824, 1 - (0.0256824 + 0.037), 0.037 )
+Sleep.scenario$cat.adjustments$r1Sleep[4,] <- c(0.0276766, 1 - (0.0276766 + 0.036), 0.036 )
+Sleep.scenario$cat.adjustments$r1Sleep[5,] <- c(0.0276766, 1 - (0.0276766 + 0.036), 0.036 )
+Sleep.scenario$cat.adjustments$r1Sleep[6,] <- c(0.0339050, 1 - (0.0339050 + 0.032), 0.032 )
+Sleep.scenario$cat.adjustments$r1Sleep[7,] <- c(0.0339050, 1 - (0.0339050 + 0.032), 0.032 )
+Sleep.scenario$cat.adjustments$r1Sleep[8,] <- c(0.0183554, 1 - (0.0183554 + 0.049), 0.049 )
+Sleep.scenario$cat.adjustments$r1Sleep[9,] <- c(0.0183554, 1 - (0.0183554 + 0.047), 0.047 )
+Sleep.scenario$cat.adjustments$r1Sleep[10,] <- c(0.0301278, 1 - (0.0301278 + 0.03), 0.03 )
+Sleep.scenario$cat.adjustments$r1Sleep[11,] <- c(0.0301278, 1 - (0.0301278 + 0.031), 0.031 )
+Sleep.scenario$cat.adjustments$r1Sleep[12,] <- c(0.0301278, 1 - (0.0301278 + 0.032), 0.032 )
+Sleep.scenario$cat.adjustments$r1Sleep[13,] <- c(0.0301278, 1 - (0.0301278 + 0.029), 0.029 )
+Sleep.scenario$cat.adjustments$r1Sleep[14,] <- c(0.0301278, 1 - (0.0301278 + 0.03), 0.03 )
+Sleep.scenario$cat.adjustments$r1Sleep[15,] <- c(0.0301278, 1 - (0.0301278 + 0.029), 0.029 )
+Sleep.scenario$cat.adjustments$r1Sleep[16,] <- c(0.0301278, 1 - (0.0301278 + 0.031), 0.031 )
+Sleep.scenario$cat.adjustments$r1Sleep[17,] <- c(0.0301278, 1 - (0.0301278 + 0.031), 0.031 )
+Sleep.scenario$cat.adjustments$r1Sleep[18,] <- c(0.0301278, 1 - (0.0301278 + 0.031), 0.031 )
+Sleep.scenario$cat.adjustments$r1Sleep[19,] <- c(0.0301278, 1 - (0.0301278 + 0.031), 0.031 )
 
 BreakfastSleepWatchTV.scenario$cat.adjustments$z1Breakfast[1,] = c(0.05, 0.95)
 
