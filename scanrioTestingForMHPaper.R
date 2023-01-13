@@ -26,8 +26,6 @@ source("simulateKnowLab.R")
 
 
 
-
-
 tableBuilderNew(env.base, "freq", "z1ParentDepressLvl1")
 
 tableBuilderNew(env.base, "freq", "z1ParentDepressLvl1", 
@@ -279,13 +277,16 @@ INTERACT50.scenario <- simulateSimario(INTERACT50.scenario, 10,
 
 tableBuilderNew(env.base, "freq", "z1DepressLvl1") %>% 
   filter(Var == "Depression")
+
 tableBuilderNew(INTERACT50.scenario, "freq", "z1DepressLvl1") %>%
   filter(Var == "Depression")
+
 compareFreq(env.base, INTERACT50.scenario, "z1DepressLvl1")
 
 tableBuilderNew(env.base, "freq", "z1DepressLvl1", 
                 logisetexpr = "z1INTERACTLvl1 == 0") %>%
   filter(Var == "Depression")
+
 tableBuilderNew(INTERACT50.scenario, "freq","z1DepressLvl1", 
                 logisetexpr = "z1INTERACTLvl1 == 0",
                 envBase = env.base, basePop = TRUE) %>% 
@@ -399,7 +400,8 @@ compareFreqHighRisk(env.base, PUNISH50.scenario,
 # PUNISH25.scenario ####
 
 PUNISH25.scenario <- createSimenv("scenario", 
-                                    initialSim$simframe, initialSim$dict, "years1_21")
+                                    initialSim$simframe, initialSim$dict, 
+                                  "years1_21")
 
 PUNISH25.scenario$cat.adjustments$z1PUNISH[5,] <- c(0.833,0.167)
 

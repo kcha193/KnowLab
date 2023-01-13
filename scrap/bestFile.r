@@ -53,9 +53,15 @@ table(r1stchildethn)
 z1BreakfastLvl1 <- numeric(5000)
 
 
-z1BreakfastLvl1[SESBTHLvl1 == 1 & z1genderLvl1 == 0 & r1stchildethn == 0] <- rbinom(sum(SESBTHLvl1 == 1 & z1genderLvl1 == 0 & r1stchildethn == 0), 1, (0.924 * 0.796 * 0.917)^(1/3))
-z1BreakfastLvl1[SESBTHLvl2 == 1 & z1genderLvl1 == 0 & r1stchildethn == 0] <- rbinom(sum(SESBTHLvl2 == 1 & z1genderLvl1 == 0 & r1stchildethn == 0), 1, (0.867 * 0.796 * 0.917)^(1/3))
-z1BreakfastLvl1[SESBTHLvl3 == 1 & z1genderLvl1 == 0 & r1stchildethn == 0] <- rbinom(sum(SESBTHLvl3 == 1 & z1genderLvl1 == 0 & r1stchildethn == 0), 1 , (0.664 * 0.796 * 0.917)^(1/3))
+z1BreakfastLvl1[SESBTHLvl1 == 1 & z1genderLvl1 == 0 & r1stchildethn == 0] <-
+    rbinom(sum(SESBTHLvl1 == 1 & z1genderLvl1 == 0 & r1stchildethn == 0), 1,
+           (0.924 * 0.796 * 0.917)^(1/3))
+z1BreakfastLvl1[SESBTHLvl2 == 1 & z1genderLvl1 == 0 & r1stchildethn == 0] <-
+  rbinom(sum(SESBTHLvl2 == 1 & z1genderLvl1 == 0 & r1stchildethn == 0), 1, 
+         (0.867 * 0.796 * 0.917)^(1/3))
+z1BreakfastLvl1[SESBTHLvl3 == 1 & z1genderLvl1 == 0 & r1stchildethn == 0] <- 
+  rbinom(sum(SESBTHLvl3 == 1 & z1genderLvl1 == 0 & r1stchildethn == 0), 1 , 
+         (0.664 * 0.796 * 0.917)^(1/3))
 
 
 z1BreakfastLvl1[SESBTHLvl1 == 1 & z1genderLvl1 == 1 & r1stchildethn == 0] <- rbinom(sum(SESBTHLvl1 == 1 & z1genderLvl1 == 1 & r1stchildethn == 0), 1 , (0.924 * 0.872 * 0.917)^(1/3))

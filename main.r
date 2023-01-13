@@ -12,10 +12,9 @@ library(tidyverse)
 library(simarioV2)
 # library(profvis)
 
-setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
+#setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
 
 NUM_ITERATIONS <- 21
-
 
 source("initKnowLab.R")
 initialSim <- initSim(NUM_ITERATIONS)
@@ -41,6 +40,12 @@ env.base <- simulateSimario(Simenv, 10, simulateKnowLab)
 saveRDS(env.base, "base/FullBaseRun.rds")
 saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 
+
+env.base <- simulateSimario(Simenv, 50, simulateKnowLab)
+
+saveRDS(env.base, "base/FullBaseRun.rds")
+
+
 .rs.restartR()
 
 #####################################################################################
@@ -49,7 +54,29 @@ saveRDS(env.base, "../KnowLabShiny/base/FullBaseRun.rds")
 prop.table(table(env.base$modules$run_results$run1$z1OverweightLvl1))[1]
 
 
+env.base10 <- simulateSimario(Simenv, 10, simulateKnowLab)
+saveRDS(env.base, "base/FullBaseRun.rds")
+env.base20 <- simulateSimario(Simenv, 20, simulateKnowLab)
+env.base30 <- simulateSimario(Simenv, 30, simulateKnowLab)
+env.base40 <- simulateSimario(Simenv, 40, simulateKnowLab)
+env.base50 <- simulateSimario(Simenv, 50, simulateKnowLab)
+env.base60 <- simulateSimario(Simenv, 60, simulateKnowLab)
+env.base70 <- simulateSimario(Simenv, 70, simulateKnowLab)
+env.base80 <- simulateSimario(Simenv, 80, simulateKnowLab)
+env.base90 <- simulateSimario(Simenv, 90, simulateKnowLab)
 env.base100 <- simulateSimario(Simenv, 100, simulateKnowLab)
+env.base110 <- simulateSimario(Simenv, 110, simulateKnowLab)
+env.base120 <- simulateSimario(Simenv, 120, simulateKnowLab)
+env.base130 <- simulateSimario(Simenv, 130, simulateKnowLab)
+env.base140 <- simulateSimario(Simenv, 140, simulateKnowLab)
+env.base150 <- simulateSimario(Simenv, 150, simulateKnowLab)
+env.base160 <- simulateSimario(Simenv, 160, simulateKnowLab)
+env.base170 <- simulateSimario(Simenv, 170, simulateKnowLab)
+env.base180 <- simulateSimario(Simenv, 180, simulateKnowLab)
+env.base190 <- simulateSimario(Simenv, 190, simulateKnowLab)
+env.base200 <- simulateSimario(Simenv, 200, simulateKnowLab)
+
+
 
 pop <- NULL
 
@@ -58,20 +85,59 @@ propStore <- NULL
 for(i in 1:100){
   print(i)
   pop <- c(pop, 
-           env.base100$modules$run_results[[i]]$z1overcrowdLvl1)
+           env.base100$modules$run_results[[i]]$z1OverweightLvl1)
   
   propStore <- c(propStore, prop.table(table(pop))[2])
 }
+
 
 data.frame(Run = 1:100, 
            Percentage = propStore*100) %>% 
   ggplot(aes(x = Run, y = Percentage)) + 
   geom_path() + geom_point() + 
   theme_bw() + geom_vline(xintercept = 10) + 
-  ylim(19.0, 20.0) + ylab("Proportion")
+  ylim(35, 36) + ylab("Proportion")
 
 
 ggsave("compare10runsto100runs.png")
+
+
+
+tableBuilderNew(env.base, "freq", "z1WatchTVLvl1")
+
+WatchTV.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+WatchTV.scenario$cat.adjustments$z1WatchTVLvl1[1,]=c(0.8, 0.2)
+
+WatchTV.scenario100 <- 
+  simulateSimario(WatchTV.scenario, 100, simulateKnowLab)
+
+
+pop <- NULL
+
+propStoreTV <- NULL
+
+for(i in 1:100){
+  print(i)
+  pop <- c(pop, 
+           WatchTV.scenario100$modules$run_results[[i]]$z1OverweightLvl1)
+  
+  propStoreTV <- c(propStoreTV, prop.table(table(pop))[2])
+}
+
+
+
+
+data.frame(Run = 1:100, 
+           Percentage = c(propStore*100, propStoreTV*100), 
+           Scenario = rep(c("Base", "WatchTV"), each = 100)) %>% 
+  ggplot(aes(x = Run, y = Percentage, col = Scenario)) + 
+  geom_path() + geom_point() + 
+  theme_bw() + geom_vline(xintercept = 10) + 
+  ylab("Proportion")+ 
+  ylim(33, 36)
+
+ggsave("compare10runsto100runsWatchTV.png")
 
 
 91/60

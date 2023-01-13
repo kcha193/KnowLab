@@ -115,7 +115,6 @@ library(simarioV2)
 setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
 
 initialSim <<- readRDS("base/initialSim.rds")
-env.base  <<- readRDS("base/FullBaseRun.rds")
 
 NUM_ITERATIONS <<- 21
 dict <<- initialSim$dict
@@ -128,6 +127,19 @@ children <<- initialSim$children
 transition_probabilities <<- initialSim$transition_probabilities
 
 source("simulateKnowLab.R")
+
+Simenv <- createSimenv("Base", initialSim$simframe, 
+                       initialSim$dict, "years1_21")
+
+env.base <- simulateSimario(Simenv, 50, simulateKnowLab)
+
+
+tableBuilderNew(env.base, "freq", "z1OverweightLvl1") %>% 
+  filter(Var == "Overweight") %>% 
+  write.csv(file = "baseOverweight.csv")
+
+
+saveRDS(env.base, "base/FullBaseRun.rds")
 
 
 compareFreq = 
@@ -144,7 +156,7 @@ compareFreq =
     results <- numeric(3)
     
     for(i in 1:20){
-      lm.fit <- lm(c(Base[i,], Scenario[i,]) ~ factor(rep(c("B", "S"), each = 10)))
+      lm.fit <- lm(c(Base[i,], Scenario[i,]) ~ factor(rep(c("B", "S"), each = 50)))
       
       results <- 
         rbind(results,c(summary(lm.fit )$coef[2,1],confint(	lm.fit )[2,]))
@@ -160,14 +172,59 @@ compareFreq =
 
 compareFreq(env.base, env.base, "z1OverweightLvl1")
 
+
 ########################################################################
+# Breakfast from 81 to 95% for female only ####
 Breakfast.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
 tableBuilderNew(env.base, "freq", "z1BreakfastLvl1")
 
 
+tableBuilderNew(env.base, "freq", "z1BreakfastLvl1", grpbyName = "z1genderLvl1" )
+
+tableBuilderNew(env.base, "freq", "z1BreakfastLvl1", logisetexpr = "z1genderLvl1 == 0" )
+
+
+Breakfast.scenario$cat.adjustments$z1BreakfastLvl1[1,] <- c(0.05,  0.95)  
+
+subgroupExpression <- "z1genderLvl1 == 0"
+
+Breakfast.scenario <- setGlobalSubgroupFilterExpression(Breakfast.scenario, subgroupExpression)
+
+Breakfast.scenario <- simulateSimario(Breakfast.scenario, 10, simulateKnowLab)
+
+
+tableBuilderNew(Breakfast.scenario, "freq", "z1BreakfastLvl1")
+
+tableBuilderNew(Breakfast.scenario, "freq", "z1BreakfastLvl1", logisetexpr = "z1genderLvl1 == 0" )
+
+
+########################################################################
+# Breakfast from 81 to 95% ####
+Breakfast.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
+
+tableBuilderNew(env.base, "freq", "z1BreakfastLvl1")
+#    Var      Year Mean Lower Upper
+# 1  No Childhood 18.2  17.2  19.3
+# 2 Yes Childhood 81.8  80.7  82.8
+
+
+Breakfast.scenario$cat.adjustments$z1BreakfastLvl1[1,] <- c(0.05,  0.95)  
+
+Breakfast.scenario <- simulateSimario(Breakfast.scenario, 50, simulateKnowLab)
+
+results <- compareFreq(env.base, Breakfast.scenario, "z1OverweightLvl1")
+
+results
+
+apply(results[5:20,],2, mean)
+
+write.csv(compareFreq(env.base, Breakfast.scenario, "z1OverweightLvl1"), 
+          "compareBreakfastA5_21.csv")	
+
+
 #######################################################################
-# Breakfast from 81 to 95%
+# Caesarean from 12.6 to 9.2% #####
 Caesarean.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict, "years1_21")
 
 tableBuilderNew(env.base, "freq", "z1CaesareanLvl1")
@@ -179,7 +236,7 @@ tableBuilderNew(env.base, "freq", "z1CaesareanLvl1")
 
 Caesarean.scenario$cat.adjustments$z1CaesareanLvl1[1,] = c(0.908, 0.092)
 
-Caesarean.scenario <- simulateSimario(Caesarean.scenario, 10, simulateKnowLab)
+Caesarean.scenario <- simulateSimario(Caesarean.scenario, 50, simulateKnowLab)
 
 results <- compareFreq(env.base, Caesarean.scenario, "z1OverweightLvl1")
 
@@ -187,7 +244,8 @@ results
 
 apply(results[2:20,],2, mean)
 
-write.csv(compareFreq(env.base, Breakfast.scenario, "z1OverweightLvl1"), "compareCaesareanA1_21.csv")	
+write.csv(compareFreq(env.base, Caesarean.scenario, "z1OverweightLvl1"), 
+          "compareCaesareanA3_21.csv")	
 	
 	
 ############################################################################
@@ -199,7 +257,7 @@ Maternal.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$di
 
 Maternal.scenario$cat.adjustments$r1mBMI[1,] = 	c(0.77, 0.02, 0.135, 0.075)
 
-Maternal.scenario <- simulateSimario(Maternal.scenario, 10, simulateKnowLab)
+Maternal.scenario <- simulateSimario(Maternal.scenario, 50, simulateKnowLab)
 
 results <- compareFreq(env.base, Maternal.scenario, "z1OverweightLvl1")
 
@@ -216,7 +274,7 @@ Birthweight.scenario <- createSimenv("scenario", initialSim$simframe, initialSim
 
 Birthweight.scenario$cat.adjustments$bwkg[1,] = c(0.041, 0.161, 0.336, 0.412, 0.05)
 
-Birthweight.scenario <- simulateSimario(Birthweight.scenario, 10, simulateKnowLab)
+Birthweight.scenario <- simulateSimario(Birthweight.scenario, 50, simulateKnowLab)
 
 results <- compareFreq(env.base, Birthweight.scenario, "z1OverweightLvl1")
 apply(results[1:17,],2, mean)
@@ -234,9 +292,9 @@ pregsmk.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dic
 
 pregsmk.scenario$cat.adjustments$pregsmk[1,] = c(1-0.165 , rep(0.165/5, 5))
 
-pregsmk.scenario <- simulateSimario(pregsmk.scenario, 10, simulateKnowLab)
+pregsmk.scenario <- simulateSimario(pregsmk.scenario, 50, simulateKnowLab)
 
-(results <- compareFreq(env.base, pregsmk.scenario, "z1OverweightLvl1"))
+results <- compareFreq(env.base, pregsmk.scenario, "z1OverweightLvl1")
 apply(results[2:13,],2, mean)
 
 write.csv(compareFreq(env.base, pregsmk.scenario, "z1OverweightLvl1"), "comparePregsmkA3_A14.csv")	
@@ -249,7 +307,7 @@ BREAST.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dict
 
 BREAST.scenario$cat.adjustments$BREAST[1,]= c(0.26, rep(0.74/12, 12))
 
-BREAST.scenario <- simulateSimario(BREAST.scenario, 10, simulateKnowLab)
+BREAST.scenario <- simulateSimario(BREAST.scenario, 50, simulateKnowLab)
 
 (results <- compareFreq(env.base, BREAST.scenario, "z1OverweightLvl1"))
 apply(results[2:13,],2, mean)
@@ -266,7 +324,7 @@ ParentEduc.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$
 
 ParentEduc.scenario$cat.adjustments$r1ParentEduc[1,]=c(0.5, 0.45, 0.05)
 
-ParentEduc.scenario <- simulateSimario(ParentEduc.scenario, 10, simulateKnowLab)
+ParentEduc.scenario <- simulateSimario(ParentEduc.scenario, 50, simulateKnowLab)
 
 (results <- compareFreq(env.base, ParentEduc.scenario, "z1OverweightLvl1"))
 apply(results[1:14,],2, mean)
@@ -335,7 +393,7 @@ Sleep.scenario$cat.adjustments$r1Sleep[19,] <- c(0.0301278, 1 - (0.0301278 + 0.0
 
 
 
-Sleep.scenario <- simulateSimario(Sleep.scenario, 10, simulateKnowLab)
+Sleep.scenario <- simulateSimario(Sleep.scenario, 50, simulateKnowLab)
 
 (results <- compareFreq(env.base, Sleep.scenario, "z1OverweightLvl1"))
 
@@ -352,7 +410,7 @@ WatchTV.scenario <- createSimenv("scenario", initialSim$simframe, initialSim$dic
 
 WatchTV.scenario$cat.adjustments$z1WatchTVLvl1[1,]=c(0.8, 0.2)
 
-WatchTV.scenario <- simulateSimario(WatchTV.scenario, 10, simulateKnowLab)
+WatchTV.scenario <- simulateSimario(WatchTV.scenario, 50, simulateKnowLab)
 
 (results <- compareFreq(env.base, WatchTV.scenario, "z1OverweightLvl1"))
 apply(results[2:11,],2, mean)
@@ -366,7 +424,7 @@ pregsmkBreast.scenario <- createSimenv("scenario", initialSim$simframe, initialS
 pregsmkBreast.scenario$cat.adjustments$pregsmk[1,] = c(1-0.165 , rep(0.165/5, 5))
 pregsmkBreast.scenario$cat.adjustments$BREAST[1,]= c(0.26, rep(0.74/12, 12))
 
-pregsmkBreast.scenario <- simulateSimario(pregsmkBreast.scenario, 10, simulateKnowLab)
+pregsmkBreast.scenario <- simulateSimario(pregsmkBreast.scenario, 50, simulateKnowLab)
 
 (results <- compareFreq(env.base, pregsmkBreast.scenario, "z1OverweightLvl1"))
 apply(results[2:13,],2, mean)
@@ -413,7 +471,7 @@ BreakfastSleepWatchTV.scenario$cat.adjustments$z1Breakfast[1,] = c(0.05, 0.95)
 
 BreakfastSleepWatchTV.scenario$cat.adjustments$z1WatchTVLvl1[1,]=c(0.8, 0.2)
 
-BreakfastSleepWatchTV.scenario <- simulateSimario(BreakfastSleepWatchTV.scenario, 10, simulateKnowLab)
+BreakfastSleepWatchTV.scenario <- simulateSimario(BreakfastSleepWatchTV.scenario, 50, simulateKnowLab)
 
 (results <- compareFreq(env.base, BreakfastSleepWatchTV.scenario, "z1OverweightLvl1"))
 apply(results[4:11,],2, mean)
