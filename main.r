@@ -25,12 +25,11 @@ saveRDS(initialSim, "../KnowLabShiny/base/initialSim.rds")
 Simenv <- createSimenv("Base", initialSim$simframe, 
                        initialSim$dict, "years1_21")
 
-#source("SimmoduleMELC1_21.R")
+
 source("simulateKnowLab.R")
 
+
 env.base <- simulateSimario(Simenv, 10, simulateKnowLab)
-
-
 
 # p <-
 #   profvis({
