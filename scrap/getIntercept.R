@@ -45,7 +45,7 @@ ORtoRR(prop.table(table(env.base$simframe$r1stchildethnLvl2))[2], 0.33,  1.41)
 
 
 
-setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
+#setwd("C:\\Users\\kcha193\\workspace\\KnowLab")
 
 #source("MELC.R")
 env.base  <- readRDS("base/FullBaseRun.rds")
@@ -85,7 +85,7 @@ getIntercept <- function(base.rate, model.glm, envir = parent.frame(), set = NUL
   
   f <-
     function(alpha)
-      base.rate - sum(exp(alpha + conP)/(1+exp(alpha + conP)) *joinP) 
+      base.rate - sum(exp(alpha + conP)/(1+exp(alpha + conP)) * joinP) 
   
   return(uniroot(f, c(-100,100))$root)
 }
@@ -199,7 +199,7 @@ z1OverweightLvl1 <- predSimBinom(temp)
 
 print(table(z1OverweightLvl1)[2]/5000)
 
-write.csv(modeldf$zz1OverweightA2, paste(modelfiledir, "z1OverweightA", 2, ".csv", sep = ""), row.names = FALSE) 
+#write.csv(modeldf$zz1OverweightA2, paste(modelfiledir, "z1OverweightA", 2, ".csv", sep = ""), row.names = FALSE) 
 
 #########################################################################################################
 
